@@ -1,8 +1,12 @@
 
 var React = require('react')
 var CM = require('code-mirror')
+var PT = React.PropTypes
 
 var CodeMirror = React.createClass({
+  propTypes: {
+    onScroll: PT.func
+  },
   componentDidUpdate: function (prevProps) {
     if (prevProps.initialValue !== this.props.initialValue) {
       this.cm.setValue(this.props.initialValue)
@@ -19,6 +23,11 @@ var CodeMirror = React.createClass({
     this.cm.on('change', (cm) => {
       this.props.onChange(cm.getValue())
     })
+    this.cm.on('scroll', (cm) => {
+      var node = cm.getScrollerElement()
+      var max = node.scrollHeight - node.getBoundingClientRect().height
+      this.props.onScroll(node.scrollTop / max)
+    })
     var box = this.getDOMNode().getBoundingClientRect()
     this.cm.setSize(box.width, box.height)
 
@@ -29,7 +38,7 @@ var CodeMirror = React.createClass({
   },
 
   render: function () {
-    return this.transferPropsTo(<div/>)
+    return <div/>
   }
 })
 

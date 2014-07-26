@@ -20,6 +20,12 @@ var Editor = React.createClass({
     this.props.onChange(e.target.value)
   },
 
+  handleScroll: function (percent) {
+    var node = this.refs.rendered.getDOMNode()
+    var height = node.getBoundingClientRect().height
+    node.scrollTop = (node.scrollHeight - height) * percent
+  },
+
   render: function () {
     return <div className="editor">
       <div className="editor_top">
@@ -34,6 +40,7 @@ var Editor = React.createClass({
             Markdown
           </div>
           <CodeMirror
+            onScroll={this.handleScroll}
             initialValue={this.props.raw}
             onChange={this.props.onChange} />
         </div>
@@ -41,9 +48,12 @@ var Editor = React.createClass({
           <div className="editor_display-header">
             Preview
           </div>
-          <div className="editor_rendered" dangerouslySetInnerHTML={{
-            __html: this.props.rendered
-          }}/>
+          <div
+            ref="rendered"
+            className="editor_rendered"
+            dangerouslySetInnerHTML={{
+              __html: this.props.rendered
+            }}/>
         </div>
       </div>
     </div>;
