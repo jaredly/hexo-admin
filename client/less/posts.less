@@ -1,0 +1,43 @@
+
+.posts {
+  display: flex;
+  flex: 1;
+}
+
+.posts_display {
+  flex: 1;
+}
+
+.posts_list {
+  background-color: #333;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.posts_post {
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+
+  &--selected,
+  &:hover {
+    background-color: #666;
+  }
+}
+
+.posts_display {
+  padding: 30px;
+  overflow: auto;
+  position: relative;
+}
+
+.posts_edit-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: #eee;
+  cursor: pointer;
+}
+

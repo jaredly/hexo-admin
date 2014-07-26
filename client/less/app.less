@@ -1,0 +1,53 @@
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.app_header {
+  background-color: #557;
+}
+
+.app_nav {
+  list-style: none;
+  margin: 0 10px;
+  padding: 0;
+  display: inline-block;
+
+  li {
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+
+    a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      display: inline-block;
+
+      &.active,
+      &:hover {
+        background-color: #aaa;
+      }
+    }
+
+  }
+}
+
+.app_main {
+  flex: 1;
+  display: flex;
+}
+
