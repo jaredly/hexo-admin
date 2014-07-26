@@ -3,6 +3,7 @@ var React = require('react/addons')
 var cx = React.addons.classSet
 var Promise = require('es6-promise').Promise
 var PT = React.PropTypes
+var CodeMirror = require('./code-mirror')
 
 var Editor = React.createClass({
   propTypes: {
@@ -28,10 +29,11 @@ var Editor = React.createClass({
           onChange={this.handleChangeTitle}/>
       </div>
       <div className="editor_main">
-        <textarea
-          onChange={this.handleChange}
-          value={this.props.raw}
-          className="editor_edit"/>
+        <div className="editor_edit">
+          <CodeMirror
+            initialValue={this.props.raw}
+            onChange={this.props.onChange} />
+        </div>
         <div className="editor_display" dangerouslySetInnerHTML={{
           __html: this.props.rendered
         }}/>

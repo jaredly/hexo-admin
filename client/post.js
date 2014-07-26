@@ -14,7 +14,6 @@ var Post = React.createClass({
 
   handleChange: function (text) {
     this.setState({
-      raw: text,
       rendered: marked(text)
     })
   },

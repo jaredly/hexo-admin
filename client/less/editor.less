@@ -7,24 +7,82 @@
 
 .editor_title {
   width: 100%;
-  display: border-box;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
   padding: 10px;
   font-size: 24px;
 }
 
+@edit-back: rgb(219, 213, 197);
+
 .editor_main {
   flex: 1;
   display: flex;
+  padding: 5px 0px;
+  background-color: @edit-back;
+
+  > div {
+    background-color: white;
+  }
 }
 
-.editor_edit {
+.code-mirror_wrappper {
   flex: 1;
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inconsolata'), local('Inconsolata'), url('Inconsolata-Regular.ttf');
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Inconsolata Bold'), local('Inconsolata-Bold'), url('Inconsolata-Bold.ttf');
 }
 
 .editor_display {
   flex: 1;
-  background-color: yellow;
-  border-left: 1px solid black;
+  border-left: 5px solid @edit-back;
   overflow: auto;
   padding: 20px;
+  font-size: 18px;
+}
+
+.editor_edit {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-family: Inconsolata;
+  padding: 0 20px;
+  font-size: 18px;
+
+  > div {
+    flex: 1
+  }
+}
+
+
+.CodeMirror, .CodeMirror pre {
+  // font-family: Inconsolata!important;
+  line-height: 1.3em;
+}
+
+.cm-header-1 {
+  font-size: 2em;
+}
+
+.cm-header-2 {
+  font-size: 1.7em;
+}
+
+.cm-header-3 {
+  font-size: 1.5em;
+}
+
+.cm-header-4 {
+  font-size: 1.3em;
 }

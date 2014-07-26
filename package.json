@@ -29,6 +29,7 @@
     "serve-static": "^1.4.0"
   },
   "devDependencies": {
+    "code-mirror": "^3.22.0",
     "es6-promise": "^1.0.0",
     "marked": "^0.3.2",
     "react": "^0.11.1",
