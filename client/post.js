@@ -23,9 +23,10 @@ var Post = React.createClass({
   },
 
   dataDidLoad: function (data) {
+    var parts = data.raw.split('---');
     this.setState({
       title: data.title,
-      raw: data.raw.split('---')[1],
+      raw: parts.slice(1).join('---').trim(),
       rendered: data.content
     })
   },
