@@ -24,9 +24,17 @@
   position: relative;
   transition: background-color .3s ease;
 
-  &--selected,
   &:hover {
+    background-color: @primaryMostlyLight;
+  }
+
+  &--selected {
     background-color: @primaryRatherLight;
+  }
+
+  &--draft {
+    color: #aaa;
+    font-style: italic;
   }
 }
 
@@ -36,23 +44,51 @@
   color: #999;
   bottom: 2px;
   right: 5px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .posts_display {
-  padding: 30px;
-  overflow: auto;
+  display: flex;
   position: relative;
 }
 
-.posts_edit-link {
+.posts_content {
+  overflow: auto;
+  padding: 30px;
+}
+
+.posts_draft-message {
+  background-color: @primaryRatherLight;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10px;
-  background-color: #eee;
+  right: 0;
+  padding: 5px;
+  text-align: center;
+  color: white;
+  font-style: italic;
+  font-weight: bold;
+  opacity: .9;
+}
+
+.posts_edit-link {
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 6px;
+  border-radius: 15px;
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
+  transition: opacity .3s ease, background-color .1s ease;
+
+  &:hover {
+    background-color: white;
+  }
+
+  .posts_post:hover & {
+    opacity: 1;
+  }
 }
 

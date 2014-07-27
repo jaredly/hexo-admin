@@ -79,10 +79,10 @@ var NewPost = React.createClass({
         onKeyPress={this._onKeydown}
         onChange={this._onChange}
         />
-      <i className="fa fa-ok new-post_ok"
-        onClick={this._onSubmit} >K</i>
-      <i className="fa fa-cancel new-post_cancel"
-        onClick={this._onCancel} >X</i>
+      <i className="fa fa-check-circle new-post_ok"
+        onClick={this._onSubmit} ></i>
+      <i className="fa fa-times-circle new-post_cancel"
+        onClick={this._onCancel} ></i>
     </div>
   }
 })

@@ -1,6 +1,11 @@
 
 var path = require('path')
 
+function addIsDraft(post) {
+  post.isDraft = post.source.indexOf('_draft') === 0
+  return post
+}
+
 module.exports = function (app) {
   var use = function (path, fn) {
     app.use('/admin/api/' + path, function (req, res) {
@@ -23,7 +28,7 @@ module.exports = function (app) {
 
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
-   res.done(post.toArray());
+   res.done(post.toArray().map(addIsDraft));
   });
 
   use('posts/update/', function (req, res) {
@@ -49,7 +54,7 @@ module.exports = function (app) {
       return res.send(400, 'No title given');
     }
 
-    hexo.post.create({title: req.body.title}, function (err, filename, content) {
+    hexo.post.create({title: req.body.title, layout: 'draft'}, function (err, filename, content) {
       if (err) {
         console.error(err, err.stack)
         return res.send(500, 'Failed to create post')
@@ -58,7 +63,7 @@ module.exports = function (app) {
       var source = filename.slice(hexo.source_dir.length)
       hexo.source.process([source], function () {
         var post = hexo.model('Post').findOne({source: source})
-        res.done(post);
+        res.done(addIsDraft(post));
       });
     });
   });

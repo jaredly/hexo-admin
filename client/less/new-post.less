@@ -25,24 +25,27 @@
 }
 
 .m-icon-button {
-  color: red;
   cursor: pointer;
   position: absolute;
   top: 15px;
+  opacity: .5;
+  transition: opacity .3s ease;
 
   &:hover {
-    color: #aaa;
+    opacity: 1;
   }
 }
 
 .new-post_ok {
-  right: 20px;
+  right: 35px;
+  color: rgb(0, 102, 255);
 
   .m-icon-button;
 }
 
 .new-post_cancel {
-  right: 5px;
+  right: 10px;
+  color: rgb(255, 115, 115);
 
   .m-icon-button;
 }
