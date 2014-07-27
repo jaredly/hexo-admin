@@ -36,6 +36,7 @@ module.exports = {
   post: (id, data) => {
     if (data) return post('/posts/' + id, data)
     else return get('/posts/' + id)
-  }
+  },
+  newPost: (title) => post('/posts/new', {title: title})
 }
 

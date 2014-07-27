@@ -1,9 +1,11 @@
 
-var Link = require('react-router').Link;
-var DataFetcher = require('./data-fetcher');
-var api = require('./api');
 var React = require('react/addons')
 var cx = React.addons.classSet
+var Link = require('react-router').Link;
+
+var DataFetcher = require('./data-fetcher');
+var NewPost = require('./new-post')
+var api = require('./api');
 
 var Posts = React.createClass({
   mixins: [DataFetcher({
@@ -16,6 +18,12 @@ var Posts = React.createClass({
     }
   },
 
+  _onNew: function (post) {
+    var posts = this.state.data.slice()
+    posts.unshift(post)
+    this.setState({data: posts})
+  },
+
   render: function () {
     if (!this.state.data) {
       return <div className='posts'>Loading...</div>
@@ -23,6 +31,7 @@ var Posts = React.createClass({
     var current = this.state.data[this.state.selected] || {}
     return <div className="posts">
       <ul className='posts_list'>
+        <NewPost onNew={this._onNew}/>
         {
           this.state.data.map((post, i) => 
             <li key={post._id} className={cx({

@@ -10,7 +10,6 @@ var App = React.createClass({
         <span className="app_title">Hexo Admin</span>
         <ul className="app_nav">
           <li><Link to="posts">Posts</Link></li>
-          <li><Link to="create">Create</Link></li>
           <li><Link to="about">About</Link></li>
         </ul>
       </div>
