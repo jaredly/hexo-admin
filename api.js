@@ -36,6 +36,26 @@ module.exports = function (app) {
       res.done(post)
     });
   });
+  use('posts/new', function (req, res, next) {
+    if (req.method !== 'POST') return next()
+    if (!req.body) {
+      return res.send(400, 'No post body given');
+    }
+    if (!req.body.title) {
+      return res.send(400, 'No title given');
+    }
+    hexo.post.create({title: req.body.title}, function (err, filename, content) {
+      if (err) {
+        console.error(err, err.stack)
+        return res.send(500, 'Failed to create post')
+      }
+      var source = filename.slice(hexo.source_dir.length)
+      hexo.source.process([source], function () {
+        var post = hexo.model('Post').findOne({source: source})
+        res.done(post);
+      });
+    });
+  });
   use('posts/', function (req, res, next) {
     var url = req.url
     if (url[url.length - 1] === '/') {
@@ -43,20 +63,20 @@ module.exports = function (app) {
     }
     var id = url.split('/').slice(-1)[0]
     if (id === 'posts' || !id) return next()
-    if (req.method === 'POST') {
-      // deal
-      if (!req.body) {
-        return res.send(400, 'No post body given');
-      }
-      hexo.post.update(id, req.body, function (err, post) {
-        if (err) {
-          return res.send(400, err);
-        }
-        res.done(post)
-      });
-      return
+    if (req.method === 'GET') {
+      var post = hexo.model('Post').get(id)
+      if (!post) return next()
+      return res.done(post)
     }
-    return res.done(hexo.model('Post').get(id))
+    if (!req.body) {
+      return res.send(400, 'No post body given');
+    }
+    hexo.post.update(id, req.body, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.done(post)
+    });
   });
 }
 
