@@ -17,12 +17,60 @@
   padding: 10px 25px;
   font-size: 34px;
   font-weight: bold;
+
+  .editor--draft & {
+    font-style: italic;
+    color: #aaa;
+  }
 }
 
-.editor_updated {
+.pb-button {
+  outline: none;
+  border: transparent;
+  background-color: transparent;
   position: absolute;
-  right: 25px;
+  right: 14px;
   top: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 7px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  opacity: .5;
+  transition: opacity .3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.editor_publish {
+  .pb-button;
+
+  color: rgb(255, 213, 213);
+  background-color: rgb(218, 18, 18);
+  text-shadow: 1px 1px rgb(124, 49, 49);
+}
+
+.editor_unpublish {
+  .pb-button;
+
+  color: gray;
+}
+
+
+.editor_updated {
+  //position: absolute;
+  //right: 25px;
+  //top: 15px;
+  float: right;
+  font-size: 14px;
+  font-family: Inconsolata;
+  color: #aaa;
+}
+
+.editor_word-count {
+  float: right;
   font-size: 14px;
   font-family: Inconsolata;
   color: #aaa;

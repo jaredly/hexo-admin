@@ -2,6 +2,7 @@
 var React = require('react')
 var CM = require('code-mirror')
 var PT = React.PropTypes
+var api = require('./api')
 
 var CodeMirror = React.createClass({
   propTypes: {
@@ -37,6 +38,26 @@ var CodeMirror = React.createClass({
       var box = this.getDOMNode().getBoundingClientRect()
       this.cm.setSize(box.width, box.height)
     })
+
+    document.addEventListener('paste', this._onPaste)
+  },
+
+  componentWillUnmount: function () {
+    document.removeEventListener('paste', this._onPaste)
+  },
+
+  _onPaste: function (event) {
+    var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    if (!items.length) return
+    var blob = items[0].getAsFile();
+    if (!blob) return
+    var reader = new FileReader();
+    reader.onload = (event) => {
+      api.uploadImage(event.target.result).then((src) =>
+        this.cm.replaceSelection('![pasted image](' + src + ')')
+      );
+    };
+    reader.readAsDataURL(blob);
   },
 
   render: function () {

@@ -23,7 +23,6 @@ var Post = React.createClass({
   componentDidMount: function () {
     this._post = _.debounce((update) => {
       var now = moment()
-      this.setState({updated: null})
       api.post(this.props.params.postId, update).then(() => {
         this.setState({
           updated: now
@@ -38,6 +37,7 @@ var Post = React.createClass({
     }
     this.setState({
       raw: text,
+      updated: null,
       rendered: marked(text)
     })
     this._post({_content: text})
@@ -49,6 +49,20 @@ var Post = React.createClass({
     }
     this.setState({title: title});
     this._post({title: title})
+  },
+
+  handlePublish: function () {
+    if (!this.state.data.isDraft) return
+    api.publish(this.state.data._id).then((post) => {
+      this.setState({data: post})
+    });
+  },
+
+  handleUnpublish: function () {
+    if (this.state.data.isDraft) return
+    api.unpublish(this.state.data._id).then((post) => {
+      this.setState({data: post})
+    });
   },
 
   dataDidLoad: function (data) {
@@ -63,13 +77,23 @@ var Post = React.createClass({
   },
 
   render: function () {
+    var post = this.state.data
+    if (!post) {
+      return <span>Loading...</span>
+    }
+    var permaLink = '/' + post.path
     return Editor({
       raw: this.state.initialRaw,
+      wordCount: this.state.raw ? this.state.raw.split(' ').length : 0,
+      isDraft: post.isDraft,
       updated: this.state.updated,
       title: this.state.title,
       rendered: this.state.rendered,
+      previewLink: permaLink,
       onChange: this.handleChange,
-      onChangeTitle: this.handleChangeTitle
+      onChangeTitle: this.handleChangeTitle,
+      onPublish: this.handlePublish,
+      onUnpublish: this.handleUnpublish,
     })
   }
 });

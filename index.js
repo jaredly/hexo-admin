@@ -7,7 +7,7 @@ var path = require('path')
 var api = require('./api');
 
 filter.register('server_middleware', function (app) {
-    app.use('/admin/api/', bodyParser.json())
+    app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
     api(app);
     app.use('/admin/monkeys', function (req, res, next) {
         res.end('Monkeys!');

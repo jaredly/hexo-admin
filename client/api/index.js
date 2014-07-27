@@ -37,6 +37,10 @@ module.exports = {
     if (data) return post('/posts/' + id, data)
     else return get('/posts/' + id)
   },
-  newPost: (title) => post('/posts/new', {title: title})
+  newPost: (title) => post('/posts/new', {title: title}),
+  uploadImage: (data) => post('/images/upload', {data: data}),
+  remove: (id) => post('/posts/' + id + '/remove'),
+  publish: (id) => post('/posts/' + id + '/publish'),
+  unpublish: (id) => post('/posts/' + id + '/unpublish'),
 }
 
