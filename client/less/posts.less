@@ -13,7 +13,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 300px;
+  width: 400px;
   overflow: auto;
 }
 
@@ -21,11 +21,21 @@
   padding: 10px;
   color: white;
   cursor: pointer;
+  position: relative;
 
   &--selected,
   &:hover {
     background-color: #666;
   }
+}
+
+.posts_post-date {
+  position: absolute;
+  line-height: 1;
+  color: #999;
+  bottom: 2px;
+  right: 5px;
+  font-size: 12px;
 }
 
 .posts_display {
@@ -41,5 +51,7 @@
   padding: 10px;
   background-color: #eee;
   cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
 }
 

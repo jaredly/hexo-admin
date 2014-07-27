@@ -25,12 +25,24 @@ var NewPost = React.createClass({
     }
   },
 
+  _onKeydown: function (e) {
+    if (e.key === 'Enter') {
+      this._onSubmit()
+    }
+  },
+
   _onShow: function () {
     this.setState({showing: true})
   },
 
+  _onBlur: function () {
+    if (this.state.showing) {
+      this._onCancel();
+    }
+  },
+
   _onSubmit: function () {
-    this.setState({loading: true})
+    this.setState({loading: true, showing: false})
     api.newPost(this.state.text).then((post) => {
       this.setState({showing: false, text: 'Untitled'})
       this.props.onNew(post)
@@ -63,6 +75,8 @@ var NewPost = React.createClass({
       <input className="new-post_input"
         ref="input"
         value={this.state.text}
+        onBlur={this._onBlur}
+        onKeyPress={this._onKeydown}
         onChange={this._onChange}
         />
       <i className="fa fa-ok new-post_ok"

@@ -57,7 +57,7 @@ var Editor = React.createClass({
             ref="rendered"
             className="editor_rendered"
             dangerouslySetInnerHTML={{
-              __html: this.props.rendered
+              __html: this.props.rendered || '<h1 class="editor_no-content">There doesn\'t seem to be anything here</h1>'
             }}/>
         </div>
       </div>

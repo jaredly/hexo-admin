@@ -1,0 +1,22 @@
+{
+  "esnext": true,
+  "strict": false,
+  "laxcomma": true,
+  "undef": true,
+  "browser": true,
+  "unused": true,
+  "globals": {
+    "marked": false,
+    "Promise": false,
+    "_": false
+  },
+  "node": true,
+  "-W033": false,
+  "-W024": false,
+  "-W030": false,
+  "-W069": false,
+  "-W089": false,
+  "-W098": false,
+  "-W116": false,
+  "-W065": false
+}
