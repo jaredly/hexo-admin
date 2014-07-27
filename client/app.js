@@ -6,7 +6,7 @@ var App = React.createClass({
   render: function () {
     return <div className="app">
       <div className="app_header">
-        <img src="/images/icon.png"/>
+        <img src="logo.png" className="app_logo"/>
         <span className="app_title">Hexo Admin</span>
         <ul className="app_nav">
           <li><Link to="posts">Posts</Link></li>
