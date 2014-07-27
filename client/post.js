@@ -23,6 +23,7 @@ var Post = React.createClass({
   componentDidMount: function () {
     this._post = _.debounce((update) => {
       var now = moment()
+      this.setState({updated: null})
       api.post(this.props.params.postId, update).then(() => {
         this.setState({
           updated: now

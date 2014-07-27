@@ -9,7 +9,7 @@
 }
 
 .posts_list {
-  background-color: #333;
+  background-color: @primaryVeryLight;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -19,13 +19,14 @@
 
 .posts_post {
   padding: 10px;
-  color: white;
+  color: @primaryLightText;
   cursor: pointer;
   position: relative;
+  transition: background-color .3s ease;
 
   &--selected,
   &:hover {
-    background-color: #666;
+    background-color: @primaryRatherLight;
   }
 }
 

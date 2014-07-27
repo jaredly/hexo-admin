@@ -6,7 +6,12 @@
 
 .new-post_button {
   padding: 10px;
-  color: white;
+  color: @accentp5;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: @primaryRatherLight;
+  }
 }
 
 .new-post_input {
@@ -15,6 +20,8 @@
   font-size: 20px;
   width: 100%;
   height: 52px;
+  outline: none;
+  border: none;
 }
 
 .m-icon-button {

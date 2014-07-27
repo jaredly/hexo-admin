@@ -35,9 +35,10 @@ var Editor = React.createClass({
           className='editor_title'
           value={this.props.title}
           onChange={this.handleChangeTitle}/>
-        <SinceWhen className="editor_updated"
-          prefix="saved "
-          time={this.props.updated}/>
+        {this.props.updated &&
+            <SinceWhen className="editor_updated"
+            prefix="saved "
+            time={this.props.updated}/>}
       </div>
       <div className="editor_main">
         <div className="editor_edit">

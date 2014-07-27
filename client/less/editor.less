@@ -28,12 +28,12 @@
   color: #aaa;
 }
 
-@edit-back: rgb(219, 213, 197);
+@edit-back: @accent2light; //rgb(219, 213, 197);
 
 .editor_main {
   flex: 1;
   display: flex;
-  padding: 5px 0px;
+  padding: 5px 0 0;
   background-color: @edit-back;
 
   > div {
@@ -83,7 +83,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, .9);
+  background-color: @accent2transparent;
   z-index: 10;
   padding: 0 25px;
   font-size: 14px;
@@ -107,10 +107,9 @@
 }
 
 .editor_rendered {
-  margin-top: 20px;
   flex: 1;
   overflow: auto;
-  padding: 20px;
+  padding: 40px 20px 20px;
 
   > :first-child {
     margin-top: 0;

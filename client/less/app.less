@@ -7,7 +7,7 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
+  font-family: "Open Sans";
   position: absolute;
   top: 0;
   left: 0;
@@ -16,7 +16,11 @@ body {
 }
 
 .app_header {
-  background-color: #557;
+  background-color: @primaryVeryDark;
+
+  &, a {
+    color: @primaryDarkText;
+  }
 }
 
 .app_nav {
@@ -26,20 +30,22 @@ body {
   display: inline-block;
 
   li {
-    color: white;
+    color: @primaryDarkText;
     font-weight: bold;
     display: inline-block;
     cursor: pointer;
 
     a {
-      color: white;
+      color: @primaryDarkText;
       text-decoration: none;
-      padding: 10px 20px;
+      padding: 10px 20px 7px;
       display: inline-block;
+      border-bottom: 3px solid transparent;
 
       &.active,
       &:hover {
-        background-color: #aaa;
+        border-bottom-color: @accentp5;
+        color: @accentp5;
       }
     }
 
