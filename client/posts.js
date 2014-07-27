@@ -2,6 +2,7 @@
 var React = require('react/addons')
 var cx = React.addons.classSet
 var Link = require('react-router').Link;
+var Router = require('react-router');
 
 var DataFetcher = require('./data-fetcher');
 var NewPost = require('./new-post')
@@ -22,6 +23,7 @@ var Posts = React.createClass({
     var posts = this.state.data.slice()
     posts.unshift(post)
     this.setState({data: posts})
+    Router.transitionTo('post', {postId: post._id})
   },
 
   render: function () {
