@@ -59,12 +59,14 @@ module.exports = function (options) {
       var key = serialize(params)
 
       var loading;
+      /*
       if (cache[key] && !force) {
         var data = cache[key]
         loading = Promise.resolve(data)
       } else {
+      */
         loading = options.fetch(params)
-      }
+      // }
 
       loading.then((data) => {
         if (!this.isMounted()) return

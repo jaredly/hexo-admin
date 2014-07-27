@@ -7,11 +7,13 @@ var CodeMirror = React.createClass({
   propTypes: {
     onScroll: PT.func
   },
+
   componentDidUpdate: function (prevProps) {
     if (prevProps.initialValue !== this.props.initialValue) {
       this.cm.setValue(this.props.initialValue)
     }
   },
+
   componentDidMount: function () {
     require('code-mirror/mode/markdown')
     this.cm = CM(this.getDOMNode(), {

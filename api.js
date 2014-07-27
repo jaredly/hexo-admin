@@ -37,7 +37,11 @@ module.exports = function (app) {
     });
   });
   use('posts/', function (req, res, next) {
-    var id = req.url.split('/').slice(-2)[0]
+    var url = req.url
+    if (url[url.length - 1] === '/') {
+      url = url.slice(0, -1)
+    }
+    var id = url.split('/').slice(-1)[0]
     if (id === 'posts' || !id) return next()
     if (req.method === 'POST') {
       // deal

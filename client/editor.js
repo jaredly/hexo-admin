@@ -4,12 +4,14 @@ var cx = React.addons.classSet
 var Promise = require('es6-promise').Promise
 var PT = React.PropTypes
 var CodeMirror = require('./code-mirror')
+var SinceWhen = require('./since-when')
 
 var Editor = React.createClass({
   propTypes: {
     raw: PT.string,
     onChangeTitle: PT.func,
     title: PT.string,
+    updated: PT.object,
   },
 
   handleChangeTitle: function (e) {
@@ -33,6 +35,9 @@ var Editor = React.createClass({
           className='editor_title'
           value={this.props.title}
           onChange={this.handleChangeTitle}/>
+        <SinceWhen className="editor_updated"
+          prefix="saved "
+          time={this.props.updated}/>
       </div>
       <div className="editor_main">
         <div className="editor_edit">
