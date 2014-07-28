@@ -7,4 +7,4 @@ Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svb
 
 ![posts view](docs/pasted-12.png)
 
-![editor view](docs/poasted-13.png)
+![editor view](docs/pasted-13.png)
