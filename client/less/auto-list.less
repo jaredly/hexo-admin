@@ -1,0 +1,37 @@
+
+.autolist_item {
+  position: relative;
+  border-radius: 5px;
+  transition: background-color .2s ease;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.autolist_del {
+  position: absolute;
+  cursor: pointer;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+  color: #ccc;
+  transition: color .3s ease;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.autolist_show {
+  padding: 5px 6px;
+  cursor: pointer;
+}
+
+.autolist_show--new {
+  color: #aaa;
+}
+
+.autolist_input {
+  .m-config-input;
+}

@@ -42,5 +42,6 @@ module.exports = {
   remove: (id) => post('/posts/' + id + '/remove'),
   publish: (id) => post('/posts/' + id + '/publish'),
   unpublish: (id) => post('/posts/' + id + '/unpublish'),
+  tagsAndCategories: () => get('/tags-and-categories'),
 }
 

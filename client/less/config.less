@@ -1,0 +1,71 @@
+
+.config-dropper {
+  position: absolute;
+  top: 18px;
+  right: 135px;
+}
+
+.config-dropper_handle {
+  width: 30px;
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+
+  .config-dropper--open & {
+    background-color: black;
+    color: white;
+  }
+}
+
+.config {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  z-index: 100;
+  background-color: black;
+  padding: 10px;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  color: white;
+  font-size: 16px;
+  line-height: 16px;
+  width: 200px;
+}
+
+.config_close {
+  position: absolute;
+  right: 15px;
+  color: white;
+}
+
+.config_title {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.config_section-title {
+  font-size: 14px;
+  line-height: 14px;
+  margin: 5px 0;
+  color: #44CA0F;
+}
+
+.m-config-input {
+  background-color: transparent;
+  border: 1px solid #777;
+  color: white;
+  outline: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1px 5px;
+}
+
+.config_date {
+  .m-config-input;
+  margin: 5px 0;
+}
+
+
+

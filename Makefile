@@ -8,7 +8,7 @@ watch:
 	@watchify -v ${BROWS}
 
 less:
-	@lessc client/less/index.less > www/bundle.css
+	@lessc client/less/index.less www/bundle.css
 
 watch-less:
 	@watch make less

@@ -34,16 +34,19 @@ var CodeMirror = React.createClass({
     var box = this.getDOMNode().getBoundingClientRect()
     this.cm.setSize(box.width, box.height)
 
-    window.addEventListener('resize', () => {
-      var box = this.getDOMNode().getBoundingClientRect()
-      this.cm.setSize(box.width, box.height)
-    })
+    window.addEventListener('resize', this._onResize)
 
     document.addEventListener('paste', this._onPaste)
   },
 
+  _onResize: function () {
+    var box = this.getDOMNode().getBoundingClientRect()
+    this.cm.setSize(box.width, box.height)
+  },
+
   componentWillUnmount: function () {
     document.removeEventListener('paste', this._onPaste)
+    document.removeEventListener('resize', this._onResize)
   },
 
   _onPaste: function (event) {

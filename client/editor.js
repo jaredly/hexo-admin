@@ -6,6 +6,7 @@ var PT = React.PropTypes
 var CodeMirror = require('./code-mirror')
 var SinceWhen = require('./since-when')
 var Rendered = require('./rendered')
+var ConfigDropper = require('./config-dropper')
 
 var Editor = React.createClass({
   propTypes: {
@@ -15,15 +16,12 @@ var Editor = React.createClass({
     updated: PT.object,
     isDraft: PT.bool,
     onPublish: PT.func.isRequired,
-    onUnpublish: PT.func.isRequired
+    onUnpublish: PT.func.isRequired,
+    tagsAndCategories: PT.object
   },
 
   handleChangeTitle: function (e) {
     return this.props.onChangeTitle(e.target.value)
-  },
-
-  handleChange: function (e) {
-    this.props.onChange(e.target.value)
   },
 
   handleScroll: function (percent) {
@@ -42,6 +40,10 @@ var Editor = React.createClass({
           className='editor_title'
           value={this.props.title}
           onChange={this.handleChangeTitle}/>
+        <ConfigDropper
+          post={this.props.post}
+          tagsAndCategories={this.props.tagsAndCategories}
+          onChange={this.props.onChange}/>
         {this.props.isDraft ?
           <button className="editor_publish" onClick={this.props.onPublish}>
             Publish
@@ -62,7 +64,7 @@ var Editor = React.createClass({
           <CodeMirror
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
-            onChange={this.props.onChange} />
+            onChange={this.props.onChangeContent} />
         </div>
         <div className="editor_display">
           <div className="editor_display-header">

@@ -13,10 +13,12 @@ var NewPost = require('./new-post')
 var api = require('./api');
 
 var Posts = React.createClass({
-  mixins: [DataFetcher({
-    fetch: () => api.posts().then((data) => 
-      _.sortBy(data, ['isDraft', 'date']).reverse()
-    )
+  mixins: [DataFetcher((params) => {
+    return {
+      posts: api.posts().then((posts) => 
+        _.sortBy(posts, ['isDraft', 'date']).reverse()
+      )
+    }
   })],
 
   getInitialState: function () {
@@ -26,9 +28,9 @@ var Posts = React.createClass({
   },
 
   _onNew: function (post) {
-    var posts = this.state.data.slice()
+    var posts = this.state.posts.slice()
     posts.unshift(post)
-    this.setState({data: posts})
+    this.setState({posts: posts})
     Router.transitionTo('post', {postId: post._id})
   },
 
@@ -40,15 +42,15 @@ var Posts = React.createClass({
   },
 
   render: function () {
-    if (!this.state.data) {
+    if (!this.state.posts) {
       return <div className='posts'>Loading...</div>
     }
-    var current = this.state.data[this.state.selected] || {}
+    var current = this.state.posts[this.state.selected] || {}
     return <div className="posts">
       <ul className='posts_list'>
         <NewPost onNew={this._onNew}/>
         {
-          this.state.data.map((post, i) => 
+          this.state.posts.map((post, i) => 
             <li key={post._id} className={cx({
                 "posts_post": true,
                 "posts_post--draft": post.isDraft,

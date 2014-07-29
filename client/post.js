@@ -10,8 +10,11 @@ var _ = require('lodash')
 var moment = require('moment')
 
 var Post = React.createClass({
-  mixins: [DataFetcher({
-    fetch: (params) => api.post(params.postId)
+  mixins: [DataFetcher((params) => {
+    return {
+      post: api.post(params.postId),
+      tagsAndCategories: api.tagsAndCategories()
+    }
   })],
 
   getInitialState: function () {
@@ -31,7 +34,18 @@ var Post = React.createClass({
     }, 1000, {trailing: true, loading: true})
   },
 
-  handleChange: function (text) {
+  handleChange: function (update) {
+    var now = moment()
+    api.post(this.props.params.postId, update).then((data) => {
+      this.setState({
+        tagsAndCategories: data.tagsAndCategories,
+        post: data.post,
+        updated: now
+      })
+    })
+  },
+
+  handleChangeContent: function (text) {
     if (text === this.state.raw) {
       return
     }
@@ -52,20 +66,21 @@ var Post = React.createClass({
   },
 
   handlePublish: function () {
-    if (!this.state.data.isDraft) return
-    api.publish(this.state.data._id).then((post) => {
-      this.setState({data: post})
+    if (!this.state.post.isDraft) return
+    api.publish(this.state.post._id).then((post) => {
+      this.setState({post: post})
     });
   },
 
   handleUnpublish: function () {
-    if (this.state.data.isDraft) return
-    api.unpublish(this.state.data._id).then((post) => {
-      this.setState({data: post})
+    if (this.state.post.isDraft) return
+    api.unpublish(this.state.post._id).then((post) => {
+      this.setState({post: post})
     });
   },
 
-  dataDidLoad: function (data) {
+  dataDidLoad: function (name, data) {
+    if (name !== 'post') return
     var parts = data.raw.split('---');
     var raw = parts.slice(1).join('---').trim();
     this.setState({
@@ -77,12 +92,13 @@ var Post = React.createClass({
   },
 
   render: function () {
-    var post = this.state.data
-    if (!post) {
+    var post = this.state.post
+    if (!post || !this.state.tagsAndCategories) {
       return <span>Loading...</span>
     }
     var permaLink = '/' + post.path
     return Editor({
+      post: this.state.post,
       raw: this.state.initialRaw,
       wordCount: this.state.raw ? this.state.raw.split(' ').length : 0,
       isDraft: post.isDraft,
@@ -91,9 +107,11 @@ var Post = React.createClass({
       rendered: this.state.rendered,
       previewLink: permaLink,
       onChange: this.handleChange,
+      onChangeContent: this.handleChangeContent,
       onChangeTitle: this.handleChangeTitle,
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
+      tagsAndCategories: this.state.tagsAndCategories,
     })
   }
 });

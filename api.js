@@ -8,6 +8,21 @@ function addIsDraft(post) {
   return post
 }
 
+function tagsAndCategories() {
+  var cats = {}
+    , tags = {}
+  hexo.model('Category').forEach(function (cat) {
+    cats[cat._id] = cat.name
+  })
+  hexo.model('Tag').forEach(function (tag) {
+    tags[tag._id] = tag.name
+  })
+  return {
+    categories: cats,
+    tags: tags
+  }
+}
+
 module.exports = function (app) {
   var use = function (path, fn) {
     app.use('/admin/api/' + path, function (req, res) {
@@ -28,23 +43,13 @@ module.exports = function (app) {
     })
   }
 
+  use('tags-and-categories', function (req, res) {
+    res.done(tagsAndCategories())
+  })
+
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
    res.done(post.toArray().map(addIsDraft));
-  });
-
-  use('posts/update/', function (req, res) {
-    var id = req.url.split('/').slice(-2)[0]
-    if (!req.body) {
-      return res.send(400, 'No post body given');
-    }
-
-    hexo.post.update(id, req.body, function (err, post) {
-      if (err) {
-        return res.send(400, err);
-      }
-      res.done(post)
-    });
   });
 
   use('posts/new', function (req, res, next) {
@@ -103,7 +108,10 @@ module.exports = function (app) {
       if (err) {
         return res.send(400, err);
       }
-      res.done(addIsDraft(post))
+      res.done({
+        post: addIsDraft(post),
+        tagsAndCategories: tagsAndCategories()
+      })
     });
   });
 
