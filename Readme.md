@@ -1,6 +1,6 @@
 ![logo](docs/logo.png)
 
-Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
+An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
 
 ### Contents
 - [**Screenshots**](#screenshots)
