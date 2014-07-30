@@ -3,6 +3,7 @@
  */
 var $post = $('.post'),
 	$first = $('.post.first'),
+	$second = $($('.post')[1]),
 	$last = $('.post.last'),
 	$fnav = $('.fixed-nav'),
 	$postholder = $('.post-holder'),
@@ -19,6 +20,7 @@ var $post = $('.post'),
     }
     $(document).ready(function(){
 
+        /*
         $postholder.each(function (e) {
         	if(e % 2 != 0)
         		$(this).css({
@@ -26,6 +28,7 @@ var $post = $('.post'),
                     'color'     : 'white',
                 })
         })
+       */
 
         $postafter.each(function (e) {
         	var bg = $(this).parent().css('background-color')
@@ -39,6 +42,9 @@ var $post = $('.post'),
 
         $('.btn.first').click( function () {
         	srcTo ($first)
+        })
+        $('.btn.second').click( function () {
+        	srcTo ($second)
         })
         $('.btn.last').click( function () {
         	srcTo ($last)

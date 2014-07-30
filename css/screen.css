@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    Table of Contents
    ========================================================================== */
@@ -1127,5 +1128,16 @@ a.fn-item.active {
 
 /* ==========================================================================
    End of file. Media queries should be the last thing here. Do not add stuff
-   below this point, or it will probably fuck everything up.
+   below this point, or it will probably mess everything up.
    ========================================================================== */
+
+/** Custom stuff **/
+
+.post-holder--blue {
+    background-color: #0099cc;
+    color     : white;
+}
+
+.post-holder--blue pre {
+    color: #3A4145;
+}

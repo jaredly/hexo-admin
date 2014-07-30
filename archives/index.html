@@ -32,7 +32,7 @@
         <h1 class="blog-title">Hexo Admin Plugin</h1>
         <h2 class="blog-description">Edit your content in style</h2>
 
-        <a class='btn first'>Quickstart</a>
+        <a class='btn second'>Quickstart</a>
         <a class='btn btn-red' href='admin/'>Demo</a>
         <a class='btn btn-blue' target="_blank" href='http://github.com/jaredly/hexo-admin'>
 	<i class="fa fa-github"></i> Fork
@@ -50,7 +50,20 @@
 
   <!-- Each post will be output using this markup -->
   
-  <div class="post-holder">
+  <div class="post-holder ">
+    <article class="post first">
+      <header class="post-header">
+        <h2 class="post-title">Screentshots</h2>
+      </header>
+      <section class="post-content">
+        <p><p><img src="/hexo-admin/images/screenshot-1.png" alt="posts"><br><img src="/hexo-admin/images/screenshot-2.png" alt="posts"></p>
+</p>
+      </section>
+    </article>
+    <div class="post-after"></div>
+  </div>
+  
+  <div class="post-holder post-holder--blue">
     <article class="post first">
       <header class="post-header">
         <h2 class="post-title">Quickstart</h2>
@@ -60,7 +73,7 @@
 <figure class="highlight sh"><pre><div class="line">npm install -g hexo</div><div class="line"><span class="built_in">cd</span> ~/</div><div class="line">hexo init my-blog</div><div class="line"><span class="built_in">cd</span> my-blog</div><div class="line">npm install</div></pre></figure>
 
 <h4 id="2-_Install_the_admin_&amp;_start_things_up">2. Install the admin &amp; start things up</h4>
-<figure class="highlight sh"><pre><div class="line">npm install --save hexo-admin-plugin</div><div class="line">hexo server <span class="operator">-d</span></div><div class="line">open http://localhost:<span class="number">4000</span>/admin/</div></pre></figure>
+<figure class="highlight sh"><pre><div class="line">npm install --save hexo-admin</div><div class="line">hexo server <span class="operator">-d</span></div><div class="line">open http://localhost:<span class="number">4000</span>/admin/</div></pre></figure>
 
 <h4 id="3-_Profit!">3. Profit!</h4>
 <p>The UI should be pretty discoverable — let me know if you can’t find something.</p>
@@ -75,7 +88,7 @@
     <div class="post-after"></div>
   </div>
   
-  <div class="post-holder">
+  <div class="post-holder ">
     <article class="post first">
       <header class="post-header">
         <h2 class="post-title">Credits</h2>
