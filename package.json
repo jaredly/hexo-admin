@@ -1,6 +1,6 @@
 {
   "name": "hexo-admin-plugin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,6 @@
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
     "moment": "^2.7.0",
-    "react": "^0.11.1",
     "reactify": "^0.14.0",
     "superagent": "^0.18.2",
     "superagent-browserify": "0.0.2"
