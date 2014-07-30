@@ -1,5 +1,5 @@
 {
-  "name": "hexo-admin-plugin",
+  "name": "hexo-admin",
   "version": "0.1.2",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaredly/hexo-admin-plugin"
+    "url": "https://github.com/jaredly/hexo-admin.git"
   },
   "keywords": [
     "hexo",
@@ -20,9 +20,9 @@
   "author": "Jared Forsyth <jared@jaredforsyth.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jaredly/hexo-admin-plugin/issues"
+    "url": "https://github.com/jaredly/hexo-admin/issues"
   },
-  "homepage": "https://github.com/jaredly/hexo-admin-plugin",
+  "homepage": "http://jaredly.github.io/hexo-admin/",
   "dependencies": {
     "body-parser": "^1.5.0",
     "moment": "^2.7.0",
