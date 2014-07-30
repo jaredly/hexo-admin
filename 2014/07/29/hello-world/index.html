@@ -20,39 +20,26 @@
 </head>
 
 
-<body class="home-template">
+<body class="post-template">
 
   
-<header id="site-head"  style="background-image: url(images/screenshot.png)" >
-  <div class="vertical">
-    <div class="site-head-content inner">
-      <div id="site-head-content" class="inner">
-
-         <a class="blog-logo" href="/hexo-admin/"><img src="images/logo.png" alt="Blog Logo"/></a> 
-        <h1 class="blog-title">Hexo Admin Plugin</h1>
-        <h2 class="blog-description">Edit your content in style</h2>
-
-        <a class='btn first'>Read about it</a>
-        <a class='btn btn-red' href='admin/'>Demo</a><br>
-        <i id='header-arrow' class="fa fa-angle-down"></i>
-      </div>
-
-    </div>
-  </div>
-</header>
 
 <main class="content" role="main">
-  <div class='fixed-nav'></div>
-
-  <!-- Each post will be output using this markup -->
-  
-  <div class="post-holder">
-    <article class="post first">
-      <header class="post-header">
-        <h2 class="post-title">Hello World</h2>
-      </header>
-      <section class="post-content">
-        <p><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+  <article class="post">
+    <header class="post-header">
+      <a class="blog-logo" href="/hexo-admin/">
+        
+        <img src="images/logo.png" alt="Blog Logo"/></a>
+        
+      </a>
+    </header>
+    <span class="post-meta">
+      <time datetime="2014-07-30T02:30:49.000Z" itemprop="datePublished">Jul 29 2014</time>
+      
+    </span>
+    <h1 class="post-title">Hello World</h1>
+    <section class="post-content">
+      <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick_Start">Quick Start</h2>
 <h3 id="Create_a_new_post">Create a new post</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
@@ -70,17 +57,36 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
 
 <p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-</p>
+
+    </section>
+      <section id="comment">
+          <h1 class="title">Comments</h1>
+
+          
       </section>
-    </article>
-    <div class="post-after"></div>
-  </div>
-  
+    <footer class="post-footer">
+      <section class="author">
+        <h4>Jared Forsyth</h4>
+        <p>Partying it up here with hexo.</p>
+      </section>
 
-  
-
-  
-
+      <section class="share">
+        <h4>Share this post</h4>
+        <a class="icon-twitter" href="http://twitter.com/share?url=http://jaredly.github.io/hexo-admin/hexo-admin/2014/07/29/hello-world/"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+        </a>
+        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://jaredly.github.io/hexo-admin/hexo-admin/2014/07/29/hello-world/"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+        </a>
+        <a class="icon-google-plus" href="https://plus.google.com/share?url=http://jaredly.github.io/hexo-admin/hexo-admin/2014/07/29/hello-world/"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+        </a>
+      </section>
+    </footer>
+  </article>
 </main>
 
 
