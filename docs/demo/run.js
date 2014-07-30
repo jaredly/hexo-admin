@@ -1,11 +1,13 @@
-
-var admin = require('./')
-  , api = require('./api')
+var admin = require('../../client')
+  , api = require('../../client/api')
 
 // for debugging
 window.React = require('react')
 
-api.init('rest', '/admin/api');
+api.init(require('./test-api.js'), {
+  posts: require('./posts.js'),
+  tagsAndCategories: require('./tags-and-categories.js'),
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     var node = document.createElement('div')

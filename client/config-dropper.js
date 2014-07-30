@@ -8,7 +8,7 @@ var cx = React.addons.classSet;
 var dateFormat = 'MMM D YYYY HH:mm'
 
 function toText(lst, map) {
-  return lst.map((name) => map[name])
+  return lst.map((name) => map[name] || name)
 }
 
 var ConfigDropper = React.createClass({
