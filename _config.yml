@@ -80,8 +80,12 @@ disqus_shortname:
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
 ## Themes: https://github.com/hexojs/hexo/wiki/Themes
-theme: landscape
+theme: spp
 exclude_generator:
+
+cover: //blog.ghost.org/content/images/2013/Nov/cover.png
+logo: //blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png
+bio: 'Partying it up here with hexo.'
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
