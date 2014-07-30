@@ -1,0 +1,54 @@
+
+<% permalink = config.url + config.root + post.path %>
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      <a class="blog-logo" href="<%- config.root %>">
+        <% if (theme.logo) { %>
+        <img src="<%- theme.logo %>" alt="Blog Logo"/></a>
+        <% } else { %>
+        <span class="blog-title"><%- config.title %></span>
+        <% } %>
+      </a>
+    </header>
+    <span class="post-meta">
+      <time datetime="<%= date_xml(post.date) %>" itemprop="datePublished"><%= date(post.date, null) %></time>
+      <% if (post.tags && post.tags.length){ %> on <% post.tags.forEach(function(tag) { %><a href='<%= config.root + tag.path %>' style='margin:0 5px;'><%= tag.name %></a><% }); %><% } %>
+    </span>
+    <h1 class="post-title"><%- post.title %></h1>
+    <section class="post-content">
+      <%- post.content %>
+    </section>
+      <section id="comment">
+          <h1 class="title">Comments</h1>
+
+          <% if(config.disqus_shortname) { %>
+          <div id="disqus_thread">
+              <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+          <% } %>
+      </section>
+    <footer class="post-footer">
+      <section class="author">
+        <h4><%- config.author %></h4>
+        <p><%- theme.bio %></p>
+      </section>
+
+      <section class="share">
+        <h4>Share this post</h4>
+        <a class="icon-twitter" href="http://twitter.com/share?url=<%- permalink %>"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+        </a>
+        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<%- permalink %>"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+        </a>
+        <a class="icon-google-plus" href="https://plus.google.com/share?url=<%- permalink %>"
+           onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+        </a>
+      </section>
+    </footer>
+  </article>
+</main>

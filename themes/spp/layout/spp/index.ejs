@@ -1,0 +1,62 @@
+
+<header id="site-head" <% if (theme.cover) { %> style="background-image: url(<%- theme.cover %>)" <% } %>>
+  <div class="vertical">
+    <div class="site-head-content inner">
+      <div id="site-head-content" class="inner">
+
+        <% if (theme.logo) { %> <a class="blog-logo" href="<%- config.root %>"><img src="<%- theme.logo %>" alt="Blog Logo"/></a> <% } %>
+        <h1 class="blog-title"><%- config.title %></h1>
+        <h2 class="blog-description"><%- config.subtitle %></h2>
+
+        <a class='btn first'>Show me more</a>
+        <a class='btn last'>Any comment</a><br>
+        <i id='header-arrow' class="fa fa-angle-down"></i>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main class="content" role="main">
+  <div class='fixed-nav'></div>
+
+  <!-- Each post will be output using this markup -->
+  <% page.posts.each(function(post) { %>
+  <div class="post-holder">
+    <article class="post first">
+      <header class="post-header">
+        <h2 class="post-title"><%- post.title %></h2>
+      </header>
+      <section class="post-content">
+        <p><%- post.content %></p>
+      </section>
+    </article>
+    <div class="post-after"></div>
+  </div>
+  <% }); %>
+
+  <% if ((page.current == 1) && (config.disqus_shortname)) { %>
+  <div class="post-holder">
+    <article class="post last">
+      <header class="post-header">
+        <h2 class="post-title">Comments</h2>
+      </header>
+      <section class="post-content">
+        <div id="disqus_thread">
+          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+      </section>
+    </article>
+    <div class="post-after"></div>
+  </div>
+  <% } %>
+
+  <% if (page.total > 1) { %>
+  <nav class="pagination" role="pagination">
+    <% if (page.prev) { %><a class="newer-posts" href="<%- config.root %><%- page.prev_link %>">← Newer Posts</a><% } %>
+    <span class="page-number">Page <%- page.current %> of <%- page.total %></span>
+    <% if (page.next) { %><a class="older-posts" href="<%- config.root %><%- page.next_link %>">Older Posts →</a><% } %>
+  </nav>
+  <% } %>
+
+</main>

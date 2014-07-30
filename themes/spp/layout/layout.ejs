@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<%- partial('spp/head') %>
+<% if (typeof page.title == 'undefined') { %>
+<body class="home-template">
+<% } else { %>
+<body class="post-template">
+<% } %>
+  <%- body %>
+  <%- partial('spp/footer') %>
+  <%- partial('spp/after_all') %>
+</body>
+</html>
