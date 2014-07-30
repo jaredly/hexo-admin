@@ -32,8 +32,12 @@
         <h1 class="blog-title">Hexo Admin Plugin</h1>
         <h2 class="blog-description">Edit your content in style</h2>
 
-        <a class='btn first'>Read about it</a>
-        <a class='btn btn-red' href='admin/'>Demo</a><br>
+        <a class='btn first'>Quickstart</a>
+        <a class='btn btn-red' href='admin/'>Demo</a>
+        <a class='btn btn-blue' target="_blank" href='http://github.com/jaredly/hexo-admin'>
+	<i class="fa fa-github"></i> Fork
+	</a><br>
+	<br>
         <i id='header-arrow' class="fa fa-angle-down"></i>
       </div>
 
@@ -49,27 +53,35 @@
   <div class="post-holder">
     <article class="post first">
       <header class="post-header">
-        <h2 class="post-title">Hello World</h2>
+        <h2 class="post-title">Quickstart</h2>
       </header>
       <section class="post-content">
-        <p><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+        <p><h4 id="1-_Setup_hexo_&amp;_create_a_blog">1. Setup hexo &amp; create a blog</h4>
+<figure class="highlight"><pre><div class="line">npm install -g hexo</div><div class="line"><span class="built_in">cd</span> ~/</div><div class="line">hexo init my-blog</div><div class="line"><span class="built_in">cd</span> my-blog</div><div class="line">npm install</div></pre></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<h4 id="2-_Install_the_admin_&amp;_start_things_up">2. Install the admin &amp; start things up</h4>
+<figure class="highlight"><pre><div class="line">npm <span class="operator"><span class="keyword">install</span> <span class="comment">--save hexo-admin-plugin</span></span></div><div class="line">hexo <span class="keyword">server</span> -d</div><div class="line"><span class="keyword">open</span> http://localhost:<span class="number">3000</span>/admin/</div></pre></figure>
 
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<h4 id="3-_Profit!">3. Profit!</h4>
+<p>The UI should be pretty discoverable — let me know if you can’t find something.</p>
+<h4 id="4-_Contribute!">4. Contribute!</h4>
+<ul>
+<li>let me know how it can be improved in the <a href="https://github.com/jaredly/hexo-admin/issues" target="_blank" rel="external">github issues</a></li>
+<li><a href="https://github.com/jaredly/hexo-admin" target="_blank" rel="external">fork</a> and pull-request</li>
+</ul>
+</p>
+      </section>
+    </article>
+    <div class="post-after"></div>
+  </div>
+  
+  <div class="post-holder">
+    <article class="post first">
+      <header class="post-header">
+        <h2 class="post-title">Credits</h2>
+      </header>
+      <section class="post-content">
+        <p><p>built with ❤ by <a href="http://jaredly.github.io" target="_blank" rel="external">Jared Forsyth</a> (<a href="http://twitter.com/jaredforsyth" target="_blank" rel="external">@jaredforsyth</a>) using <a href="http://facebook.github.io/react" target="_blank" rel="external">react</a>, <a href="http://browserify.org" target="_blank" rel="external">browserify</a>, and <a href="http://lesscss.org" target="_blank" rel="external">less</a>.</p>
 </p>
       </section>
     </article>

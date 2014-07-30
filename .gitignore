@@ -1,3 +1,5 @@
 node_modules
 www
 docs/demo/admin/bundle.js
+db.json
+public/
