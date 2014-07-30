@@ -2,3 +2,5 @@ node_modules
 www/bundle.css
 www/bundle.js
 docs/demo/admin/bundle.js
+public
+db.json
