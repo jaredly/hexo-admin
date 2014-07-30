@@ -1,4 +1,4 @@
-![logo](docs/logo.png)
+![logo](docs/logo.png?raw=true)
 
 An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
 
@@ -8,9 +8,9 @@ An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost]
 - [**Credits**](#credits)
 
 # Screenshots
-![posts view](docs/pasted-0.png)
+![posts view](docs/pasted-0.png?raw=true)
 
-![editor view](docs/pasted-1.png)
+![editor view](docs/pasted-1.png?raw=true)
 
 # Quickstart
 ### 1. Setup hexo & create a blog
