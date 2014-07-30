@@ -25,8 +25,8 @@
   <div class='fixed-nav'></div>
 
   <!-- Each post will be output using this markup -->
-  <% page.posts.each(function(post) { %>
-  <div class="post-holder">
+  <% page.posts.each(function(post, i) { %>
+  <div class="post-holder <%- i % 2 ? "post-holder--blue" : "" %>">
     <article class="post first">
       <header class="post-header">
         <h2 class="post-title"><%- post.title %></h2>
@@ -40,7 +40,7 @@
   <% }); %>
 
   <% if ((page.current == 1) && (config.disqus_shortname)) { %>
-  <div class="post-holder">
+  <div class="post-holder <%- page.posts.count() & 2 ? "post-holder--blue" : "" %>">
     <article class="post last">
       <header class="post-header">
         <h2 class="post-title">Comments</h2>
