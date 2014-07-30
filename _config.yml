@@ -37,7 +37,7 @@ post_asset_folder: false
 relative_link: false
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   tab_replace:
 
 # Category & Tag
