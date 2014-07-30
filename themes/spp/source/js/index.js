@@ -3,6 +3,7 @@
  */
 var $post = $('.post'),
 	$first = $('.post.first'),
+	$second = $($('.post')[1]),
 	$last = $('.post.last'),
 	$fnav = $('.fixed-nav'),
 	$postholder = $('.post-holder'),
@@ -41,6 +42,9 @@ var $post = $('.post'),
 
         $('.btn.first').click( function () {
         	srcTo ($first)
+        })
+        $('.btn.second').click( function () {
+        	srcTo ($second)
         })
         $('.btn.last').click( function () {
         	srcTo ($last)
