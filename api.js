@@ -1,6 +1,7 @@
 
 var path = require('path')
 var fs = require('fs')
+var update = require('./update')
 
 function addIsDraft(post) {
   post.isDraft = post.source.indexOf('_draft') === 0
@@ -104,7 +105,7 @@ module.exports = function (app) {
       return res.send(400, 'No post body given');
     }
 
-    hexo.post.update(id, req.body, function (err, post) {
+    update(id, req.body, function (err, post) {
       if (err) {
         return res.send(400, err);
       }
@@ -147,7 +148,7 @@ function remove(id, body, res) {
   var post = hexo.model('Post').get(id)
   if (!post) return res.send(404, "Post not found")
   var newSource = '_discarded/' + post.source.slice('_drafts/'.length)
-  hexo.post.update(id, {source: newSource}, function (err, post) {
+  update(id, {source: newSource}, function (err, post) {
     if (err) {
       return res.send(400, err);
     }
@@ -159,7 +160,7 @@ function publish(id, body, res) {
   var post = hexo.model('Post').get(id)
   if (!post) return res.send(404, "Post not found")
   var newSource = '_posts/' + post.source.slice('_drafts/'.length)
-  hexo.post.update(id, {source: newSource}, function (err, post) {
+  update(id, {source: newSource}, function (err, post) {
     if (err) {
       return res.send(400, err);
     }
@@ -171,7 +172,7 @@ function unpublish(id, body, res) {
   var post = hexo.model('Post').get(id)
   if (!post) return res.send(404, "Post not found")
   var newSource = '_drafts/' + post.source.slice('_posts/'.length)
-  hexo.post.update(id, {source: newSource}, function (err, post) {
+  update(id, {source: newSource}, function (err, post) {
     if (err) {
       return res.send(400, err);
     }
