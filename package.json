@@ -4,7 +4,8 @@
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "prepublish": "make build less"
   },
   "repository": {
     "type": "git",
@@ -24,13 +25,14 @@
   "homepage": "https://github.com/jaredly/hexo-admin-plugin",
   "dependencies": {
     "body-parser": "^1.5.0",
-    "react": "^0.11.1",
-    "react-router": "^0.4.1",
+    "moment": "^2.7.0",
     "serve-static": "^1.4.0"
   },
   "devDependencies": {
     "code-mirror": "^3.22.0",
     "es6-promise": "^1.0.0",
+    "react": "^0.11.1",
+    "react-router": "^0.4.1",
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
     "moment": "^2.7.0",
