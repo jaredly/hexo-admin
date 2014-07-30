@@ -12,7 +12,7 @@ npm install
 ```
 #### 2. Install the admin & start things up
 ```sh
-npm install --save hexo-admin-plugin
+npm install --save hexo-admin
 hexo server -d
 open http://localhost:4000/admin/
 ```
