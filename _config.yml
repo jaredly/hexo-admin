@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
+title: Hexo Admin Plugin
+subtitle: Edit your content in style
 description:
-author: John Doe
+author: Jared Forsyth
 email:
 language:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
+url: http://jaredly.github.io/hexo-admin
+root: /hexo-admin/
 permalink: :year/:month/:day/:title/
 tag_dir: tags
 archive_dir: archives
@@ -82,10 +82,6 @@ disqus_shortname:
 ## Themes: https://github.com/hexojs/hexo/wiki/Themes
 theme: spp
 exclude_generator:
-
-cover: //blog.ghost.org/content/images/2013/Nov/cover.png
-logo: //blog.ghost.org/content/images/2013/Nov/bloglogo_1-1.png
-bio: 'Partying it up here with hexo.'
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html

@@ -1,6 +1,6 @@
 # config
-cover: /images/screenshot.png
-logo: /images/logo.png
+cover: images/screenshot.png
+logo: images/logo.png
 bio: 'Partying it up here with hexo.'
 
 # Content

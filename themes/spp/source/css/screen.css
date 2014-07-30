@@ -200,6 +200,13 @@ a.btn:hover {
     background: #86c440;
 }
 
+a.btn-red {
+    background-color: rgb(255, 97, 97);
+}
+a.btn-red:hover {
+    background-color: rgb(255, 56, 56);
+}
+
 #header-arrow {
     font-size: 140px;
     margin: -10px auto;
