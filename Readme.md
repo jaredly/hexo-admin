@@ -3,9 +3,9 @@
 Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
 
 ### Contents
-- **Screenshots**
-- **Quickstart**
-- **Credits**
+- [**Screenshots**](#screenshots)
+- [**Quickstart**](#quickstart)
+- [**Credits**](#credits)
 
 # Screenshots
 ![posts view](docs/pasted-0.png)
