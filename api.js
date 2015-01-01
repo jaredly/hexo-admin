@@ -1,4 +1,3 @@
-
 var path = require('path')
 var fs = require('fs')
 var update = require('./update')
@@ -46,8 +45,76 @@ module.exports = function (app) {
 
   use('tags-and-categories', function (req, res) {
     res.done(tagsAndCategories())
-  })
+  });
+    
+  use('pages/list', function (req, res) {
+   var page = hexo.model('Page')
+   res.done(page.toArray().map(addIsDraft));
+  });
 
+  use('pages/new', function (req, res, next) {
+    if (req.method !== 'Page') return next()
+    if (!req.body) {
+      return res.send(400, 'No page body given');
+    }
+    if (!req.body.title) {
+      return res.send(400, 'No title given');
+    }
+
+    hexo.page.create({title: req.body.title, layout: 'draft', date: new Date()}, function (err, filename, content) {
+      if (err) {
+        console.error(err, err.stack)
+        return res.send(500, 'Failed to create page')
+      }
+
+      var source = filename.slice(hexo.source_dir.length)
+      hexo.source.process([source], function () {
+        var page = hexo.model('Page').findOne({source: source})
+        res.done(addIsDraft(page));
+      });
+    });
+  });
+
+  use('pages/', function (req, res, next) {
+    var url = req.url
+    if (url[url.length - 1] === '/') {
+      url = url.slice(0, -1)
+    }
+    var parts = url.split('/')
+    var last = parts[parts.length-1]
+    if (last === 'publish') {
+      return publish(parts[parts.length-2], req.body, res)
+    }
+    if (last === 'unpublish') {
+      return unpublish(parts[parts.length-2], req.body, res)
+    }
+    if (last === 'remove') {
+      return remove(parts[parts.length-2], req.body, res)
+    }
+
+    var id = last
+    if (id === 'pages' || !id) return next()
+    if (req.method === 'GET') {
+      var page = hexo.model('Page').get(id)
+      if (!page) return next()
+      return res.done(addIsDraft(page))
+    }
+
+    if (!req.body) {
+      return res.send(400, 'No page body given');
+    }
+
+    update(id, req.body, function (err, page) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.done({
+        page: addIsDraft(page),
+        tagsAndCategories: tagsAndCategories()
+      })
+    });
+  });
+    
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
    res.done(post.toArray().map(addIsDraft));
@@ -141,7 +208,8 @@ module.exports = function (app) {
         res.done('/' + filename)
       });
     })
-  })
+  });
+
 }
 
 function remove(id, body, res) {

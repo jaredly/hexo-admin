@@ -39,6 +39,12 @@ module.exports = function (baseUrl) {
       return get('/posts/' + id)
     },
     newPost: (title) => post('/posts/new', {title: title}),
+    pages: () => get('/pages/list'),
+    page: (id, data) => {
+      if (data) return post('/pages/' + id, data)
+      return get('/pages/' + id)
+    },
+    newPage: (title) => post('/pages/new', {title: title}),
     uploadImage: (data) => post('/images/upload', {data: data}),
     remove: (id) => post('/posts/' + id + '/remove'),
     publish: (id) => post('/posts/' + id + '/publish'),

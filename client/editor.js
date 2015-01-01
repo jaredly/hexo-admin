@@ -42,6 +42,7 @@ var Editor = React.createClass({
           onChange={this.handleChangeTitle}/>
         <ConfigDropper
           post={this.props.post}
+          page={this.props.page}
           tagsAndCategories={this.props.tagsAndCategories}
           onChange={this.props.onChange}/>
         {this.props.isDraft ?
