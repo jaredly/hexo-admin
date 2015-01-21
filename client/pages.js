@@ -48,7 +48,7 @@ var Pages = React.createClass({
     var current = this.state.pages[this.state.selected] || {}
     return <div className="posts">
       <ul className='posts_list'>
-        <Newpage onNew={this._onNew}/>
+        {/** not working atm <Newpage onNew={this._onNew}/> **/}
         {
           this.state.pages.map((page, i) => 
             <li key={page._id} className={cx({

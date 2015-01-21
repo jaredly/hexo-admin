@@ -4,3 +4,4 @@ www/bundle.js
 docs/demo/admin/bundle.js
 public
 db.json
+*.swp

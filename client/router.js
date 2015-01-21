@@ -11,8 +11,8 @@ module.exports = () => {
   return <Route handler={App}>
     <Route name="posts" handler={Posts} path="/"/>
     <Route name="post" handler={Post} path="/posts/:postId"/>
-    <Route name="pages" handler={Pages} path="/pages"/>
     <Route name="page" handler={Page} path="/pages/:pageId"/>
+    <Route name="pages" handler={Pages} path="/pages"/>
     <Route name="about" handler={About}/>
   </Route>
 }

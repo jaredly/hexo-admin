@@ -10,12 +10,13 @@ var fs = require('fs'),
  * Updates a post.
  *
  * @method update
+ * @param {str} model the type of model being updated
  * @param {Object} post a post model
  * @param {Object} update attributes to update
  * @param {Function} callback
  */
-module.exports = function (id, update, callback) {
-  var post = hexo.model('Post').get(id)
+module.exports = function (model, id, update, callback) {
+  var post = hexo.model(model).get(id)
   if (!post) {
     return callback('Post not found');
   }
@@ -61,7 +62,7 @@ module.exports = function (id, update, callback) {
       }
       hexo.source.process([post.source], function () {
         console.log(post.full_source, post.source)
-        callback(null, hexo.model('Post').get(id));
+        callback(null, hexo.model(model).get(id));
       });
     });
   });

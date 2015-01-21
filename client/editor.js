@@ -10,6 +10,7 @@ var ConfigDropper = require('./config-dropper')
 
 var Editor = React.createClass({
   propTypes: {
+    post: PT.object,
     raw: PT.string,
     onChangeTitle: PT.func,
     title: PT.string,
@@ -40,18 +41,17 @@ var Editor = React.createClass({
           className='editor_title'
           value={this.props.title}
           onChange={this.handleChangeTitle}/>
-        <ConfigDropper
+        {!this.props.isPage && <ConfigDropper
           post={this.props.post}
-          page={this.props.page}
           tagsAndCategories={this.props.tagsAndCategories}
-          onChange={this.props.onChange}/>
-        {this.props.isDraft ?
+          onChange={this.props.onChange}/>}
+        {!this.props.isPage && (this.props.isDraft ?
           <button className="editor_publish" onClick={this.props.onPublish}>
             Publish
           </button> :
           <button className="editor_unpublish" onClick={this.props.onUnpublish}>
             Unpublish
-          </button>}
+          </button>)}
       </div>
       <div className="editor_main">
         <div className="editor_edit">

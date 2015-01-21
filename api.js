@@ -1,6 +1,8 @@
 var path = require('path')
 var fs = require('fs')
-var update = require('./update')
+var updateAny = require('./update')
+  , updatePage = updateAny.bind(null, 'Page')
+  , update = updateAny.bind(null, 'Post')
 
 function addIsDraft(post) {
   post.isDraft = post.source.indexOf('_draft') === 0
@@ -46,14 +48,15 @@ module.exports = function (app) {
   use('tags-and-categories', function (req, res) {
     res.done(tagsAndCategories())
   });
-    
+
   use('pages/list', function (req, res) {
    var page = hexo.model('Page')
    res.done(page.toArray().map(addIsDraft));
   });
 
+  /** NOT WORKING. Is there a fn in hexo for creating a page?
   use('pages/new', function (req, res, next) {
-    if (req.method !== 'Page') return next()
+    if (req.method !== 'POST') return next()
     if (!req.body) {
       return res.send(400, 'No page body given');
     }
@@ -61,7 +64,7 @@ module.exports = function (app) {
       return res.send(400, 'No title given');
     }
 
-    hexo.page.create({title: req.body.title, layout: 'draft', date: new Date()}, function (err, filename, content) {
+    hexo.post.create({title: req.body.title, layout: 'page', date: new Date()}, function (err, filename, content) {
       if (err) {
         console.error(err, err.stack)
         return res.send(500, 'Failed to create page')
@@ -74,20 +77,17 @@ module.exports = function (app) {
       });
     });
   });
+  **/
 
   use('pages/', function (req, res, next) {
     var url = req.url
+    console.log('in pages', url)
     if (url[url.length - 1] === '/') {
       url = url.slice(0, -1)
     }
     var parts = url.split('/')
     var last = parts[parts.length-1]
-    if (last === 'publish') {
-      return publish(parts[parts.length-2], req.body, res)
-    }
-    if (last === 'unpublish') {
-      return unpublish(parts[parts.length-2], req.body, res)
-    }
+    // not currently used?
     if (last === 'remove') {
       return remove(parts[parts.length-2], req.body, res)
     }
@@ -104,7 +104,7 @@ module.exports = function (app) {
       return res.send(400, 'No page body given');
     }
 
-    update(id, req.body, function (err, page) {
+    updatePage(id, req.body, function (err, page) {
       if (err) {
         return res.send(400, err);
       }
@@ -114,7 +114,7 @@ module.exports = function (app) {
       })
     });
   });
-    
+
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
    res.done(post.toArray().map(addIsDraft));

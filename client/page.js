@@ -97,7 +97,8 @@ var Page = React.createClass({
     }
     var permaLink = '/' + page.path
     return Editor({
-      page: this.state.page,
+      isPage: true,
+      post: this.state.page,
       raw: this.state.initialRaw,
       wordCount: this.state.raw ? this.state.raw.split(' ').length : 0,
       isDraft: page.isDraft,
