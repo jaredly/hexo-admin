@@ -1,47 +1,52 @@
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var filter = hexo.extend.filter;
-var url = require("url");
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        console.log("check user", arguments);
-        done();
-    }
-));
+var auth= require('connect-auth');
+var strategy = require("./auth");
 
-var path = require('path')
-
+var path = require('path');
 var api = require('./api');
 
 filter.register('server_middleware', function (app) {
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(cookieParser());
+    app.use(session({
+        secret: "ewrwer"
+    }));
+    app.use(auth( strategy() ));
 
-    app.use(passport.initialize());
-    app.use(passport.session());
+    app.use('/admin', function (req, res) {
+        req.authenticate(['someName'], function(error, authenticated) {
 
-    app.use(function (req, res, next) {
+            serveStatic(path.join(__dirname, 'www'))(req, res);
 
-        var paths = url.parse(req.url).pathname.split("/");
-        if (paths[1] === 'admin' && req.method === 'GET') {
-            if (req.isAuthenticated()) { return next(); }
+        });
+    });
 
-            res.end('<html><form action="/admin/" method="post"><input name="login"/><input name="password"/></form></html>');
+    app.use('/login/', function (req, res) {
+
+        if (req.method === 'POST') {
+
+            req.authenticate(['someName'], function(error, done) {
+                if (done) {
+                    res.writeHead(302, { 'Location':  "/admin/" });
+                    res.end();
+                }
+            });
 
         } else {
-            next();
+
+            serveStatic(path.join(__dirname, 'auth'))(req, res);
+
         }
 
     });
 
-    app.post('/admin/',
-        passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-        function(req, res) {
-            res.redirect('/admin/');
-        });
 
-    app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
+    app.use('/admin/api/', bodyParser.json({limit: '50mb'}));
     api(app);
-    app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
+    //app.use('/admin/', );
 });
 
