@@ -3,7 +3,7 @@ var md5 = require("MD5");
 module.exports= function() {
     this.name = "someName";
 
-    function failed_validation( request, response, uri ) {
+    function failed_validation( request, response ) {
         var redirectUrl= "/login/";
         response.writeHead(303, { 'Location':  redirectUrl });
         response.end();
@@ -14,7 +14,7 @@ module.exports= function() {
             executionScope.success( {name:request.body.user}, callback )
         }
         else {
-            executionScope.fail( callback )
+            failed_validation(request, response);
         }
     }
 
