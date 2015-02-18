@@ -13,14 +13,14 @@ filter.register('server_middleware', function (app) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
     app.use(session({
-        secret: "ewrwer"
+        secret: "Who kills Lora Palmer"
     }));
     app.use(auth( strategy() ));
 
-    app.use('/admin', function (req, res) {
-        req.authenticate(['someName'], function(error, authenticated) {
+    app.use('/admin', function (req, res, next) {
+        req.authenticate(['someName'], function() {
 
-            serveStatic(path.join(__dirname, 'www'))(req, res);
+            serveStatic(path.join(__dirname, 'www'))(req, res, next);
 
         });
     });
@@ -44,9 +44,7 @@ filter.register('server_middleware', function (app) {
 
     });
 
-
     app.use('/admin/api/', bodyParser.json({limit: '50mb'}));
     api(app);
-    //app.use('/admin/', );
 });
 
