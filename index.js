@@ -17,15 +17,7 @@ filter.register('server_middleware', function (app) {
     }));
     app.use(auth( strategy() ));
 
-    app.use('/admin', function (req, res, next) {
-        req.authenticate(['someName'], function() {
-
-            serveStatic(path.join(__dirname, 'www'))(req, res, next);
-
-        });
-    });
-
-    app.use('/login/', function (req, res) {
+    app.use('/admin/login', function (req, res) {
 
         if (req.method === 'POST') {
 
@@ -42,6 +34,18 @@ filter.register('server_middleware', function (app) {
 
         }
 
+    });
+    
+    app.use('/admin', function (req, res, next) {
+        if (hexo.config.login && hexo.config.password) {
+            req.authenticate(['someName'], function() {
+
+                serveStatic(path.join(__dirname, 'www'))(req, res, next);
+
+            });
+        } else {
+            serveStatic(path.join(__dirname, 'www'))(req, res, next);            
+        }
     });
 
     app.use('/admin/api/', bodyParser.json({limit: '50mb'}));
