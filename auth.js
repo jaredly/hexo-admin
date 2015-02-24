@@ -4,7 +4,7 @@ module.exports= function() {
     this.name = "someName";
 
     function failed_validation( request, response ) {
-        var redirectUrl= "/login/";
+        var redirectUrl= "/admin/login";
         response.writeHead(303, { 'Location':  redirectUrl });
         response.end();
     }
