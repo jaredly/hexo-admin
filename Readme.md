@@ -30,11 +30,34 @@ open http://localhost:4000/admin/
 ### 3. Profit!
 The UI should be pretty discoverable -- let me know if you can't find something.
 
-### 4. Contribute!
-- let me know how it can be improved in the [github issues](https://github.com/jaredly/hexo-admin/issues)
+### 4. Password protection
+If you're using Hexo admin on your live server, you want some password
+protection. To enable this, you just add a few config variables to your hexo
+`_config.yml`:
+
+```
+admin:
+  username: myfavoritename
+  password_hash: be121740bf988b2225a313fa1f107ca1
+  secret: a secret something
+```
+
+The password_hash is the md5 hash of your password. You can use [this
+site](http://www.md5.cz/) to come up with that, or whatever you want. The
+`secret` is used to make the cookies secure, so it's a good idea to have it be
+long and complicated.
+
+Once that's in place, start up your hexo server and going to `/admin/` will
+require you to enter your password.
+
+### 5. Contribute!
+- let me know how it can be improved in the [github
+  issues](https://github.com/jaredly/hexo-admin/issues)
 - [fork](https://github.com/jaredly/hexo-admin) and pull-request
 
 # Credits
 
-built with ❤ by [Jared Forsyth](http://jaredly.github.io) ([@jaredforsyth](http://twitter.com/jaredforsyth)) using [react](http://facebook.github.io/react), [browserify](
+built with ❤ by [Jared Forsyth](http://jaredly.github.io)
+([@jaredforsyth](http://twitter.com/jaredforsyth)) using
+[react](http://facebook.github.io/react), [browserify](
 http://browserify.org), and [less](http://lesscss.org).
