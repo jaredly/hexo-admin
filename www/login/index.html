@@ -12,14 +12,14 @@
     <form class="col s12" method="post">
         <div class="row">
             <div class="input-field col s6" style="float: none; margin:auto">
-                <input id="first_name" name="login" type="text" class="validate">
-                <label for="first_name">Login</label>
+                <input id="username" name="username" type="text" class="validate" autofocus>
+                <label for="username">Username</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6" style="float: none; margin:auto">
-                <input id="last_name" name="password" type="password" class="validate">
-                <label for="last_name">Password</label>
+                <input id="password" name="password" type="password" class="validate">
+                <label for="password">Password</label>
             </div>
         </div>
         <div class="row">
@@ -35,9 +35,6 @@
     </div>
 </body>
 <script>
-   $(document).ready(function () {
-       $("#first_name").focus();
-   });
 
 </script>
 </html>
