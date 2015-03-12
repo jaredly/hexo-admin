@@ -52,7 +52,12 @@ var CodeMirror = React.createClass({
   _onPaste: function (event) {
     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
     if (!items.length) return
-    var blob = items[0].getAsFile();
+    var blob;
+    for (var i = items.length - 1; i >= 0; i--) {
+      if (items[i].kind == 'file'){
+        blob = items[0].getAsFile();
+      }
+    };
     if (!blob) return
     var reader = new FileReader();
     reader.onload = (event) => {
