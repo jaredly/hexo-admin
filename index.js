@@ -1,12 +1,8 @@
-var serveStatic = require('serve-static');
-var bodyParser = require('body-parser');
-var filter = hexo.extend.filter;
-
-var path = require('path')
-
-var api = require('./api');
-
-var passwordProtected = hexo.config.admin && hexo.config.admin.username;
+var serveStatic = require('serve-static'),
+	bodyParser = require('body-parser'),
+	path = require('path'),
+	api = require('./api'),
+	passwordProtected = passwordProtected = hexo.config.admin && hexo.config.admin.username;
 
 // verify that correct config options are set.
 if (passwordProtected) {
@@ -20,16 +16,15 @@ if (passwordProtected) {
     }
 }
 
-filter.register('server_middleware', function (app) {
+hexo.extend.filter.register('server_middleware', function (app) {
 
-    if (passwordProtected) {
-        // setup authentication, login page, etc.
-        require('./auth')(app)
-    }
+	if (passwordProtected) {
+			// setup authentication, login page, etc.
+			require('./auth')(app, hexo)
+	}
 
-    app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
-    app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
-    // setup the json api endpoints
-    api(app);
+	app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
+	app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
+	// setup the json api endpoints
+	api(app, hexo);
 });
-

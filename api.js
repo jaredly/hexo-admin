@@ -4,28 +4,67 @@ var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
 
-function addIsDraft(post) {
-  post.isDraft = post.source.indexOf('_draft') === 0
-  post.isDiscarded = post.source.indexOf('_discarded') === 0
-  return post
-}
+module.exports = function (app, hexo) {
 
-function tagsAndCategories() {
-  var cats = {}
-    , tags = {}
-  hexo.model('Category').forEach(function (cat) {
-    cats[cat._id] = cat.name
-  })
-  hexo.model('Tag').forEach(function (tag) {
-    tags[tag._id] = tag.name
-  })
-  return {
-    categories: cats,
-    tags: tags
+  function addIsDraft(post) {
+    post.isDraft = post.source.indexOf('_draft') === 0
+    post.isDiscarded = post.source.indexOf('_discarded') === 0
+    return post
   }
-}
 
-module.exports = function (app) {
+  function tagsAndCategories() {
+    var cats = {}
+      , tags = {}
+    hexo.model('Category').forEach(function (cat) {
+      cats[cat._id] = cat.name
+    })
+    hexo.model('Tag').forEach(function (tag) {
+      tags[tag._id] = tag.name
+    })
+    return {
+      categories: cats,
+      tags: tags
+    }
+  }
+  
+  function remove(id, body, res) {
+    var post = hexo.model('Post').get(id)
+    if (!post) return res.send(404, "Post not found")
+    var newSource = '_discarded/' + post.source.slice('_drafts/'.length)
+    update(id, {source: newSource}, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.done(addIsDraft(post))
+    })
+  }
+
+  function publish(id, body, res) {
+    var post = hexo.model('Post').get(id)
+    if (!post) return res.send(404, "Post not found")
+    var newSource = '_posts/' + post.source.slice('_drafts/'.length)
+    update(id, {source: newSource}, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.done(addIsDraft(post))
+    })
+  }
+
+  function unpublish(id, body, res) {
+    var post = hexo.model('Post').get(id)
+    if (!post) return res.send(404, "Post not found")
+    var newSource = '_drafts/' + post.source.slice('_posts/'.length)
+    update(id, {source: newSource}, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      res.done(addIsDraft(post))
+    })
+  }
+
+
+
   var use = function (path, fn) {
     app.use('/admin/api/' + path, function (req, res) {
       var done = function (val) {
@@ -211,40 +250,3 @@ module.exports = function (app) {
   });
 
 }
-
-function remove(id, body, res) {
-  var post = hexo.model('Post').get(id)
-  if (!post) return res.send(404, "Post not found")
-  var newSource = '_discarded/' + post.source.slice('_drafts/'.length)
-  update(id, {source: newSource}, function (err, post) {
-    if (err) {
-      return res.send(400, err);
-    }
-    res.done(addIsDraft(post))
-  })
-}
-
-function publish(id, body, res) {
-  var post = hexo.model('Post').get(id)
-  if (!post) return res.send(404, "Post not found")
-  var newSource = '_posts/' + post.source.slice('_drafts/'.length)
-  update(id, {source: newSource}, function (err, post) {
-    if (err) {
-      return res.send(400, err);
-    }
-    res.done(addIsDraft(post))
-  })
-}
-
-function unpublish(id, body, res) {
-  var post = hexo.model('Post').get(id)
-  if (!post) return res.send(404, "Post not found")
-  var newSource = '_drafts/' + post.source.slice('_posts/'.length)
-  update(id, {source: newSource}, function (err, post) {
-    if (err) {
-      return res.send(400, err);
-    }
-    res.done(addIsDraft(post))
-  })
-}
-

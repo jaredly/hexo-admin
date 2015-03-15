@@ -1,6 +1,6 @@
 var md5 = require("MD5");
 
-module.exports = function () {
+module.exports = function (hexo) {
     this.name = "adminAuth";
 
     function failed_validation( request, response ) {
