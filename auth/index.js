@@ -11,7 +11,6 @@ var cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
   , auth = require('connect-auth')
   , path = require('path')
-
   , authStrategy = require('./strategy')
 
 module.exports = function (app, hexo) {

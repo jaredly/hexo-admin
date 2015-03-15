@@ -2,7 +2,7 @@ var serveStatic = require('serve-static'),
 	bodyParser = require('body-parser'),
 	path = require('path'),
 	api = require('./api'),
-	passwordProtected = passwordProtected = hexo.config.admin && hexo.config.admin.username;
+	passwordProtected = hexo.config.admin && hexo.config.admin.username;
 
 // verify that correct config options are set.
 if (passwordProtected) {

@@ -26,7 +26,7 @@ module.exports = function (app, hexo) {
       tags: tags
     }
   }
-  
+
   function remove(id, body, res) {
     var post = hexo.model('Post').get(id)
     if (!post) return res.send(404, "Post not found")
@@ -36,7 +36,7 @@ module.exports = function (app, hexo) {
         return res.send(400, err);
       }
       res.done(addIsDraft(post))
-    })
+    }, hexo)
   }
 
   function publish(id, body, res) {
@@ -48,7 +48,7 @@ module.exports = function (app, hexo) {
         return res.send(400, err);
       }
       res.done(addIsDraft(post))
-    })
+    }, hexo)
   }
 
   function unpublish(id, body, res) {
@@ -60,10 +60,8 @@ module.exports = function (app, hexo) {
         return res.send(400, err);
       }
       res.done(addIsDraft(post))
-    })
+    }, hexo)
   }
-
-
 
   var use = function (path, fn) {
     app.use('/admin/api/' + path, function (req, res) {
@@ -151,7 +149,7 @@ module.exports = function (app, hexo) {
         page: addIsDraft(page),
         tagsAndCategories: tagsAndCategories()
       })
-    });
+    }, hexo);
   });
 
   use('posts/list', function (req, res) {
@@ -219,7 +217,7 @@ module.exports = function (app, hexo) {
         post: addIsDraft(post),
         tagsAndCategories: tagsAndCategories()
       })
-    });
+    }, hexo);
   });
 
   use('images/upload', function (req, res, next) {
