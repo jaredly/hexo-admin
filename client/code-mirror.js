@@ -56,6 +56,7 @@ var CodeMirror = React.createClass({
     for (var i = items.length - 1; i >= 0; i--) {
       if (items[i].kind == 'file'){
         blob = items[i].getAsFile();
+        break;
       }
     };
     if (!blob) return
