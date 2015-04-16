@@ -2,6 +2,10 @@
 
 An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
 
+
+## *Important:* 
+Currently, [hexo-admin](https://github.com/jaredly/hexo-admin) supports only version 2.x of [Hexo](http://hexo.io)
+
 ### Contents
 - [**Screenshots**](#screenshots)
 - [**Quickstart**](#quickstart)
@@ -15,7 +19,7 @@ An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost]
 # Quickstart
 ### 1. Setup hexo & create a blog
 ```sh
-npm install -g hexo
+npm install -g hexo@2.x
 cd ~/
 hexo init my-blog
 cd my-blog
