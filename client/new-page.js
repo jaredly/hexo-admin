@@ -10,7 +10,7 @@ var NewPage = React.createClass({
 
   getInitialState: function () {
     return {
-      showing: false,
+      showing: true,
       loading: true,
       text: 'Untitled'
     }

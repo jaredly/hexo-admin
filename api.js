@@ -91,7 +91,6 @@ module.exports = function (app, hexo) {
    res.done(page.toArray().map(addIsDraft));
   });
 
-  /** NOT WORKING. Is there a fn in hexo for creating a page?
   use('pages/new', function (req, res, next) {
     if (req.method !== 'POST') return next()
     if (!req.body) {
@@ -101,20 +100,20 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    hexo.post.create({title: req.body.title, layout: 'page', date: new Date()}, function (err, filename, content) {
-      if (err) {
-        console.error(err, err.stack)
-        return res.send(500, 'Failed to create page')
-      }
-
-      var source = filename.slice(hexo.source_dir.length)
-      hexo.source.process([source], function () {
+    hexo.post.create({title: req.body.title, layout: 'page', date: new Date()})
+    .error(function(err) {
+      console.error(err, err.stack)
+      return res.send(500, 'Failed to create page')
+    })
+    .then(function (err, file) {
+      var source = file.path.slice(hexo.source_dir.length)
+      hexo.source.process([source]).then(function () {
         var page = hexo.model('Page').findOne({source: source})
         res.done(addIsDraft(page));
       });
     });
   });
-  **/
+
 
   use('pages/', function (req, res, next) {
     var url = req.url
@@ -166,15 +165,16 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    hexo.post.create({title: req.body.title, layout: 'draft', date: new Date()}, function (err, filename, content) {
-      if (err) {
-        console.error(err, err.stack)
-        return res.send(500, 'Failed to create post')
-      }
-
-      var source = filename.slice(hexo.source_dir.length)
-      hexo.source.process([source], function () {
+    hexo.post.create({title: req.body.title, layout: 'draft', date: new Date()})
+    .error(function(err) {
+      console.error(err, err.stack)
+      return res.send(500, 'Failed to create post')
+    })
+    .then(function (file) {
+      var source = file.path.slice(hexo.source_dir.length)
+      hexo.source.process([source]).then(function () {
         var post = hexo.model('Post').findOne({source: source})
+        console.warn(post)
         res.done(addIsDraft(post));
       });
     });
@@ -241,7 +241,7 @@ module.exports = function (app, hexo) {
       if (err) {
         console.log(err)
       }
-      hexo.source.process([filename], function () {
+      hexo.source.process([filename]).then(function () {
         res.done('/' + filename)
       });
     })
