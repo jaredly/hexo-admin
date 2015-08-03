@@ -174,7 +174,6 @@ module.exports = function (app, hexo) {
       var source = file.path.slice(hexo.source_dir.length)
       hexo.source.process([source]).then(function () {
         var post = hexo.model('Post').findOne({source: source})
-        console.warn(post)
         res.done(addIsDraft(post));
       });
     });

@@ -15,7 +15,7 @@ var api = require('./api');
 var Posts = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
-      posts: api.posts().then((posts) => 
+      posts: api.posts().then((posts) =>
         _.sortBy(posts, ['isDraft', 'date']).reverse()
       )
     }
@@ -50,7 +50,7 @@ var Posts = React.createClass({
       <ul className='posts_list'>
         <NewPost onNew={this._onNew}/>
         {
-          this.state.posts.map((post, i) => 
+          this.state.posts.map((post, i) =>
             <li key={post._id} className={cx({
                 "posts_post": true,
                 "posts_post--draft": post.isDraft,

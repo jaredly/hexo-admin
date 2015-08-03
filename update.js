@@ -1,10 +1,11 @@
 var fs = require('fs'),
   path = require('path'),
   moment = require('moment'),
-  util = require('hexo-util'),
+  hfm = require('hexo-front-matter'),
   file = require('hexo-fs'),
-  yfm = util.yfm,
-  escape = util.escape;
+  extend = require('extend');
+//  yfm = util.yfm,
+//  escape = util.escape;
 
 /**
  * Updates a post.
@@ -21,19 +22,20 @@ module.exports = function (model, id, update, callback, hexo) {
     return callback('Post not found');
   }
   var config = hexo.config,
-    slug = post.slug = escape.filename(post.slug || post.title, config.filename_case),
+    slug = post.slug = hfm.escape(post.slug || post.title, config.filename_case),
     layout = post.layout = (post.layout || config.default_layout).toLowerCase(),
     date = post.date = post.date ? moment(post.date) : moment();
 
-  var split = yfm.split(post.raw),
+  var split = hfm.split(post.raw),
     frontMatter = split.data
-    compiled = yfm([frontMatter, '---', split.content].join('\n'));
+    compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
 
   var preservedKeys = ['title', 'date', 'tags', 'categories', '_content'];
-  var prev_full = post.full_source;
-
+  var prev_full = post.full_source,
+    full_source = prev_full;
   if (update.source && update.source !== post.source) {
-    update.full_source = hexo.source_dir + update.source
+    //TODO post.full_source only readable
+    full_source = hexo.source_dir + update.source
   }
 
   preservedKeys.forEach(function (attr) {
@@ -45,23 +47,25 @@ module.exports = function (model, id, update, callback, hexo) {
 
   delete update._content
 
-  var raw = yfm.stringify(compiled);
+  var raw = hfm.stringify(compiled);
   update.raw = raw
   update.updated = moment()
-  for (var name in update) {
-    post[name] = update[name];
-  }
-  console.log(prev_full, post.source)
+
+  //for (var name in update) {
+  //  post[name] = update[name];
+  //}
+  extend(post, update)
+
   post.save(function () {
-    console.log(post.full_source, post.source)
-    file.writeFile(post.full_source, raw, function(err){
+  //  console.log(post.full_source, post.source)
+    file.writeFile(full_source, raw, function(err){
       if (err) return callback(err);
 
-      if (post.full_source !== prev_full) {
+      if (full_source !== prev_full) {
         fs.unlinkSync(prev_full)
       }
-      hexo.source.process([post.source], function () {
-        console.log(post.full_source, post.source)
+      hexo.source.process([post.source]).then(function () {
+  //      console.log(post.full_source, post.source)
         callback(null, hexo.model(model).get(id));
       });
     });
