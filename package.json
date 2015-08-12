@@ -1,6 +1,6 @@
 {
   "name": "hexo-admin",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
