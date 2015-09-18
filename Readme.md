@@ -5,7 +5,7 @@ An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost]
 ## Hexo Version
 
 For 2.x, use version `0.3.0` of this plugin. Version `1.x` and beyond only
-support Hexo v2.x.
+support Hexo v3.x.
 
 ### Contents
 - [**Screenshots**](#screenshots)
