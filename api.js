@@ -71,7 +71,16 @@ module.exports = function (app, hexo) {
           return res.end('');
         }
         res.setHeader('Content-type', 'application/json')
-        res.end(JSON.stringify(val))
+        res.end(JSON.stringify(val, function(k, v) {
+          // tags and cats have posts reference resulting in circular json..
+          if ( k == 'tags' || k == 'categories' ) {
+            // convert object to simple array
+            return v.toArray ? v.toArray().map(function(obj) {
+              return obj.name
+            }) : v
+          }
+          return v;
+        }))
       }
       res.done = done
       res.send = function (num, data) {

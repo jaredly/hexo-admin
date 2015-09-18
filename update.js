@@ -34,7 +34,7 @@ module.exports = function (model, id, update, callback, hexo) {
   var prev_full = post.full_source,
     full_source = prev_full;
   if (update.source && update.source !== post.source) {
-    //TODO post.full_source only readable
+    // post.full_source only readable ~ see: /hexo/lib/models/post.js
     full_source = hexo.source_dir + update.source
   }
 
@@ -51,9 +51,16 @@ module.exports = function (model, id, update, callback, hexo) {
   update.raw = raw
   update.updated = moment()
 
-  //for (var name in update) {
-  //  post[name] = update[name];
-  //}
+  // tags and cats are only getters now. ~ see: /hexo/lib/models/post.js
+  if ( typeof update.tags !== 'undefined' ) {
+    post.setTags(update.tags)
+    delete update.tags
+  }
+  if ( typeof update.categories !== 'undefined' ) {
+    post.setCategories(update.categories)
+    delete update.categories
+  }
+
   extend(post, update)
 
   post.save(function () {
