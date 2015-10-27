@@ -2,7 +2,8 @@ var serveStatic = require('serve-static'),
 	bodyParser = require('body-parser'),
 	path = require('path'),
 	api = require('./api'),
-	passwordProtected = hexo.config.admin && hexo.config.admin.username;
+	passwordProtected = hexo.config.admin && hexo.config.admin.username,
+	cs = require('child_process');
 
 // verify that correct config options are set.
 if (passwordProtected) {
@@ -22,7 +23,14 @@ hexo.extend.filter.register('server_middleware', function (app) {
 			// setup authentication, login page, etc.
 			require('./auth')(app, hexo)
 	}
-
+	app.use('/admin/deploy', bodyParser.json())
+	app.use('/admin/deploy', function(req, res, next){
+	    cs.exec(hexo.config.admin.path+' "'+req.body.commit+'"', function(err, stdout, stderr){
+		    res.writeHead(200, {"Content-Type": "application/json"});
+			res.write(JSON.stringify({stdout: stdout, stderr: stderr}));
+		    next();
+		});
+	});
 	app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
 	app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
 	// setup the json api endpoints
