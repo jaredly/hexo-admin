@@ -5,7 +5,7 @@ var Posts = require('./posts')
 var Page = require('./page')
 var Pages = require('./pages')
 var About = require('./about')
-var Deploy = require('/deploy')
+var Deploy = require('./deploy')
 var Route = require('react-router').Route
 
 module.exports = () => {
