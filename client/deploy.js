@@ -6,4 +6,4 @@ var Deploy = React.createClass({
   }
 })
 
-module.exports = About
+module.exports = Deploy
