@@ -5,6 +5,7 @@ var Posts = require('./posts')
 var Page = require('./page')
 var Pages = require('./pages')
 var About = require('./about')
+var Deploy = require('./deploy')
 var Route = require('react-router').Route
 
 module.exports = () => {
@@ -14,6 +15,7 @@ module.exports = () => {
     <Route name="page" handler={Page} path="/pages/:pageId"/>
     <Route name="pages" handler={Pages} path="/pages"/>
     <Route name="about" handler={About}/>
+    <Route name="deploy" handler={Deploy}/>
   </Route>
 }
 

@@ -18,13 +18,12 @@ if (passwordProtected) {
 
 hexo.extend.filter.register('server_middleware', function (app) {
 
-	if (passwordProtected) {
-			// setup authentication, login page, etc.
-			require('./auth')(app, hexo)
-	}
-
-	app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
-	app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
-	// setup the json api endpoints
-	api(app, hexo);
+  if (passwordProtected) {
+    // setup authentication, login page, etc.
+    require('./auth')(app, hexo)
+  }
+  app.use('/admin/', serveStatic(path.join(__dirname, 'www')));
+  app.use('/admin/api/', bodyParser.json({limit: '50mb'}))
+  // setup the json api endpoints
+  api(app, hexo);
 });
