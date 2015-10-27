@@ -1,61 +1,80 @@
 var React = require('react')
+var api = require('./api')
+
 var divStyle = {
-    whiteSpace: 'nowrap'
-  };
+  whiteSpace: 'nowrap'
+};
+
 var Deploy = React.createClass({
   getInitialState: function() {
     return {
       stdout: '',
-      stderr: ''
+      stderr: '',
+      error: null,
+      message: '',
+      status: 'initial',
     };
   },
+
   handleSubmit: function(e) {
-    console.log(this.refs.commit.state.value);
     e.preventDefault();
-	this.setState({
-      stdout: 'loading',
-      stderr: 'loading'
+    var message = this.state.message;
+    this.setState({
+      message: '',
+      error: null,
+      stdout: '',
+      stderr: '',
+      status: 'loading',
     });
-    $.post("/admin/deploy", {commit:this.refs.commit.state.value}, function(result) {
-	  if (this.isMounted()) {
-	    var lines = result.stdout.trim();
-	    var br = lines.split('\n').map(function(line) {
-            if(line==="")
-			    return "None";
-		    else
-			    return (<span>{line}<br/></span>);
-        });
-	    var lines2 = this.state.stderr.trim();
-	    var br2 = lines2.split('\n').map(function(line) {
-            if(line==="")
-			    return "None";
-		    else
-			    return (<span>{line}<br/></span>);
-        });
-		if(!!br2){
-			br2="None";
-		}
-        this.setState({
-          stdout: br,
-          stderr: br2
-        });
-      }
-    }.bind(this));
+    api.deploy(message).then(result => {
+      this.setState({
+        status: result.error ? 'error' : 'success',
+        error: result.error,
+        stdout: result.stdout && result.stdout.trim(),
+        stderr: result.stderr && result.stderr.trim(),
+      });
+    });
   },
+
   render: function () {
-    
-    return (
-	    <div className="deploy" style={divStyle}>
-	    <form onSubmit={this.handleSubmit}>
-		  <input type="text" placeholder="commit log" ref="commit" />
-		  <input type="submit" value="Deploy" />
-		</form>
-        <h1>Output</h1>
-        <p><strong>{this.state.stdout}</strong></p>
-	    <h1>Error</h1>
-	    <p><strong>{this.state.stderr}</strong></p>
+    var body;
+    if (this.state.error) {
+      body = <h4>Error: {this.state.error}</h4>
+    } else if (this.state.status === 'loading') {
+      body = <h4>Loading...</h4>
+    } else if (this.state.status === 'success') {
+      body = (
+        <div>
+          <h4>Std Output</h4>
+          <pre>
+            {this.state.stdout}
+          </pre>
+          <h4>Std Error</h4>
+          <pre>
+            {this.state.stderr}
+          </pre>
         </div>
-		)
+      );
+    }
+
+    return (
+      <div className="deploy" style={divStyle}>
+        <p>
+          Type a message here and hit `deploy` to run your deploy script.
+        </p>
+        <form className='deploy_form' onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            className="deploy_message"
+            value={this.state.message}
+            placeholder="Deploy/commit message"
+            onChange={e => this.setState({message: e.target.value})}
+          />
+          <input type="submit" value="Deploy" />
+        </form>
+        {body}
+      </div>
+    )
     ;
   }
 })

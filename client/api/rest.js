@@ -44,6 +44,7 @@ module.exports = function (baseUrl) {
       if (data) return post('/pages/' + id, data)
       return get('/pages/' + id)
     },
+    deploy: (message) => post('/deploy', {message: message}),
     newPage: (title) => post('/pages/new', {title: title}),
     uploadImage: (data) => post('/images/upload', {data: data}),
     remove: (id) => post('/posts/' + id + '/remove'),
