@@ -22,7 +22,7 @@ module.exports = function (app, hexo) {
       secret: hexo.config.admin.secret
   }));
   app.use(auth(authStrategy(hexo)));
-  app.use('/admin/login', function (req, res) {
+  app.use(hexo.config.root + '/admin/login', function (req, res) {
       if (req.method === 'POST') {
           req.authenticate(['adminAuth'], function(error, done) {
               if (done) {
@@ -34,7 +34,7 @@ module.exports = function (app, hexo) {
           serveStatic(path.join(__dirname, '../www', 'login'))(req, res);
       }
   });
-  app.use('/admin/', function (req, res, next) {
+  app.use(hexo.config.root + '/admin/', function (req, res, next) {
       req.authenticate(['adminAuth'], next)
   });
 }
