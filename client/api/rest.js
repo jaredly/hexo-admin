@@ -45,6 +45,7 @@ module.exports = function (baseUrl) {
       return get('/pages/' + id)
     },
     deploy: (message) => post('/deploy', {message: message}),
+    generate: () => post('/generate', {}),
     newPage: (title) => post('/pages/new', {title: title}),
     uploadImage: (data) => post('/images/upload', {data: data}),
     remove: (id) => post('/posts/' + id + '/remove'),
@@ -53,4 +54,3 @@ module.exports = function (baseUrl) {
     tagsAndCategories: () => get('/tags-and-categories'),
   }
 }
-

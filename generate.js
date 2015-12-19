@@ -9,14 +9,9 @@ function once(fn) {
   }
 }
 
-module.exports = function (message, done) {
-  var options = ['deploy']
-  if (message && message !== '') {
-    options.push('-m ' + message + '');
-  }
-
+module.exports = function (done) {
   done = once(done);
-  var proc = spawn('hexo', options, {detached: true});
+  var proc = spawn('hexo', ['generate'], {detached: true});
   var stdout = '';
   var stderr = '';
   proc.stdout.on('data', function(data){ stdout += data.toString() });
