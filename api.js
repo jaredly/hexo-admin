@@ -3,6 +3,7 @@ var fs = require('fs')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
+  , deploy = require('./deploy')
 
 module.exports = function (app, hexo) {
 
@@ -64,7 +65,7 @@ module.exports = function (app, hexo) {
   }
 
   var use = function (path, fn) {
-    app.use('/admin/api/' + path, function (req, res) {
+    app.use(hexo.config.root + 'admin/api/' + path, function (req, res) {
       var done = function (val) {
         if (!val) {
           res.statusCode = 204
@@ -253,6 +254,25 @@ module.exports = function (app, hexo) {
         res.done('/' + filename)
       });
     })
+  });
+
+  use('deploy', function(req, res, next) {
+    if (req.method !== 'POST') return next()
+    if (!hexo.config.admin || !hexo.config.admin.deployCommand) {
+      return res.done({error: 'Config value "admin.deployCommand" not found'});
+    }
+    try {
+      deploy(hexo.config.admin.deployCommand, req.body.message, function(err, result) {
+        console.log('res', err, result);
+        if (err) {
+          return res.done({error: err.message || err})
+        }
+        res.done(result);
+      });
+    } catch (e) {
+      console.log('EEE', e);
+      res.done({error: e.message})
+    }
   });
 
 }

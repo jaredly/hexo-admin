@@ -24,7 +24,7 @@
   },
   "homepage": "http://jaredly.github.io/hexo-admin/",
   "dependencies": {
-    "MD5": "^1.2.1",
+    "md5": "^2",
     "body-parser": "^1.5.0",
     "browserify": "^11.2.0",
     "connect-auth": "^0.6.1",
