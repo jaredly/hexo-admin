@@ -9,9 +9,15 @@ function once(fn) {
   }
 }
 
-module.exports = function (done) {
+module.exports = function (config, done) {
   done = once(done);
-  var proc = spawn('hexo', ['generate'], {detached: true});
+
+  var generateCommand = config.admin && config.admin.generateCommand ? config.admin.generateCommand.split(' ') : [];
+  var command = generateCommand.length > 0 ? generateCommand[0] : 'hexo';
+  generateCommand.shift();
+  var options = generateCommand.length > 0 ? generateCommand : ['generate'];
+
+  var proc = spawn(command, options, {detached: true});
   var stdout = '';
   var stderr = '';
   proc.stdout.on('data', function(data){ stdout += data.toString() });

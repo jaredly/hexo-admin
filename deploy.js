@@ -9,14 +9,19 @@ function once(fn) {
   }
 }
 
-module.exports = function (message, done) {
-  var options = ['deploy']
+module.exports = function (config, message, done) {
+
+  var deployCommand = config.admin && config.admin.deployCommand ? config.admin.deployCommand.split(' ') : [];
+  var command = deployCommand.length > 0 ? deployCommand[0] : 'hexo';
+  generateCommand.shift();
+  var options = deployCommand.length > 0 ? deployCommand : ['deploy'];
+
   if (message && message !== '') {
     options.push('-m ' + message + '');
   }
 
   done = once(done);
-  var proc = spawn('hexo', options, {detached: true});
+  var proc = spawn(command, options, {detached: true});
   var stdout = '';
   var stderr = '';
   proc.stdout.on('data', function(data){ stdout += data.toString() });

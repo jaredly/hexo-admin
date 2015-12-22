@@ -260,7 +260,7 @@ module.exports = function (app, hexo) {
   use('generate', function(req, res, next) {
     if (req.method !== 'POST') return next()
     try {
-      generate(function(err, result) {
+      generate(hexo.config, function(err, result) {
         if (err) {
           return res.done({error: err.message || err})
         }
@@ -274,7 +274,7 @@ module.exports = function (app, hexo) {
   use('deploy', function(req, res, next) {
     if (req.method !== 'POST') return next()
     try {
-      deploy(req.body.message, function(err, result) {
+      deploy(hexo.config, req.body.message, function(err, result) {
         if (err) {
           return res.done({error: err.message || err})
         }
