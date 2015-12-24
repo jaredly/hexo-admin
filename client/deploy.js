@@ -87,7 +87,7 @@ var Deploy = React.createClass({
         <div className="deploy_options">
           <h1> Publish changes to server </h1>
           <p>
-            Click here to sync your changes <i>(this will run hexo generate and hexo deploy)</i>
+            Click here to sync your changes <small>(this will run generate and deploy)</small>
           </p>
           <form className='deploy_form' onSubmit={this.handleSync}>
             <input
@@ -97,16 +97,17 @@ var Deploy = React.createClass({
               placeholder="Deploy message (optional)"
               onChange={e => this.setState({message: e.target.value})}
             />
-          <input type="submit" value="Generate and Deploy" />
+          <input type="submit" value="Publish" />
           </form>
           <hr/>
-          <h5> <i className="fa fa-plus"></i> Advanced options</h5>
+          <h4>Advanced options</h4>
           <form className='deploy_form' onSubmit={this.handleGenerate}>
-            <p>Click here to generate static files only: </p>
+            <p><b>Generate:</b></p>
             <input type="submit" value="Generate files" />
+            <small> (Click here to generate static files)</small>
           </form>
           <form className='deploy_form' onSubmit={this.handleDeploy}>
-            <p>Type your deploy message here:</p>
+            <p><b>Deploy:</b></p>
             <input
               type="text"
               className="deploy_message "
@@ -115,6 +116,7 @@ var Deploy = React.createClass({
               onChange={e => this.setState({message: e.target.value})}
             />
             <input type="submit" value="Deploy" />
+            <small> (Click here to deploy your static files)</small>
           </form>
         </div>
         <div className="deploy_output">
