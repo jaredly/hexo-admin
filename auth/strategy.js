@@ -1,10 +1,11 @@
 var md5 = require("MD5");
+var urljoin = require('url-join');
 
 module.exports = function (hexo) {
     this.name = 'adminAuth';
 
     function failed_validation( request, response ) {
-        var redirectUrl= hexo.config.root + 'admin/login';
+        var redirectUrl = urljoin(hexo.config.root, 'admin/login');
         response.writeHead(303, { 'Location':  redirectUrl });
         response.end();
     }
