@@ -27,7 +27,7 @@ var NewPost = React.createClass({
 
   _onKeydown: function (e) {
     if (e.key === 'Enter') {
-      this._onSubmit()
+      this._onSubmit(e)
     }
   },
 
@@ -41,7 +41,8 @@ var NewPost = React.createClass({
     }
   },
 
-  _onSubmit: function () {
+  _onSubmit: function (e) {
+    e.preventDefault();
     this.setState({loading: true, showing: false})
     api.newPost(this.state.text).then((post) => {
       this.setState({showing: false, text: 'Untitled'})
@@ -80,9 +81,9 @@ var NewPost = React.createClass({
         onChange={this._onChange}
         />
       <i className="fa fa-check-circle new-post_ok"
-        onClick={this._onSubmit} ></i>
+        onMouseDown={this._onSubmit} ></i>
       <i className="fa fa-times-circle new-post_cancel"
-        onClick={this._onCancel} ></i>
+        onMouseDown={this._onCancel} ></i>
     </div>
   }
 })
