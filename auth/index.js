@@ -12,6 +12,7 @@ var cookieParser = require('cookie-parser')
   , auth = require('connect-auth')
   , path = require('path')
   , authStrategy = require('./strategy')
+  , urljoin = require('url-join');
 
 module.exports = function (app, hexo) {
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,11 +23,11 @@ module.exports = function (app, hexo) {
       secret: hexo.config.admin.secret
   }));
   app.use(auth(authStrategy(hexo)));
-  app.use(hexo.config.root + '/admin/login', function (req, res) {
+  app.use(urljoin(hexo.config.root, 'admin/login'), function (req, res) {
       if (req.method === 'POST') {
           req.authenticate(['adminAuth'], function(error, done) {
               if (done) {
-                  res.writeHead(302, { 'Location':  "/admin/" });
+                  res.writeHead(302, { Location: urljoin(hexo.config.root, 'admin/') });
                   res.end();
               }
           });
@@ -34,7 +35,7 @@ module.exports = function (app, hexo) {
           serveStatic(path.join(__dirname, '../www', 'login'))(req, res);
       }
   });
-  app.use(hexo.config.root + '/admin/', function (req, res, next) {
+  app.use(urljoin(hexo.config.root, 'admin/'), function (req, res, next) {
       req.authenticate(['adminAuth'], next)
   });
 }

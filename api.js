@@ -1,5 +1,7 @@
 var path = require('path')
 var fs = require('fs')
+var urljoin = require('url-join');
+
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -65,7 +67,7 @@ module.exports = function (app, hexo) {
   }
 
   var use = function (path, fn) {
-    app.use(hexo.config.root + 'admin/api/' + path, function (req, res) {
+    app.use(urljoin(hexo.config.root, 'admin/api/', path), function (req, res) {
       var done = function (val) {
         if (!val) {
           res.statusCode = 204
