@@ -47,10 +47,10 @@ admin:
   secret: a secret something
 ```
 
-The password_hash is the md5 hash of your password. You can use [this
-site](http://www.md5.cz/) to come up with that, or whatever you want. The
-`secret` is used to make the cookies secure, so it's a good idea to have it be
-long and complicated.
+The password_hash is the bcrypt hash of your password. You can use [this
+site](https://www.bcrypt-generator.com/) to come up with that, or whatever you
+want. The `secret` is used to make the cookies secure, so it's a good idea to
+have it be long and complicated.
 
 Once that's in place, start up your hexo server and going to `/admin/` will
 require you to enter your password.

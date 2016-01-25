@@ -1,4 +1,4 @@
-var md5 = require("MD5");
+var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function (hexo) {
     this.name = "adminAuth";
@@ -11,7 +11,8 @@ module.exports = function (hexo) {
 
     function validate_credentials( executionScope, request, response, callback ) {
         var config = hexo.config.admin
-        if( request.body.username == config.username && md5(request.body.password) == config.password_hash ) {
+        if (request.body.username == config.username &&
+            bcrypt.compareSync(request.body.password, config.password_hash)) {
             executionScope.success({name:request.body.user}, callback)
         }
         else {
@@ -20,7 +21,6 @@ module.exports = function (hexo) {
     }
 
     this.authenticate = function(request, response, callback) {
-
         if (request.body && request.body.username && request.body.password ) {
             validate_credentials( this, request, response, callback );
         }

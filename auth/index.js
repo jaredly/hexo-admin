@@ -1,8 +1,8 @@
 /**
  * This enables authentication for the admin pages.
  * All paths starting with /admin/ are protected by cookie-based login, where
- * username must match `admin.username` and the password's md5 hash must match
- * `admin.md5_password`.
+ * username must match `admin.username` and the password's bcrypt hash must match
+ * `admin.password_hash`.
  */
 
 var cookieParser = require('cookie-parser')
@@ -21,8 +21,8 @@ module.exports = function (app, hexo) {
       saveUninitialized: false,
       secret: hexo.config.admin.secret
   }));
-  app.use(auth(authStrategy(hexo)));
-  app.use(hexo.config.root + '/admin/login', function (req, res) {
+  app.use(hexo.config.root + 'admin', auth(new authStrategy(hexo)));
+  app.use(hexo.config.root + 'admin/login', function (req, res) {
       if (req.method === 'POST') {
           req.authenticate(['adminAuth'], function(error, done) {
               if (done) {
@@ -34,7 +34,7 @@ module.exports = function (app, hexo) {
           serveStatic(path.join(__dirname, '../www', 'login'))(req, res);
       }
   });
-  app.use(hexo.config.root + '/admin/', function (req, res, next) {
+  app.use(hexo.config.root + 'admin/', function (req, res, next) {
       req.authenticate(['adminAuth'], next)
   });
 }
