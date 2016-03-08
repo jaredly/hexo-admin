@@ -1,4 +1,4 @@
-
+/** @jsx React.DOM */
 var App = require('./app');
 var Post = require('./post')
 var Posts = require('./posts')
@@ -18,4 +18,3 @@ module.exports = () => {
     <Route name="deploy" handler={Deploy}/>
   </Route>
 }
-

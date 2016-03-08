@@ -1,5 +1,7 @@
-var React = require('react')
-var api = require('./api')
+/** @jsx React.DOM */
+
+var React = require('react');
+var api = require('./api');
 
 var divStyle = {
   whiteSpace: 'nowrap'

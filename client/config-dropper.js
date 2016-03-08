@@ -1,11 +1,11 @@
-
-var React = require('react/addons')
-var AutoList = require('./auto-list')
-var moment = require('moment')
-var _ = require('lodash')
+/** @jsx React.DOM */
+var React = require('react/addons');
+var AutoList = require('./auto-list');
+var moment = require('moment');
+var _ = require('lodash');
 var cx = React.addons.classSet;
 
-var dateFormat = 'MMM D YYYY HH:mm'
+var dateFormat = 'MMM D YYYY HH:mm';
 
 function toText(lst, map) {
   return lst.map((name) => map[name] || name)

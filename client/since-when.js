@@ -1,5 +1,6 @@
+/** @jsx React.DOM */
 
-var React = require('react')
+var React = require('react');
 
 var SinceWhen = React.createClass({
   componentDidMount: function () {

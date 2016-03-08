@@ -1,4 +1,5 @@
-var React = require('react')
+/** @jsx React.DOM */
+var React = require('react');
 
 var About = React.createClass({
   render: function () {

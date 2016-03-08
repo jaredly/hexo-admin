@@ -1,6 +1,6 @@
-
-var Link = require('react-router').Link
-var React = require('react')
+/** @jsx React.DOM */
+var Link = require('react-router').Link;
+var React = require('react');
 
 var App = React.createClass({
   render: function () {

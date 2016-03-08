@@ -1,8 +1,8 @@
-
-var React = require('react')
-var CM = require('code-mirror')
-var PT = React.PropTypes
-var api = require('./api')
+/** @jsx React.DOM */
+var React = require('react');
+var CM = require('code-mirror');
+var PT = React.PropTypes;
+var api = require('./api');
 
 var CodeMirror = React.createClass({
   propTypes: {

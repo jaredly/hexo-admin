@@ -1,15 +1,15 @@
-
-var React = require('react/addons')
-var cx = React.addons.classSet
+/** @jsx React.DOM */
+var React = require('react/addons');
+var cx = React.addons.classSet;
 var Link = require('react-router').Link;
 var Router = require('react-router');
-var _ = require('lodash')
-var moment = require('moment')
-var SinceWhen = require('./since-when')
+var _ = require('lodash');
+var moment = require('moment');
+var SinceWhen = require('./since-when');
 
-var Rendered = require('./rendered')
+var Rendered = require('./rendered');
 var DataFetcher = require('./data-fetcher');
-var Newpage = require('./new-page')
+var Newpage = require('./new-page');
 var api = require('./api');
 
 var Pages = React.createClass({

@@ -1,12 +1,13 @@
+/** @jsx React.DOM */
 
-var React = require('react/addons')
-var cx = React.addons.classSet
-var Promise = require('es6-promise').Promise
-var PT = React.PropTypes
-var CodeMirror = require('./code-mirror')
-var SinceWhen = require('./since-when')
-var Rendered = require('./rendered')
-var ConfigDropper = require('./config-dropper')
+var React = require('react/addons');
+var cx = React.addons.classSet;
+var Promise = require('es6-promise').Promise;
+var PT = React.PropTypes;
+var CodeMirror = require('./code-mirror');
+var SinceWhen = require('./since-when');
+var Rendered = require('./rendered');
+var ConfigDropper = require('./config-dropper');
 
 var Editor = React.createClass({
   propTypes: {
