@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 var React = require('react/addons');
 var cx = React.addons.classSet;
 var Promise = require('es6-promise').Promise;
@@ -88,4 +87,4 @@ var Editor = React.createClass({
   }
 })
 
-module.exports = Editor
+module.exports = Editor;

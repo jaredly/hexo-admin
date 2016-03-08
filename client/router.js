@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
 var App = require('./app');
-var Post = require('./post')
-var Posts = require('./posts')
-var Page = require('./page')
-var Pages = require('./pages')
-var About = require('./about')
-var Deploy = require('./deploy')
-var Route = require('react-router').Route
+var Post = require('./post');
+var Posts = require('./posts');
+var Page = require('./page');
+var Pages = require('./pages');
+var About = require('./about');
+var Deploy = require('./deploy');
+var Route = require('react-router').Route;
 
 module.exports = () => {
   return <Route handler={App}>

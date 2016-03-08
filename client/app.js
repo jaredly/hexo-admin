@@ -22,5 +22,4 @@ var App = React.createClass({
   }
 })
 
-module.exports = App
-
+module.exports = App;

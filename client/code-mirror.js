@@ -74,4 +74,4 @@ var CodeMirror = React.createClass({
   }
 })
 
-module.exports = CodeMirror
+module.exports = CodeMirror;

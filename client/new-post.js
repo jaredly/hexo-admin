@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 var React = require('react');
 var PT = React.PropTypes;
 var api = require('./api');
@@ -89,4 +88,4 @@ var NewPost = React.createClass({
   }
 })
 
-module.exports = NewPost
+module.exports = NewPost;

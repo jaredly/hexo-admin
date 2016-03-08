@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 var React = require('react');
 
 var SinceWhen = React.createClass({
@@ -30,4 +29,4 @@ var SinceWhen = React.createClass({
   }
 })
 
-module.exports = SinceWhen
+module.exports = SinceWhen;

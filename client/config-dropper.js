@@ -142,4 +142,4 @@ var ConfigDropper = React.createClass({
   }
 })
 
-module.exports = ConfigDropper
+module.exports = ConfigDropper;

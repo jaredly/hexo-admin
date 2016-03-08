@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 var React = require('react');
 var api = require('./api');
 
@@ -81,4 +80,4 @@ var Deploy = React.createClass({
   }
 })
 
-module.exports = Deploy
+module.exports = Deploy;

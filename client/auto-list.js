@@ -119,4 +119,4 @@ var AutoList = React.createClass({
   }
 })
 
-module.exports = AutoList
+module.exports = AutoList;
