@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+import { hashHistory , Router, Route, IndexRedirect } from 'react-router';
 var App = require('./app');
 var Post = require('./post');
 var Posts = require('./posts');
@@ -6,15 +6,17 @@ var Page = require('./page');
 var Pages = require('./pages');
 var About = require('./about');
 var Deploy = require('./deploy');
-var Route = require('react-router').Route;
 
 module.exports = () => {
-  return <Route handler={App}>
-    <Route name="posts" handler={Posts} path="/"/>
-    <Route name="post" handler={Post} path="/posts/:postId"/>
-    <Route name="page" handler={Page} path="/pages/:pageId"/>
-    <Route name="pages" handler={Pages} path="/pages"/>
-    <Route name="about" handler={About}/>
-    <Route name="deploy" handler={Deploy}/>
-  </Route>
+  return <Router history={hashHistory }> 
+    <Route component={App} path="/">
+      <IndexRedirect to="/posts"/>
+      <Route name="posts" component={Posts} path="/posts"/>
+      <Route name="post" component={Post} path="/posts/:postId"/>
+      <Route name="page" component={Page} path="/pages/:pageId"/>
+      <Route name="pages" component={Pages} path="/pages"/>
+      <Route name="about" component={About} path="/about" />
+      <Route name="deploy" component={Deploy} path="/deploy"/>
+    </Route>
+  </Router>
 }

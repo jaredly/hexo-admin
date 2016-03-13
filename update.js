@@ -77,4 +77,4 @@ module.exports = function (model, id, update, callback, hexo) {
       });
     });
   });
-}
+};

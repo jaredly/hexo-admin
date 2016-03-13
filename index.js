@@ -18,11 +18,9 @@ if (passwordProtected) {
     console.error('[Hexo Admin]: config admin.secret is requred for authentication');
     passwordProtected = false;
   }
-
 }
 
 hexo.extend.filter.register('server_middleware', function(app) {
-
   if (passwordProtected) {
     require('./auth')(app, hexo);   // setup authentication, login page, etc.
   }

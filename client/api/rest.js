@@ -1,6 +1,5 @@
-
-var request = require('superagent')
-var Promise = require('es6-promise').Promise
+var request = require('superagent');
+var Promise = require('es6-promise').Promise;
 
 function _post(baseUrl, url, data) {
   return new Promise((f, r) => {
@@ -29,8 +28,8 @@ function _get(baseUrl, url, params) {
 }
 
 module.exports = function (baseUrl) {
-  var post = _post.bind(null, baseUrl)
-  var get = _get.bind(null, baseUrl)
+  var post = _post.bind(null, baseUrl);
+  var get = _get.bind(null, baseUrl);
 
   return {
     posts: () => get('/posts/list'),
@@ -52,5 +51,4 @@ module.exports = function (baseUrl) {
     unpublish: (id) => post('/posts/' + id + '/unpublish'),
     tagsAndCategories: () => get('/tags-and-categories'),
   }
-}
-
+};

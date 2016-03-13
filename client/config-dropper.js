@@ -1,9 +1,8 @@
-/** @jsx React.DOM */
-var React = require('react/addons');
+var React = require('react');
 var AutoList = require('./auto-list');
 var moment = require('moment');
 var _ = require('lodash');
-var cx = React.addons.classSet;
+var cx = require('classnames');
 
 var dateFormat = 'MMM D YYYY HH:mm';
 

@@ -1,16 +1,16 @@
-var path = require('path')
-var fs = require('fs')
+var path = require('path');
+var fs = require('fs');
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
-  , deploy = require('./deploy')
+  , deploy = require('./deploy');
 
 module.exports = function (app, hexo) {
 
   function addIsDraft(post) {
-    post.isDraft = post.source.indexOf('_draft') === 0
-    post.isDiscarded = post.source.indexOf('_discarded') === 0
-    return post
+    post.isDraft = post.source.indexOf('_draft') === 0;
+    post.isDiscarded = post.source.indexOf('_discarded') === 0;
+    return post;
   }
 
   function tagsAndCategories() {
@@ -123,7 +123,6 @@ module.exports = function (app, hexo) {
       });
     });
   });
-
 
   use('pages/', function (req, res, next) {
     var url = req.url
@@ -275,4 +274,4 @@ module.exports = function (app, hexo) {
     }
   });
 
-}
+};

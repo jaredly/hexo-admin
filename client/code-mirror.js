@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = require('react');
 var CM = require('code-mirror');
 var PT = React.PropTypes;

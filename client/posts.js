@@ -1,8 +1,6 @@
-/** @jsx React.DOM */
-var React = require('react/addons');
-var cx = React.addons.classSet;
-var Link = require('react-router').Link;
-var Router = require('react-router');
+import { browserHistory, Link } from 'react-router';
+var React = require('react');
+var cx = require('classnames');
 var _ = require('lodash');
 var moment = require('moment');
 var SinceWhen = require('./since-when');
@@ -28,17 +26,17 @@ var Posts = React.createClass({
   },
 
   _onNew: function (post) {
-    var posts = this.state.posts.slice()
-    posts.unshift(post)
-    this.setState({posts: posts})
-    Router.transitionTo('post', {postId: post._id})
+    var posts = this.state.posts.slice();
+    posts.unshift(post);
+    this.setState({posts: posts});
+    browserHistory.push('/admin/#/posts/' + post._id);
   },
 
   goTo: function (id, e) {
     if (e) {
-      e.preventDefault()
+      e.preventDefault();
     }
-    Router.transitionTo('post', {postId: id})
+    browserHistory.push('/admin/#/posts/' + id);
   },
 
   render: function () {
@@ -65,10 +63,10 @@ var Posts = React.createClass({
               <span className="posts_post-date">
                 {moment(post.date).format('MMM Do YYYY')}
               </span>
-              <a className='posts_perma-link' target="_blank" href={'/' + post.path}>
+              {!post.isDraft && <a className='posts_perma-link' target="_blank" href={'/' + post.path}>
                 <i className='fa fa-link'/>
-              </a>
-              <Link className='posts_edit-link' to="post" postId={post._id}>
+              </a>}
+              <Link className='posts_edit-link' to={`/posts/${post._id}`}>
                 <i className='fa fa-pencil'/>
               </Link>
             </li>

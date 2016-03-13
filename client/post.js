@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
 var DataFetcher = require('./data-fetcher');
 var api = require('./api');
-var React = require('react/addons');
-var cx = React.addons.classSet;
+var React = require('react');
+var cx = require('classnames');
 var Promise = require('es6-promise').Promise;
 var marked = require('marked');
-var Editor = require('./editor');
+var Editor = React.createFactory(require('./editor'));
 var _ = require('lodash');
 var moment = require('moment');
 
@@ -92,11 +91,11 @@ var Post = React.createClass({
   },
 
   render: function () {
-    var post = this.state.post
+    var post = this.state.post;
     if (!post || !this.state.tagsAndCategories) {
       return <span>Loading...</span>
     }
-    var permaLink = '/' + post.path
+    var permaLink = '/' + post.path;
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
@@ -112,7 +111,7 @@ var Post = React.createClass({
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
       tagsAndCategories: this.state.tagsAndCategories,
-    })
+    });
   }
 });
 
