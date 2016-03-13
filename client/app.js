@@ -1,6 +1,5 @@
-
-var Link = require('react-router').Link
-var React = require('react')
+import { Link } from 'react-router';
+var React = require('react');
 
 var App = React.createClass({
   render: function () {
@@ -9,18 +8,17 @@ var App = React.createClass({
         <img src="logo.png" className="app_logo"/>
         <span className="app_title">Hexo Admin</span>
         <ul className="app_nav">
-          <li><Link to="posts">Posts</Link></li>
-          <li><Link to="pages">Pages</Link></li>
-          <li><Link to="about">About</Link></li>
-          <li><Link to="deploy">Deploy</Link></li>
+          <li><Link to="/posts">Posts</Link></li>
+          <li><Link to="/pages">Pages</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/deploy">Deploy</Link></li>
         </ul>
       </div>
       <div className="app_main">
-        <this.props.activeRouteHandler/>
+        {this.props.children}
       </div>
     </div>;
   }
 })
 
-module.exports = App
-
+module.exports = App;

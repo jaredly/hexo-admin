@@ -1,5 +1,4 @@
-
-var React = require('react')
+var React = require('react');
 
 var SinceWhen = React.createClass({
   componentDidMount: function () {
@@ -29,4 +28,4 @@ var SinceWhen = React.createClass({
   }
 })
 
-module.exports = SinceWhen
+module.exports = SinceWhen;

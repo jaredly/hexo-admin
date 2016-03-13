@@ -1,7 +1,6 @@
-
-var React = require('react')
-var PT = React.PropTypes
-var api = require('./api')
+var React = require('react');
+var PT = React.PropTypes;
+var api = require('./api');
 
 var NewPage = React.createClass({
   propTypes: {
@@ -87,4 +86,4 @@ var NewPage = React.createClass({
   }
 })
 
-module.exports = NewPage
+module.exports = NewPage;

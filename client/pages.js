@@ -1,15 +1,13 @@
+import { Router, Link } from 'react-router';
+var React = require('react');
+var cx = require('classnames');
+var _ = require('lodash');
+var moment = require('moment');
+var SinceWhen = require('./since-when');
 
-var React = require('react/addons')
-var cx = React.addons.classSet
-var Link = require('react-router').Link;
-var Router = require('react-router');
-var _ = require('lodash')
-var moment = require('moment')
-var SinceWhen = require('./since-when')
-
-var Rendered = require('./rendered')
+var Rendered = require('./rendered');
 var DataFetcher = require('./data-fetcher');
-var Newpage = require('./new-page')
+var Newpage = require('./new-page');
 var api = require('./api');
 
 var Pages = React.createClass({
@@ -68,7 +66,7 @@ var Pages = React.createClass({
               <a className='posts_perma-link' target="_blank" href={'/' + page.path}>
                 <i className='fa fa-link'/>
               </a>
-              <Link className='posts_edit-link' to="page" pageId={page._id}>
+              <Link className='posts_edit-link' to={`/pages/${page._id}`}>
                 <i className='fa fa-pencil'/>
               </Link>
             </li>

@@ -1,11 +1,10 @@
+var React = require('react');
+var AutoList = require('./auto-list');
+var moment = require('moment');
+var _ = require('lodash');
+var cx = require('classnames');
 
-var React = require('react/addons')
-var AutoList = require('./auto-list')
-var moment = require('moment')
-var _ = require('lodash')
-var cx = React.addons.classSet;
-
-var dateFormat = 'MMM D YYYY HH:mm'
+var dateFormat = 'MMM D YYYY HH:mm';
 
 function toText(lst, map) {
   return lst.map((name) => map[name] || name)
@@ -142,4 +141,4 @@ var ConfigDropper = React.createClass({
   }
 })
 
-module.exports = ConfigDropper
+module.exports = ConfigDropper;

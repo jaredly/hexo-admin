@@ -1,5 +1,5 @@
-var React = require('react')
-var api = require('./api')
+var React = require('react');
+var api = require('./api');
 
 var divStyle = {
   whiteSpace: 'nowrap'
@@ -79,4 +79,4 @@ var Deploy = React.createClass({
   }
 })
 
-module.exports = Deploy
+module.exports = Deploy;

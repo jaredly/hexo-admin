@@ -1,6 +1,5 @@
-
-var React = require('react/addons')
-var cx = React.addons.classSet
+var React = require('react');
+var cx = require('classnames');
 
 var AutoList = React.createClass({
   getInitialState: function () {
@@ -119,4 +118,4 @@ var AutoList = React.createClass({
   }
 })
 
-module.exports = AutoList
+module.exports = AutoList;

@@ -1,4 +1,3 @@
-
 var types = {
   rest: require('./rest'),
 }
@@ -16,4 +15,3 @@ var mod = {
 };
 
 module.exports = mod;
-

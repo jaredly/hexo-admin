@@ -1,8 +1,7 @@
-
-var router = require('./router')
-var React = require('react')
+import router from './router';
+var React = require('react');
+var ReactDOM = require('react-dom');
 
 module.exports = function (node) {
-  React.renderComponent(router(), node)
+  ReactDOM.render(router(), node);
 }
-

@@ -1,7 +1,6 @@
-
-var React = require('react')
-var PT = React.PropTypes
-var api = require('./api')
+var React = require('react');
+var PT = React.PropTypes;
+var api = require('./api');
 
 var NewPost = React.createClass({
   propTypes: {
@@ -18,10 +17,10 @@ var NewPost = React.createClass({
 
   componentDidUpdate: function (prevProps, prevState) {
     if (this.state.showing && !prevState.showing) {
-      var node = this.refs.input.getDOMNode()
-      node.focus()
-      node.selectionStart = 0
-      node.selectionEnd = node.value.length
+      var node = this.refs.input;
+      node.focus();
+      node.selectionStart = 0;
+      node.selectionEnd = node.value.length;
     }
   },
 
@@ -88,4 +87,4 @@ var NewPost = React.createClass({
   }
 })
 
-module.exports = NewPost
+module.exports = NewPost;
