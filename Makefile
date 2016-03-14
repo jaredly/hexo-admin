@@ -5,7 +5,7 @@ build:
 	@browserify ${BROWS}
 
 watch:
-	@watchify -v ${BROWS}
+	@./node_modules/.bin/watchify -v ${BROWS}
 
 less:
 	@lessc client/less/index.less www/bundle.css
