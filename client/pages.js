@@ -46,6 +46,8 @@ var Pages = React.createClass({
       return <div className='pages'>Loading...</div>
     }
     var current = this.state.pages[this.state.selected] || {}
+    var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
+    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
     return <div className="posts">
       <ul className='posts_list'>
         {/** not working atm <Newpage onNew={this._onNew}/> **/}
@@ -65,7 +67,7 @@ var Pages = React.createClass({
               <span className="posts_post-date">
                 {moment(page.date).format('MMM Do YYYY')}
               </span>
-              <a className='posts_perma-link' target="_blank" href={'/' + page.path}>
+              <a className='posts_perma-link' target="_blank" href={rootPath + '/' + page.path}>
                 <i className='fa fa-link'/>
               </a>
               <Link className='posts_edit-link' to="page" pageId={page._id}>
