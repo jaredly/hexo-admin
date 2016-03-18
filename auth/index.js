@@ -26,7 +26,7 @@ module.exports = function (app, hexo) {
       if (req.method === 'POST') {
           req.authenticate(['adminAuth'], function(error, done) {
               if (done) {
-                  res.writeHead(302, { 'Location':  "/admin/" });
+                  res.writeHead(302, { 'Location':  hexo.config.root + "admin/" });
                   res.end();
               }
           });
