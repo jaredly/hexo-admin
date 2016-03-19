@@ -8,6 +8,7 @@ var marked = require('marked')
 var Editor = require('./editor')
 var _ = require('lodash')
 var moment = require('moment')
+var Router = require('react-router');
 
 var Post = React.createClass({
   mixins: [DataFetcher((params) => {
@@ -79,6 +80,12 @@ var Post = React.createClass({
     });
   },
 
+  handleRemove: function () {
+    api.remove(this.state.post._id).then(
+        Router.transitionTo('posts')
+    );
+  },
+
   dataDidLoad: function (name, data) {
     if (name !== 'post') return
     var parts = data.raw.split('---');
@@ -111,6 +118,7 @@ var Post = React.createClass({
       onChangeTitle: this.handleChangeTitle,
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
+      onRemove: this.handleRemove,
       tagsAndCategories: this.state.tagsAndCategories,
     })
   }

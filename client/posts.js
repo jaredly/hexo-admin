@@ -16,7 +16,7 @@ var Posts = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       posts: api.posts().then((posts) =>
-        _.sortBy(posts, ['isDraft', 'date']).reverse()
+        _.sortBy(_.filter(posts, function(post) { return !post.isDiscarded }), ['isDraft', 'date']).reverse()
       )
     }
   })],
