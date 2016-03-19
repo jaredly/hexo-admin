@@ -52,6 +52,10 @@ var Editor = React.createClass({
           <button className="editor_unpublish" onClick={this.props.onUnpublish}>
             Unpublish
           </button>)}
+          {!this.props.isPage &&
+          <button className="editor_remove" onClick={this.props.onRemove}>
+            <i className="fa fa-times"/>
+          </button>}
       </div>
       <div className="editor_main">
         <div className="editor_edit">
