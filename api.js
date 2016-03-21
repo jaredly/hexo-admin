@@ -183,7 +183,7 @@ module.exports = function (app, hexo) {
     .then(function (file) {
       var source = file.path.slice(hexo.source_dir.length)
       hexo.source.process([source]).then(function () {
-        var post = hexo.model('Post').findOne({source: source})
+        var post = hexo.model('Post').findOne({source: source.replace(/\\/g, '\/')})
         res.done(addIsDraft(post));
       });
     });
