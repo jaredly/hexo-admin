@@ -4,7 +4,7 @@ module.exports = function (hexo) {
     this.name = "adminAuth";
 
     function failed_validation( request, response ) {
-        var redirectUrl= "/admin/login";
+        var redirectUrl= hexo.config.root+"admin/login";
         response.writeHead(303, { 'Location':  redirectUrl });
         response.end();
     }
