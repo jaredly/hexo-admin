@@ -81,7 +81,7 @@ var Page = React.createClass({
   dataDidLoad: function (name, data) {
     if (name !== 'page') return
     var parts = data.raw.split('---');
-    var _slice = parts[0] === '---' ? 1 : 2;
+    var _slice = parts[0] === '' ? 2 : 1;
     var raw = parts.slice(_slice).join('---').trim();
     this.setState({
       title: data.title,
