@@ -82,7 +82,8 @@ var Post = React.createClass({
   dataDidLoad: function (name, data) {
     if (name !== 'post') return
     var parts = data.raw.split('---');
-    var raw = parts.slice(1).join('---').trim();
+    var _slice = parts[0] === '' ? 2 : 1;
+    var raw = parts.slice(_slice).join('---').trim();
     this.setState({
       title: data.title,
       initialRaw: raw,
