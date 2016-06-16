@@ -251,7 +251,7 @@ module.exports = function (app, hexo) {
         console.log(err)
       }
       hexo.source.process([filename]).then(function () {
-        res.done('/' + filename)
+        res.done(hexo.config.root + filename)
       });
     })
   });
