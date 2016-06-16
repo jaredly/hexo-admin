@@ -1,5 +1,5 @@
 var path = require('path')
-var fs = require('fs')
+var fs = require('hexo-fs')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')

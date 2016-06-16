@@ -1,8 +1,7 @@
-var fs = require('fs'),
-  path = require('path'),
+var path = require('path'),
   moment = require('moment'),
   hfm = require('hexo-front-matter'),
-  file = require('hexo-fs'),
+  fs = require('hexo-fs'),
   extend = require('extend');
 //  yfm = util.yfm,
 //  escape = util.escape;
@@ -65,7 +64,7 @@ module.exports = function (model, id, update, callback, hexo) {
 
   post.save(function () {
   //  console.log(post.full_source, post.source)
-    file.writeFile(full_source, raw, function(err){
+    fs.writeFile(full_source, raw, function(err){
       if (err) return callback(err);
 
       if (full_source !== prev_full) {
