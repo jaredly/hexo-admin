@@ -6,6 +6,7 @@ var path = require('path'),
 //  yfm = util.yfm,
 //  escape = util.escape;
 
+
 /**
  * Updates a post.
  *
@@ -16,6 +17,9 @@ var path = require('path'),
  * @param {Function} callback
  */
 module.exports = function (model, id, update, callback, hexo) {
+  function removeExtname(str) {
+    return str.substring(0, str.length - path.extname(str).length);
+  }
   var post = hexo.model(model).get(id)
   if (!post) {
     return callback('Post not found');
@@ -69,6 +73,16 @@ module.exports = function (model, id, update, callback, hexo) {
 
       if (full_source !== prev_full) {
         fs.unlinkSync(prev_full)
+        // move asset dir
+        var assetPrev = removeExtname(prev_full);
+        var assetDest = removeExtname(full_source);
+        fs.exists(assetPrev).then(function(exist) {
+          if (exist) {
+            fs.copyDir(assetPrev, assetDest).then(function() {
+              fs.rmdir(assetPrev);
+            });
+          }
+        });
       }
       hexo.source.process([post.source]).then(function () {
   //      console.log(post.full_source, post.source)
