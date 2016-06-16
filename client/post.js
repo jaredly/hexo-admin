@@ -97,7 +97,9 @@ var Post = React.createClass({
     if (!post || !this.state.tagsAndCategories) {
       return <span>Loading...</span>
     }
-    var permaLink = '/' + post.path
+    var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
+    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
+    var permaLink = rootPath + '/' + post.path
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
