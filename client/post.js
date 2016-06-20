@@ -41,7 +41,8 @@ var Post = React.createClass({
       this.setState({
         tagsAndCategories: data.tagsAndCategories,
         post: data.post,
-        updated: now
+        updated: now,
+        author: data.post.author,
       })
     })
   },

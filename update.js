@@ -33,7 +33,7 @@ module.exports = function (model, id, update, callback, hexo) {
     frontMatter = split.data
     compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
 
-  var preservedKeys = ['title', 'date', 'tags', 'categories', '_content'];
+  var preservedKeys = ['title', 'date', 'tags', 'categories', '_content', 'author'];
   var prev_full = post.full_source,
     full_source = prev_full;
   if (update.source && update.source !== post.source) {
@@ -49,7 +49,6 @@ module.exports = function (model, id, update, callback, hexo) {
   compiled.date = moment(compiled.date).toDate()
 
   delete update._content
-
   var raw = hfm.stringify(compiled);
   update.raw = raw
   update.updated = moment()
