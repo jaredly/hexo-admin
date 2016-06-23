@@ -19,6 +19,7 @@ var ConfigDropper = React.createClass({
       date: moment(this.props.post.date).format(dateFormat),
       tags: toText(this.props.post.tags, tac.tags),
       categories: toText(this.props.post.categories, tac.categories),
+      author: this.props.post.author,
     }
   },
 
@@ -31,6 +32,7 @@ var ConfigDropper = React.createClass({
       date: moment(nextProps.post.date).format(dateFormat),
       tags: toText(nextProps.post.tags, tac.tags),
       categories: toText(nextProps.post.categories, tac.categories),
+      author: nextProps.post.author,
     })
   },
 
@@ -75,6 +77,12 @@ var ConfigDropper = React.createClass({
     })
   },
 
+  _onChangeAuthor: function (e) {
+    this.setState({
+      author: e.target.value
+    })
+  },
+
   _onChange: function (attr, value) {
     var update = {}
     update[attr] = value
@@ -89,16 +97,18 @@ var ConfigDropper = React.createClass({
     var tac = this.props.tagsAndCategories
     var tags = toText(this.props.post.tags, tac.tags)
     var categories = toText(this.props.post.categories, tac.categories)
+    var author = this.props.post.author
     var textDate = date.toISOString()
     if (textDate === this.props.post.date &&
         _.isEqual(this.state.categories, categories) &&
-        _.isEqual(this.state.tags, tags)) {
+        _.isEqual(this.state.tags, tags) && author === this.state.author) {
       return
     }
     this.props.onChange({
       date: date.toISOString(),
       categories: this.state.categories,
-      tags: this.state.tags
+      tags: this.state.tags,
+      author: this.state.author,
     })
   },
 
@@ -110,6 +120,13 @@ var ConfigDropper = React.createClass({
           className="config_date"
           value={this.state.date}
           onChange={this._onChangeDate}/>
+      </div>
+      <div className="config_section">
+        <div className="config_section-title">Author</div>
+        <input
+            className="config_author"
+            value={this.state.author}
+            onChange={this._onChangeAuthor}/>
       </div>
       <div className="config_section">
         <div className="config_section-title">Tags</div>

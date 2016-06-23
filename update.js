@@ -1,11 +1,11 @@
-var fs = require('fs'),
-  path = require('path'),
+var path = require('path'),
   moment = require('moment'),
   hfm = require('hexo-front-matter'),
-  file = require('hexo-fs'),
+  fs = require('hexo-fs'),
   extend = require('extend');
 //  yfm = util.yfm,
 //  escape = util.escape;
+
 
 /**
  * Updates a post.
@@ -17,6 +17,9 @@ var fs = require('fs'),
  * @param {Function} callback
  */
 module.exports = function (model, id, update, callback, hexo) {
+  function removeExtname(str) {
+    return str.substring(0, str.length - path.extname(str).length);
+  }
   var post = hexo.model(model).get(id)
   if (!post) {
     return callback('Post not found');
@@ -30,7 +33,7 @@ module.exports = function (model, id, update, callback, hexo) {
     frontMatter = split.data
     compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
 
-  var preservedKeys = ['title', 'date', 'tags', 'categories', '_content'];
+  var preservedKeys = ['title', 'date', 'tags', 'categories', '_content', 'author'];
   var prev_full = post.full_source,
     full_source = prev_full;
   if (update.source && update.source !== post.source) {
@@ -46,7 +49,6 @@ module.exports = function (model, id, update, callback, hexo) {
   compiled.date = moment(compiled.date).toDate()
 
   delete update._content
-
   var raw = hfm.stringify(compiled);
   update.raw = raw
   update.updated = moment()
@@ -65,11 +67,21 @@ module.exports = function (model, id, update, callback, hexo) {
 
   post.save(function () {
   //  console.log(post.full_source, post.source)
-    file.writeFile(full_source, raw, function(err){
+    fs.writeFile(full_source, raw, function(err){
       if (err) return callback(err);
 
       if (full_source !== prev_full) {
         fs.unlinkSync(prev_full)
+        // move asset dir
+        var assetPrev = removeExtname(prev_full);
+        var assetDest = removeExtname(full_source);
+        fs.exists(assetPrev).then(function(exist) {
+          if (exist) {
+            fs.copyDir(assetPrev, assetDest).then(function() {
+              fs.rmdir(assetPrev);
+            });
+          }
+        });
       }
       hexo.source.process([post.source]).then(function () {
   //      console.log(post.full_source, post.source)

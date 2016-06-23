@@ -1,5 +1,5 @@
 var path = require('path')
-var fs = require('fs')
+var fs = require('hexo-fs')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -175,7 +175,7 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    hexo.post.create({title: req.body.title, layout: 'draft', date: new Date()})
+    hexo.post.create({title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author})
     .error(function(err) {
       console.error(err, err.stack)
       return res.send(500, 'Failed to create post')
@@ -251,7 +251,7 @@ module.exports = function (app, hexo) {
         console.log(err)
       }
       hexo.source.process([filename]).then(function () {
-        res.done('/' + filename)
+        res.done(hexo.config.root + filename)
       });
     })
   });

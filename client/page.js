@@ -96,7 +96,9 @@ var Page = React.createClass({
     if (!page) {
       return <span>Loading...</span>
     }
-    var permaLink = '/' + page.path
+    var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
+    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
+    var permaLink = rootPath + '/' + page.path
     return Editor({
       isPage: true,
       post: this.state.page,
