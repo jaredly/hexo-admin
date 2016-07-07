@@ -14,7 +14,7 @@ var Post = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       post: api.post(params.postId),
-      tagsAndCategories: api.tagsAndCategories()
+      tagsCategoriesAndMetadata: api.tagsCategoriesAndMetadata()
     }
   })],
 
@@ -38,12 +38,17 @@ var Post = React.createClass({
   handleChange: function (update) {
     var now = moment()
     api.post(this.props.params.postId, update).then((data) => {
-      this.setState({
-        tagsAndCategories: data.tagsAndCategories,
+      var state = {
+        tagsCategoriesAndMetadata: data.tagsCategoriesAndMetadata,
         post: data.post,
         updated: now,
         author: data.post.author,
-      })
+      }
+      for(var i=0; i<data.tagsCategoriesAndMetadata.metadata.length; i++){
+        var name = data.tagsCategoriesAndMetadata.metadata[i]
+        state[name] = data.post[name]
+      }
+      this.setState(state)
     })
   },
 
@@ -102,7 +107,7 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post
-    if (!post || !this.state.tagsAndCategories) {
+    if (!post || !this.state.tagsCategoriesAndMetadata) {
       return <span>Loading...</span>
     }
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
@@ -123,7 +128,7 @@ var Post = React.createClass({
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
       onRemove: this.handleRemove,
-      tagsAndCategories: this.state.tagsAndCategories,
+      tagsCategoriesAndMetadata: this.state.tagsCategoriesAndMetadata,
     })
   }
 });

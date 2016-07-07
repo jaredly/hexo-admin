@@ -55,7 +55,18 @@ have it be long and complicated.
 Once that's in place, start up your hexo server and going to `/admin/` will
 require you to enter your password.
 
-### 5. Contribute!
+### 5. Custom post metadata
+To add and edit your own post metadata with the admin interface, add the
+metadata variable and your custom variables to your hexo `_config.yml`:
+```
+metadata:
+  authorId: defaultAuthorId
+  postLanguage:
+```
+You can provide default values that will be used to initialize the metadata
+of a new post.
+
+### 6. Contribute!
 - let me know how it can be improved in the [github
   issues](https://github.com/jaredly/hexo-admin/issues)
 - [fork](https://github.com/jaredly/hexo-admin) and pull-request
