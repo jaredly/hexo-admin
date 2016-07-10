@@ -60,8 +60,8 @@ To add and edit your own post metadata with the admin interface, add the
 metadata variable and your custom variables to your hexo `_config.yml`:
 ```
 metadata:
-  authorId: defaultAuthorId
-  postLanguage:
+  author_id: defaultAuthorId
+  language:
 ```
 You can provide default values that will be used to initialize the metadata
 of a new post.

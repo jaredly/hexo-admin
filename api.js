@@ -158,7 +158,7 @@ module.exports = function (app, hexo) {
       }
       res.done({
         page: addIsDraft(page),
-        tagsAndCategories: tagsCategoriesAndMetadata()
+        tagsCategoriesAndMetadata: tagsCategoriesAndMetadata()
       })
     }, hexo);
   });
@@ -228,7 +228,7 @@ module.exports = function (app, hexo) {
       }
       res.done({
         post: addIsDraft(post),
-        tagsAndCategories: tagsCategoriesAndMetadata()
+        tagsCategoriesAndMetadata: tagsCategoriesAndMetadata()
       })
     }, hexo);
   });
