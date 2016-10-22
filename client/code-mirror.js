@@ -1,6 +1,6 @@
 
 var React = require('react')
-var CM = require('code-mirror')
+var CM = require('codemirror/lib/codemirror')
 var PT = React.PropTypes
 var api = require('./api')
 
@@ -16,10 +16,10 @@ var CodeMirror = React.createClass({
   },
 
   componentDidMount: function () {
-    require('code-mirror/mode/markdown')
+    require('codemirror/mode/markdown/markdown')
     this.cm = CM(this.getDOMNode(), {
       value: this.props.initialValue || '',
-      theme: require('code-mirror/theme/default'),
+      theme: 'default',
       mode: 'markdown',
       lineWrapping: true,
     });
