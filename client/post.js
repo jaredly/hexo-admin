@@ -14,7 +14,8 @@ var Post = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       post: api.post(params.postId),
-      tagsAndCategories: api.tagsAndCategories()
+      tagsAndCategories: api.tagsAndCategories(),
+      settings: api.settings()
     }
   })],
 
@@ -102,7 +103,8 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post
-    if (!post || !this.state.tagsAndCategories) {
+    var settings = this.state.settings
+    if (!post || !this.state.tagsAndCategories || !settings) {
       return <span>Loading...</span>
     }
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
@@ -124,6 +126,7 @@ var Post = React.createClass({
       onUnpublish: this.handleUnpublish,
       onRemove: this.handleRemove,
       tagsAndCategories: this.state.tagsAndCategories,
+      editorSettings: settings.editor
     })
   }
 });

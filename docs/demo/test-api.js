@@ -69,6 +69,15 @@ module.exports = function (config) {
       return Promise.resolve(ids[id])
     },
     tagsAndCategories: () => Promise.resolve(config.tagsAndCategories),
+    settings: () => Promise.resolve(config.settings),
+    setSetting: (cat, key, val) => {
+      if (!config.settings[cat])
+        config.settings[cat] = new Object()
+      config.settings[cat][key] = val
+      Promise.resolve({
+        updated: 'Successfully updated ' + cat + '.' + key + ' = ' + val,
+        settings: config.settings
+      })
+    }
   }
 }
-

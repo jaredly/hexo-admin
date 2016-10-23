@@ -6,7 +6,8 @@ var api = require('./api')
 
 var CodeMirror = React.createClass({
   propTypes: {
-    onScroll: PT.func
+    onScroll: PT.func,
+    editorSettings: PT.object
   },
 
   componentDidUpdate: function (prevProps) {
@@ -17,12 +18,18 @@ var CodeMirror = React.createClass({
 
   componentDidMount: function () {
     require('codemirror/mode/markdown/markdown')
-    this.cm = CM(this.getDOMNode(), {
+
+    var editorSettings = {
       value: this.props.initialValue || '',
       theme: 'default',
       mode: 'markdown',
       lineWrapping: true,
-    });
+    }
+    for (var key in this.props.editorSettings) {
+      editorSettings[key] = this.props.editorSettings[key]
+    }
+
+    this.cm = CM(this.getDOMNode(), editorSettings);
     this.cm.on('change', (cm) => {
       this.props.onChange(cm.getValue())
     })

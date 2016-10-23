@@ -1,5 +1,6 @@
 var path = require('path')
 var fs = require('hexo-fs')
+var yml = require('js-yaml')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -25,6 +26,22 @@ module.exports = function (app, hexo) {
     return {
       categories: cats,
       tags: tags
+    }
+  }
+
+  // reads admin panel settings from _admin-config.yml
+  // or writes it if it does not exist
+  function getSettings() {
+    var path = hexo.base_dir + '_admin-config.yml'
+    if (!fs.existsSync(path)) {
+      hexo.log.d('admin config not found, creating one')
+      fs.writeFile(hexo.base_dir+'_admin-config.yml', '')
+      return {}
+    } else {
+      var settings = yml.safeLoad(fs.readFileSync(path))
+
+      if (!settings) return {}
+      return settings
     }
   }
 
@@ -94,6 +111,46 @@ module.exports = function (app, hexo) {
 
   use('tags-and-categories', function (req, res) {
     res.done(tagsAndCategories())
+  });
+
+  use('settings/list', function (req, res) {
+    res.done(getSettings())
+  });
+
+  use('settings/set', function (req, res, next) {
+    if (req.method !== 'POST') return next()
+    if (!req.body.cat) {
+      hexo.log.d('no category')
+      return res.send(400, 'No category given')
+    }
+    if (!req.body.key) {
+      hexo.log.d('no key')
+      return res.send(400, 'No setting key given')
+    }
+    // value is capable of being false
+    if (typeof req.body.val === 'undefined') {
+      hexo.log.d('no value')
+      return res.send(400, 'No value given')
+    }
+    var settings = getSettings()
+
+    cat = req.body.cat
+    key = req.body.key
+    val = req.body.val
+
+    if (!settings[cat]) {
+      settings[cat] = Object()
+    }
+
+    settings[cat][key] = val
+    hexo.log.d('set', cat + '.' + key, '=', val)
+
+    fs.writeFileSync(hexo.base_dir + '_admin-config.yml',
+      yml.safeDump(settings))
+    res.done({
+      updated: 'Successfully updated ' + cat + '.' + key + ' = ' + val,
+      settings: settings
+    })
   });
 
   use('pages/list', function (req, res) {
@@ -274,5 +331,4 @@ module.exports = function (app, hexo) {
       res.done({error: e.message})
     }
   });
-
 }

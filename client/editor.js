@@ -18,7 +18,8 @@ var Editor = React.createClass({
     isDraft: PT.bool,
     onPublish: PT.func.isRequired,
     onUnpublish: PT.func.isRequired,
-    tagsAndCategories: PT.object
+    tagsAndCategories: PT.object,
+    editorSettings: PT.object
   },
 
   handleChangeTitle: function (e) {
@@ -69,7 +70,8 @@ var Editor = React.createClass({
           <CodeMirror
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
-            onChange={this.props.onChangeContent} />
+            onChange={this.props.onChangeContent}
+            editorSettings={this.props.editorSettings} />
         </div>
         <div className="editor_display">
           <div className="editor_display-header">
