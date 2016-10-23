@@ -149,7 +149,8 @@ var ConfigDropper = React.createClass({
     return <div className={cx({
         "config-dropper": true,
         "config-dropper--open": this.state.open
-      })}>
+      })}
+           title="Settings">
       <div className="config-dropper_handle"
            onClick={this._toggleShow}>
         <i className="fa fa-gear"/>
