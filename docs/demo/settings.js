@@ -1,2 +1,3 @@
 
-module.exports = {'editor':{'lineNumbers':false}}
+module.exports = {'options': {'lineNumbers': false},
+                  'editor': {'lineNumbers':false}}

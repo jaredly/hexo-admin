@@ -18,8 +18,9 @@ var Settings = React.createClass({
 
   render: function () {
     var LineNumbers = SettingsCheckbox({
-                        cat: 'editor',
-                        key: 'lineNumbers',
+                        name: 'lineNumbers',
+                        enableOptions: {editor: {lineNumbers: true}},
+                        disableOptions: {editor: {lineNumbers: false}},
                         label: 'Enable line numbering.'
                       });
 

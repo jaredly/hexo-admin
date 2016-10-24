@@ -1,6 +1,7 @@
 var path = require('path')
 var fs = require('hexo-fs')
 var yml = require('js-yaml')
+var deepAssign = require('deep-assign')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -119,36 +120,40 @@ module.exports = function (app, hexo) {
 
   use('settings/set', function (req, res, next) {
     if (req.method !== 'POST') return next()
-    if (!req.body.cat) {
-      hexo.log.d('no category')
-      return res.send(400, 'No category given')
-    }
-    if (!req.body.key) {
-      hexo.log.d('no key')
-      return res.send(400, 'No setting key given')
+    if (!req.body.name) {
+      console.log('no name')
+      hexo.log.d('no name')
+      return res.send(400, 'No name given')
     }
     // value is capable of being false
-    if (typeof req.body.val === 'undefined') {
+    if (typeof req.body.value === 'undefined') {
+      console.log('no value')
       hexo.log.d('no value')
       return res.send(400, 'No value given')
     }
-    var settings = getSettings()
-
-    cat = req.body.cat
-    key = req.body.key
-    val = req.body.val
-
-    if (!settings[cat]) {
-      settings[cat] = Object()
+    if (!req.body.addOptions) {
+      console.log('no addOptions')
+      hexo.log.d('no addOptions')
+      return res.send(400, 'No options to add given')
+    }
+    settings = getSettings()
+    if (!settings.options) {
+      settings.options = new Object()
     }
 
-    settings[cat][key] = val
-    hexo.log.d('set', cat + '.' + key, '=', val)
+    var name = req.body.name
+    var value = req.body.value
+    var addOptions = req.body.addOptions
+
+    settings.options[name] = value
+
+    settings = deepAssign(settings, addOptions)
+    hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addOptions))
 
     fs.writeFileSync(hexo.base_dir + '_admin-config.yml',
       yml.safeDump(settings))
     res.done({
-      updated: 'Successfully updated ' + cat + '.' + key + ' = ' + val,
+      updated: 'Successfully updated ' + name + ' = ' + value,
       settings: settings
     })
   });
