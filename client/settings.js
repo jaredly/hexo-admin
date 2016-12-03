@@ -18,11 +18,18 @@ var Settings = React.createClass({
 
   render: function () {
     var LineNumbers = SettingsCheckbox({
-                        name: 'lineNumbers',
-                        enableOptions: {editor: {lineNumbers: true}},
-                        disableOptions: {editor: {lineNumbers: false}},
-                        label: 'Enable line numbering.'
-                      });
+      name: 'lineNumbers',
+      enableOptions: {editor: {lineNumbers: true}},
+      disableOptions: {editor: {lineNumbers: false}},
+      label: 'Enable line numbering.'
+    });
+
+    var SpellCheck = SettingsCheckbox({
+      name: 'spellcheck',
+      enableOptions: {editor: {inputStyle: 'contenteditable', spellcheck: true}},
+      disableOptions: {editor: {inputStyle: null, spellcheck: false}},
+      label: 'Enable spellchecking. (buggy on older browsers)'
+    });
 
     return (
       <div className="settings" style={divStyle}>
@@ -31,6 +38,7 @@ var Settings = React.createClass({
         </p>
         <h1>Editor Settings</h1>
         {LineNumbers}
+        {SpellCheck}
       </div>
     );
   }
