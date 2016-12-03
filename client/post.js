@@ -1,4 +1,5 @@
 
+var path = require('path')
 var DataFetcher = require('./data-fetcher');
 var api = require('./api');
 var React = require('react/addons')
@@ -109,7 +110,7 @@ var Post = React.createClass({
     }
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
     var rootPath = url.slice(0, url.indexOf('admin')).join('/')
-    var permaLink = rootPath + '/' + post.path
+    var permaLink = path.join(rootPath, '/', post.path)
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
