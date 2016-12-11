@@ -13,7 +13,7 @@ var Page = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       page: api.page(params.pageId)//,
-      //tagsAndCategories: api.tagsAndCategories()
+      //tagsCategoriesAndMetadata: api.tagsCategoriesAndMetadata()
     }
   })],
 
@@ -114,7 +114,7 @@ var Page = React.createClass({
       onChangeTitle: this.handleChangeTitle,
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
-      tagsAndCategories: this.state.tagsAndCategories,
+      tagsCategoriesAndMetadata: this.state.tagsCategoriesAndMetadata,
     })
   }
 });
