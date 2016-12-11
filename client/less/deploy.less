@@ -1,6 +1,6 @@
 .deploy {
-  padding: 50px;
-  max-width: 600px;
+  flex: 1;
+  display: flex;
 
   &_form {
     margin-bottom: 20px;
@@ -16,5 +16,24 @@
 
   h1 {
     font-size: 2em;
+  }
+
+  input.md {
+    width: 400px;
+  }
+
+  .deploy_options {
+    background-color: @primaryVeryLight;
+    list-style: none;
+    padding: 30px;
+    margin: 0;
+    width: 50%;
+    overflow: auto;
+  }
+
+  .deploy_output {
+    padding: 30px;
+    display: flex;
+    position: relative;
   }
 }

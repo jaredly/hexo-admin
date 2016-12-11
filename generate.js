@@ -9,18 +9,14 @@ function once(fn) {
   }
 }
 
-module.exports = function (config, message, done) {
-
-  var deployCommand = config.admin && config.admin.deployCommand ? config.admin.deployCommand.split(' ') : [];
-  var command = deployCommand.length > 0 ? deployCommand[0] : 'hexo';
-  generateCommand.shift();
-  var options = deployCommand.length > 0 ? deployCommand : ['deploy'];
-
-  if (message && message !== '') {
-    options.push('-m ' + message + '');
-  }
-
+module.exports = function (config, done) {
   done = once(done);
+
+  var generateCommand = config.admin && config.admin.generateCommand ? config.admin.generateCommand.split(' ') : [];
+  var command = generateCommand.length > 0 ? generateCommand[0] : 'hexo';
+  generateCommand.shift();
+  var options = generateCommand.length > 0 ? generateCommand : ['generate'];
+
   var proc = spawn(command, options, {detached: true});
   var stdout = '';
   var stderr = '';
