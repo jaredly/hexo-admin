@@ -295,7 +295,6 @@ module.exports = function (app, hexo) {
 
   use('images/upload', function (req, res, next) {
     hexo.log.d('uploading image')
-    hexo.log.d(req.body.filename)
     if (req.method !== 'POST') return next()
     if (!req.body) {
       return res.send(400, 'No post body given');
@@ -315,18 +314,25 @@ module.exports = function (app, hexo) {
       imagePrefix = settings.options.imagePrefix ? settings.options.imagePrefix : imagePrefix
     }
 
-    var filename
-    if (!req.body.filename) {
-      var i = 0
-      while (fs.existsSync(path.join(hexo.source_dir, imagePath, imagePrefix + i +'.png'))) {
-        i +=1
+    var msg = 'upload successful'
+    var i = 0
+    while (fs.existsSync(path.join(hexo.source_dir, imagePath, imagePrefix + i +'.png'))) {
+      i +=1
+    }
+    var filename = path.join(imagePrefix + i +'.png')
+    if (req.body.filename) {
+      var givenFilename = req.body.filename
+      // check for png ending, add it if not there
+      var index = givenFilename.toLowerCase().indexOf('.png')
+      if (index < 0 || index != givenFilename.length - 4) {
+        givenFilename += '.png'
       }
-      filename = path.join(imagePrefix + i +'.png')
-    } else {
-      filename = req.body.filename
-      var index = filename.toLowerCase().indexOf('.png')
-      if (index < 0 || index != filename.length - 4) {
-        filename += '.png'
+      hexo.log.d('trying custom filename', givenFilename)
+      if (fs.existsSync(path.join(hexo.source_dir, imagePath, givenFilename))){
+        hexo.log.d('file already exists, using', filename)
+        msg = 'filename already exists, renamed'
+      } else {
+        filename = givenFilename
       }
     }
 
@@ -341,7 +347,10 @@ module.exports = function (app, hexo) {
         console.log(err)
       }
       hexo.source.process().then(function () {
-        setTimeout(res.done(path.join(hexo.config.root + filename)), 500)
+        res.done({
+          src: path.join(hexo.config.root + filename),
+          msg: msg
+        })
       });
     })
   });
