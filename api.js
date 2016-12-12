@@ -138,7 +138,7 @@ module.exports = function (app, hexo) {
     }
     settings = getSettings()
     if (!settings.options) {
-      settings.options = new Object()
+      settings.options = {}
     }
 
     var name = req.body.name

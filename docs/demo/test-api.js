@@ -74,11 +74,11 @@ module.exports = function (config) {
     setSetting: (name, value, addOptions) => {
       console.log(config.settings)
       if (!config.settings.options) {
-        config.settings.options = new Object()
+        config.settings.options = {}
       }
       config.settings.options[name] = value
       config.settings = deepAssign(config.settings, addOptions)
-      Promise.resolve({
+      return Promise.resolve({
         updated: 'Successfully updated ' + name + ' = ' + value,
         settings: config.settings
       })
