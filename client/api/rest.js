@@ -46,7 +46,7 @@ module.exports = function (baseUrl) {
     },
     deploy: (message) => post('/deploy', {message: message}),
     newPage: (title) => post('/pages/new', {title: title}),
-    uploadImage: (data) => post('/images/upload', {data: data}),
+    uploadImage: (data, filename) => post('/images/upload', {data: data, filename: filename}),
     remove: (id) => post('/posts/' + id + '/remove'),
     publish: (id) => post('/posts/' + id + '/publish'),
     unpublish: (id) => post('/posts/' + id + '/unpublish'),

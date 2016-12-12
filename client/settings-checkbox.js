@@ -6,8 +6,8 @@ var api = require('./api')
 var SettingsCheckbox = React.createClass({
   propTypes: {
     name: PT.string.isRequired,
-    enableOptions: PT.object.isRequired,
-    disableOptions: PT.object.isRequired,
+    enableOptions: PT.object,
+    disableOptions: PT.object,
     label: PT.string.isRequired,
     onClick: PT.func
   },
