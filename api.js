@@ -307,9 +307,11 @@ module.exports = function (app, hexo) {
     var imagePath = '/images'
     var imagePrefix = 'pasted-'
     var askImageFilename = false
+    var overwriteImages = false
     // check for image settings and set them if they exist
     if (settings.options) {
       askImageFilename = !!settings.options.askImageFilename
+      overwriteImages = !!settings.options.overwriteImages
       imagePath = settings.options.imagePath ? settings.options.imagePath : imagePath
       imagePrefix = settings.options.imagePrefix ? settings.options.imagePrefix : imagePrefix
     }
@@ -329,8 +331,14 @@ module.exports = function (app, hexo) {
       }
       hexo.log.d('trying custom filename', givenFilename)
       if (fs.existsSync(path.join(hexo.source_dir, imagePath, givenFilename))){
-        hexo.log.d('file already exists, using', filename)
-        msg = 'filename already exists, renamed'
+        if (overwriteImages) {
+          hexo.log.d('file already exists, overwriting')
+          msg = 'overwrote existing file'
+          filename = givenFilename
+        } else {
+          hexo.log.d('file already exists, using', filename)
+          msg = 'filename already exists, renamed'
+        }
       } else {
         filename = givenFilename
       }

@@ -6,22 +6,23 @@ var api = require('./api')
 var SettingsCheckbox = React.createClass({
   propTypes: {
     name: PT.string.isRequired,
+    label: PT.string.isRequired,
+    style: PT.object,
     enableOptions: PT.object,
     disableOptions: PT.object,
-    label: PT.string.isRequired,
     onClick: PT.func
   },
 
   getInitialState: function () {
     return {
-      checked: true
+      checked: false,
     }
   },
 
   componentDidMount: function() {
     var name = this.props.name
     api.settings().then( (settings) => {
-      var checked;
+      var checked
       if (!settings.options) {
         checked = false
       } else {
@@ -46,7 +47,7 @@ var SettingsCheckbox = React.createClass({
 
   render: function() {
     return (
-      <p>
+      <p style={this.props.style}>
       <label>
           <input
             checked={this.state.checked}
