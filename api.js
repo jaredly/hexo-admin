@@ -131,9 +131,9 @@ module.exports = function (app, hexo) {
       hexo.log.d('no value')
       return res.send(400, 'No value given')
     }
-    if (!req.body.addOptions) {
-      console.log('no addOptions')
-      hexo.log.d('no addOptions')
+    if (!req.body.addedOptions) {
+      console.log('no addedOptions')
+      hexo.log.d('no addedOptions')
       return res.send(400, 'No options to add given')
     }
     settings = getSettings()
@@ -143,12 +143,12 @@ module.exports = function (app, hexo) {
 
     var name = req.body.name
     var value = req.body.value
-    var addOptions = req.body.addOptions
+    var addedOptions = req.body.addedOptions
 
     settings.options[name] = value
 
-    settings = deepAssign(settings, addOptions)
-    hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addOptions))
+    settings = deepAssign(settings, addedOptions)
+    hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addedOptions))
 
     fs.writeFileSync(hexo.base_dir + '_admin-config.yml',
       yml.safeDump(settings))

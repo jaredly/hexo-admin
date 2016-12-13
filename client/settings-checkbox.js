@@ -33,10 +33,10 @@ var SettingsCheckbox = React.createClass({
 
   handleChange: function(e) {
     var name = this.props.name
-    var addOptions = e.target.checked ? this.props.enableOptions
-                                      : this.props.disableOptions
+    var addedOptions = e.target.checked ? this.props.enableOptions
+                                        : this.props.disableOptions
     var value = e.target.checked
-    api.setSetting(name, value, addOptions).then( (result) => {
+    api.setSetting(name, value, addedOptions).then( (result) => {
       console.log(result.updated)
       this.setState({
         checked: result.settings.options[name]

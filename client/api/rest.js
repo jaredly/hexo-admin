@@ -52,10 +52,10 @@ module.exports = function (baseUrl) {
     unpublish: (id) => post('/posts/' + id + '/unpublish'),
     tagsAndCategories: () => get('/tags-and-categories'),
     settings: () => get('/settings/list'),
-    setSetting: (name, value, addOptions) => post('/settings/set', {
+    setSetting: (name, value, addedOptions) => post('/settings/set', {
       name: name,
       value: value,
-      addOptions: addOptions
+      addedOptions: addedOptions
     })
   }
 }
