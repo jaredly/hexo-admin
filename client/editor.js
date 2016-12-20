@@ -6,6 +6,7 @@ var PT = React.PropTypes
 var CodeMirror = require('./code-mirror')
 var SinceWhen = require('./since-when')
 var Rendered = require('./rendered')
+var CheckGrammar = require('./check-grammar')
 var ConfigDropper = require('./config-dropper')
 
 var Editor = React.createClass({
@@ -22,14 +23,28 @@ var Editor = React.createClass({
     adminSettings: PT.object
   },
 
+  getInitialState: function() {
+    return {
+      checkingGrammar: false
+    }
+  },
+
   handleChangeTitle: function (e) {
     return this.props.onChangeTitle(e.target.value)
   },
 
   handleScroll: function (percent) {
-    var node = this.refs.rendered.getDOMNode()
-    var height = node.getBoundingClientRect().height
-    node.scrollTop = (node.scrollHeight - height) * percent
+    if (!this.state.checkingGrammar) {
+      var node = this.refs.rendered.getDOMNode()
+      var height = node.getBoundingClientRect().height
+      node.scrollTop = (node.scrollHeight - height) * percent
+    }
+  },
+
+  onCheckGrammar: function () {
+    this.setState({
+      checkingGrammar: !this.state.checkingGrammar
+    })
   },
 
   render: function () {
@@ -58,6 +73,11 @@ var Editor = React.createClass({
                   onClick={this.props.onRemove}>
             <i className="fa fa-times"/>
           </button>}
+          {!this.props.isPage &&
+          <button className="editor_checkGrammar" title="Check Grammar"
+                  onClick={this.onCheckGrammar}>
+            <i className="fa fa-check-circle-o"/>
+          </button>}
       </div>
       <div className="editor_main">
         <div className="editor_edit">
@@ -84,10 +104,12 @@ var Editor = React.createClass({
               <i className="fa fa-link"/> {this.props.previewLink}
             </a>
           </div>
-          <Rendered
+          {!this.state.checkingGrammar && <Rendered
             ref="rendered"
             className="editor_rendered"
-            text={this.props.rendered}/>
+            text={this.props.rendered}/>}
+          {this.state.checkingGrammar && <CheckGrammar
+            raw={this.props.raw} />}
         </div>
       </div>
     </div>;
