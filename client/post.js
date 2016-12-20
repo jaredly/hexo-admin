@@ -1,4 +1,5 @@
 
+var path = require('path')
 var DataFetcher = require('./data-fetcher');
 var api = require('./api');
 var React = require('react/addons')
@@ -14,7 +15,8 @@ var Post = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       post: api.post(params.postId),
-      tagsAndCategories: api.tagsAndCategories()
+      tagsAndCategories: api.tagsAndCategories(),
+      settings: api.settings()
     }
   })],
 
@@ -102,12 +104,13 @@ var Post = React.createClass({
 
   render: function () {
     var post = this.state.post
-    if (!post || !this.state.tagsAndCategories) {
+    var settings = this.state.settings
+    if (!post || !this.state.tagsAndCategories || !settings) {
       return <span>Loading...</span>
     }
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
     var rootPath = url.slice(0, url.indexOf('admin')).join('/')
-    var permaLink = rootPath + '/' + post.path
+    var permaLink = path.join(rootPath, '/', post.path)
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
@@ -124,6 +127,7 @@ var Post = React.createClass({
       onUnpublish: this.handleUnpublish,
       onRemove: this.handleRemove,
       tagsAndCategories: this.state.tagsAndCategories,
+      editorSettings: settings.editor
     })
   }
 });

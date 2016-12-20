@@ -12,8 +12,8 @@ var moment = require('moment')
 var Page = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
-      page: api.page(params.pageId)//,
-      //tagsAndCategories: api.tagsAndCategories()
+      page: api.page(params.pageId),
+      settings: api.settings()
     }
   })],
 
@@ -93,7 +93,8 @@ var Page = React.createClass({
 
   render: function () {
     var page = this.state.page
-    if (!page) {
+    var settings = this.state.settings
+    if (!page || !settings) {
       return <span>Loading...</span>
     }
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
@@ -114,7 +115,7 @@ var Page = React.createClass({
       onChangeTitle: this.handleChangeTitle,
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
-      tagsAndCategories: this.state.tagsAndCategories,
+      editorSettings: settings.editor,
     })
   }
 });

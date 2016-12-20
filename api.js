@@ -1,5 +1,7 @@
 var path = require('path')
 var fs = require('hexo-fs')
+var yml = require('js-yaml')
+var deepAssign = require('deep-assign')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -25,6 +27,22 @@ module.exports = function (app, hexo) {
     return {
       categories: cats,
       tags: tags
+    }
+  }
+
+  // reads admin panel settings from _admin-config.yml
+  // or writes it if it does not exist
+  function getSettings() {
+    var path = hexo.base_dir + '_admin-config.yml'
+    if (!fs.existsSync(path)) {
+      hexo.log.d('admin config not found, creating one')
+      fs.writeFile(hexo.base_dir+'_admin-config.yml', '')
+      return {}
+    } else {
+      var settings = yml.safeLoad(fs.readFileSync(path))
+
+      if (!settings) return {}
+      return settings
     }
   }
 
@@ -94,6 +112,50 @@ module.exports = function (app, hexo) {
 
   use('tags-and-categories', function (req, res) {
     res.done(tagsAndCategories())
+  });
+
+  use('settings/list', function (req, res) {
+    res.done(getSettings())
+  });
+
+  use('settings/set', function (req, res, next) {
+    if (req.method !== 'POST') return next()
+    if (!req.body.name) {
+      console.log('no name')
+      hexo.log.d('no name')
+      return res.send(400, 'No name given')
+    }
+    // value is capable of being false
+    if (typeof req.body.value === 'undefined') {
+      console.log('no value')
+      hexo.log.d('no value')
+      return res.send(400, 'No value given')
+    }
+    if (!req.body.addedOptions) {
+      console.log('no addedOptions')
+      hexo.log.d('no addedOptions')
+      return res.send(400, 'No options to add given')
+    }
+    settings = getSettings()
+    if (!settings.options) {
+      settings.options = {}
+    }
+
+    var name = req.body.name
+    var value = req.body.value
+    var addedOptions = req.body.addedOptions
+
+    settings.options[name] = value
+
+    settings = deepAssign(settings, addedOptions)
+    hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addedOptions))
+
+    fs.writeFileSync(hexo.base_dir + '_admin-config.yml',
+      yml.safeDump(settings))
+    res.done({
+      updated: 'Successfully updated ' + name + ' = ' + value,
+      settings: settings
+    })
   });
 
   use('pages/list', function (req, res) {
@@ -274,5 +336,4 @@ module.exports = function (app, hexo) {
       res.done({error: e.message})
     }
   });
-
 }

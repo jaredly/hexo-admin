@@ -13,6 +13,7 @@ var App = React.createClass({
           <li><Link to="pages">Pages</Link></li>
           <li><Link to="about">About</Link></li>
           <li><Link to="deploy">Deploy</Link></li>
+          <li><Link to="settings">Settings</Link></li>
         </ul>
       </div>
       <div className="app_main">
@@ -23,4 +24,3 @@ var App = React.createClass({
 })
 
 module.exports = App
-

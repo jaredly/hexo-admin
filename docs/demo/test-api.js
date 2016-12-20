@@ -2,6 +2,7 @@
 var Promise = require('es6-promise').Promise
 var moment = require('moment')
 var render = require('./render')
+var deepAssign = require('deep-assign')
 
 function newId() {
   var id = ''
@@ -69,6 +70,18 @@ module.exports = function (config) {
       return Promise.resolve(ids[id])
     },
     tagsAndCategories: () => Promise.resolve(config.tagsAndCategories),
+    settings: () => Promise.resolve(config.settings),
+    setSetting: (name, value, addedOptions) => {
+      console.log(config.settings)
+      if (!config.settings.options) {
+        config.settings.options = {}
+      }
+      config.settings.options[name] = value
+      config.settings = deepAssign(config.settings, addedOptions)
+      return Promise.resolve({
+        updated: 'Successfully updated ' + name + ' = ' + value,
+        settings: config.settings
+      })
+    }
   }
 }
-
