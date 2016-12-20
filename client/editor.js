@@ -92,6 +92,7 @@ var Editor = React.createClass({
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
             onChange={this.props.onChangeContent}
+            forceLineNumbers={this.state.checkingGrammar}
             adminSettings={this.props.adminSettings} />
         </div>
         <div className="editor_display">

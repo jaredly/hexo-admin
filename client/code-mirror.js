@@ -7,12 +7,19 @@ var api = require('./api')
 var CodeMirror = React.createClass({
   propTypes: {
     onScroll: PT.func,
+    forceLineNumbers: PT.bool,
     adminSettings: PT.object
   },
 
   componentDidUpdate: function (prevProps) {
     if (prevProps.initialValue !== this.props.initialValue) {
       this.cm.setValue(this.props.initialValue)
+    }
+    // on forcing line numbers, set or unset linenumbers if not set in adminSettings
+    if (prevProps.forceLineNumbers !== this.props.forceLineNumbers) {
+      if (!(this.props.adminSettings.editor || {}).lineNumbers) {
+        this.cm.setOption('lineNumbers', this.props.forceLineNumbers);
+      }
     }
   },
 
