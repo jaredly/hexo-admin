@@ -75,7 +75,7 @@ var Editor = React.createClass({
             <i className="fa fa-times"/>
           </button>}
           {!this.props.isPage &&
-          <button className="editor_checkGrammar" title="Check Grammar"
+          <button className="editor_checkGrammar" title="Check for Writing Improvements"
                   onClick={this.onCheckGrammar}>
             <i className="fa fa-check-circle-o"/>
           </button>}

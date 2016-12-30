@@ -32,7 +32,7 @@ var suggestionContents = function (suggestions) {
   if (suggestions.length === 0) {
     var golden = {color: 'gold'};
     contents = (<div className='grammar_box'>
-      <p className='grammar_reason'><i style={golden} className="fa fa-star"></i>&nbsp;Nice! No grammar errors found!</p>
+      <p className='grammar_reason'><i style={golden} className="fa fa-star"></i>&nbsp;Nice! No possible improvements were found!</p>
     </div>)
   } else {
     suggestions.forEach(function (suggestion, i) {
@@ -68,7 +68,7 @@ var CheckGrammar = React.createClass({
 
   render: function () {
     return (<div className='post-content editor_rendered'>
-      <h2>Grammar Check</h2>
+      <h2>Writing Suggestions</h2>
       {this.state.suggestions}
     </div>)
   }
