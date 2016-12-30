@@ -13,6 +13,7 @@ var Editor = React.createClass({
   propTypes: {
     post: PT.object,
     raw: PT.string,
+    updatedRaw: PT.string,
     onChangeTitle: PT.func,
     title: PT.string,
     updated: PT.object,
@@ -110,7 +111,7 @@ var Editor = React.createClass({
             className="editor_rendered"
             text={this.props.rendered}/>}
           {this.state.checkingGrammar && <CheckGrammar
-            raw={this.props.raw} />}
+            raw={this.props.updatedRaw} />}
         </div>
       </div>
     </div>;
