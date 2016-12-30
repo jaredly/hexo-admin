@@ -67,8 +67,12 @@ var CheckGrammar = React.createClass({
   },
 
   render: function () {
+    var creditStyle = {
+      'margin-top': '-24px'
+    }
     return (<div className='post-content editor_rendered'>
       <h2>Writing Suggestions</h2>
+      <p style={creditStyle}>Brought to you by <a href='https://github.com/btford/write-good' target='_blank'>write-good</a>.</p>
       {this.state.suggestions}
     </div>)
   }
