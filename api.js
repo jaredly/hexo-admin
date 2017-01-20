@@ -131,27 +131,29 @@ module.exports = function (app, hexo) {
       hexo.log.d('no value')
       return res.send(400, 'No value given')
     }
-    if (!req.body.addedOptions) {
-      console.log('no addedOptions')
-      hexo.log.d('no addedOptions')
-      return res.send(400, 'No options to add given')
-    }
+
+    var name = req.body.name
+    var value = req.body.value
+
+    // no addOptions means we just want to set a single value in the admin options
+    // usually for text-based option setting
+    var addedOptsExist = !!req.body.addedOptions
+
     settings = getSettings()
+    // create options section if it doesn't exist, ie. first time changing settings
     if (!settings.options) {
       settings.options = {}
     }
 
-    var name = req.body.name
-    var value = req.body.value
-    var addedOptions = req.body.addedOptions
-
     settings.options[name] = value
 
-    settings = deepAssign(settings, addedOptions)
+    var addedOptions = addedOptsExist ? req.body.addedOptions : 'no additional options'
+    if (addedOptsExist) {
+      settings = deepAssign(settings, addedOptions)
+    }
     hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addedOptions))
 
-    fs.writeFileSync(hexo.base_dir + '_admin-config.yml',
-      yml.safeDump(settings))
+    fs.writeFileSync(hexo.base_dir + '_admin-config.yml', yml.safeDump(settings))
     res.done({
       updated: 'Successfully updated ' + name + ' = ' + value,
       settings: settings
@@ -292,6 +294,7 @@ module.exports = function (app, hexo) {
   });
 
   use('images/upload', function (req, res, next) {
+    hexo.log.d('uploading image')
     if (req.method !== 'POST') return next()
     if (!req.body) {
       return res.send(400, 'No post body given');
@@ -299,21 +302,63 @@ module.exports = function (app, hexo) {
     if (!req.body.data) {
       return res.send(400, 'No data given');
     }
+    var settings = getSettings()
+
+    var imagePath = '/images'
+    var imagePrefix = 'pasted-'
+    var askImageFilename = false
+    var overwriteImages = false
+    // check for image settings and set them if they exist
+    if (settings.options) {
+      askImageFilename = !!settings.options.askImageFilename
+      overwriteImages = !!settings.options.overwriteImages
+      imagePath = settings.options.imagePath ? settings.options.imagePath : imagePath
+      imagePrefix = settings.options.imagePrefix ? settings.options.imagePrefix : imagePrefix
+    }
+
+    var msg = 'upload successful'
     var i = 0
-    while (fs.existsSync(hexo.source_dir + 'images/pasted-' + i + '.png')) {
+    while (fs.existsSync(path.join(hexo.source_dir, imagePath, imagePrefix + i +'.png'))) {
       i +=1
     }
-    var filename = 'images/pasted-' + i + '.png'
-    var outpath = hexo.source_dir + filename
+    var filename = path.join(imagePrefix + i +'.png')
+    if (req.body.filename) {
+      var givenFilename = req.body.filename
+      // check for png ending, add it if not there
+      var index = givenFilename.toLowerCase().indexOf('.png')
+      if (index < 0 || index != givenFilename.length - 4) {
+        givenFilename += '.png'
+      }
+      hexo.log.d('trying custom filename', givenFilename)
+      if (fs.existsSync(path.join(hexo.source_dir, imagePath, givenFilename))){
+        if (overwriteImages) {
+          hexo.log.d('file already exists, overwriting')
+          msg = 'overwrote existing file'
+          filename = givenFilename
+        } else {
+          hexo.log.d('file already exists, using', filename)
+          msg = 'filename already exists, renamed'
+        }
+      } else {
+        filename = givenFilename
+      }
+    }
+
+    filename = path.join(imagePath, filename)
+    var outpath = path.join(hexo.source_dir, filename)
 
     var dataURI = req.body.data.slice('data:image/png;base64,'.length)
     var buf = new Buffer(dataURI, 'base64')
+    hexo.log.d(`saving image to ${outpath}`)
     fs.writeFile(outpath, buf, function (err) {
       if (err) {
         console.log(err)
       }
-      hexo.source.process([filename]).then(function () {
-        res.done(hexo.config.root + filename)
+      hexo.source.process().then(function () {
+        res.done({
+          src: path.join(hexo.config.root + filename),
+          msg: msg
+        })
       });
     })
   });

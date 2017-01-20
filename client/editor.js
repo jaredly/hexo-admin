@@ -19,7 +19,7 @@ var Editor = React.createClass({
     onPublish: PT.func.isRequired,
     onUnpublish: PT.func.isRequired,
     tagsAndCategories: PT.object,
-    editorSettings: PT.object
+    adminSettings: PT.object
   },
 
   handleChangeTitle: function (e) {
@@ -72,7 +72,7 @@ var Editor = React.createClass({
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
             onChange={this.props.onChangeContent}
-            editorSettings={this.props.editorSettings} />
+            adminSettings={this.props.adminSettings} />
         </div>
         <div className="editor_display">
           <div className="editor_display-header">

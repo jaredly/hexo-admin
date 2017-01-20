@@ -7,7 +7,7 @@ var api = require('./api')
 var CodeMirror = React.createClass({
   propTypes: {
     onScroll: PT.func,
-    editorSettings: PT.object
+    adminSettings: PT.object
   },
 
   componentDidUpdate: function (prevProps) {
@@ -25,8 +25,8 @@ var CodeMirror = React.createClass({
       mode: 'markdown',
       lineWrapping: true,
     }
-    for (var key in this.props.editorSettings) {
-      editorSettings[key] = this.props.editorSettings[key]
+    for (var key in this.props.adminSettings.editor) {
+      editorSettings[key] = this.props.adminSettings.editor[key]
     }
 
     this.cm = CM(this.getDOMNode(), editorSettings);
@@ -67,10 +67,20 @@ var CodeMirror = React.createClass({
       }
     };
     if (!blob) return
+
+    var settings = this.props.adminSettings
     var reader = new FileReader();
     reader.onload = (event) => {
-      api.uploadImage(event.target.result).then((src) =>
-        this.cm.replaceSelection('![pasted image](' + src + ')')
+      var filename = null;
+      if (settings.options) {
+        if(!!settings.options.askImageFilename) {
+          var filePath = !!settings.options.imagePath ? settings.options.imagePath : '/images'
+          filename = prompt(`What would you like to name the photo? All files saved as pngs. Name will be relative to ${filePath}.`, 'image.png')
+        }
+      }
+      console.log(filename)
+      api.uploadImage(event.target.result, filename).then((res) =>
+        this.cm.replaceSelection(`\n![${res.msg}](${res.src})`)
       );
     };
     reader.readAsDataURL(blob);

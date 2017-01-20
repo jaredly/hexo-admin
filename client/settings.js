@@ -1,7 +1,7 @@
 
 var React = require('react/addons')
-var api = require('./api')
 var SettingsCheckbox = require('./settings-checkbox')
+var SettingsTextbox = require('./settings-textbox')
 
 var divStyle = {
   whiteSpace: 'nowrap'
@@ -9,11 +9,7 @@ var divStyle = {
 
 var Settings = React.createClass({
   getInitialState: function() {
-    return {
-      updated: null,
-      error: null,
-      status: 'initial',
-    };
+    return {};
   },
 
   render: function () {
@@ -31,14 +27,52 @@ var Settings = React.createClass({
       label: 'Enable spellchecking. (buggy on older browsers)'
     });
 
+    var AskImageFilename = SettingsCheckbox({
+      name: 'askImageFilename',
+      label: 'Always ask for filename.',
+      style: {width: '300px', display: 'inline-block'}
+    });
+
+    var OverwriteImages = SettingsCheckbox({
+      name: 'overwriteImages',
+      label: 'Overwrite images if file already exists.',
+      style: {width: '425px', display: 'inline-block'}
+    })
+
+    var ImagePath = SettingsTextbox({
+      name: 'imagePath',
+      defaultValue: '/images',
+      label: 'Image directory'
+    });
+
+    var ImagePrefix = SettingsTextbox({
+      name: 'imagePrefix',
+      defaultValue: 'pasted-',
+      label: 'Image filename prefix'
+    });
+
     return (
       <div className="settings" style={divStyle}>
+        <h1>Settings</h1>
         <p>
           Set various settings for your admin panel and editor.
         </p>
-        <h1>Editor Settings</h1>
+        <hr />
+
+        <h2>Editor Settings</h2>
         {LineNumbers}
         {SpellCheck}
+        <hr />
+
+        <h2>Image Pasting Settings</h2>
+        <p>
+          Hexo-admin allows you to paste images you copy from the web or elsewhere directly
+          into the editor. Decide how you'd like to handle the pasted images.
+        </p>
+        {AskImageFilename}
+        {OverwriteImages}
+        {ImagePath}
+        {ImagePrefix}
       </div>
     );
   }

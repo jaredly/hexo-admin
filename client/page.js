@@ -115,7 +115,7 @@ var Page = React.createClass({
       onChangeTitle: this.handleChangeTitle,
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
-      editorSettings: settings.editor,
+      adminSettings: settings
     })
   }
 });

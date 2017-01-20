@@ -127,7 +127,7 @@ var Post = React.createClass({
       onUnpublish: this.handleUnpublish,
       onRemove: this.handleRemove,
       tagsAndCategories: this.state.tagsAndCategories,
-      editorSettings: settings.editor
+      adminSettings: settings
     })
   }
 });
