@@ -82,6 +82,18 @@ module.exports = function (app, hexo) {
     }, hexo)
   }
 
+  function rename(id, body, res) {
+    var post = hexo.model('Post').get(id)
+    if (!post) return res.send(404, "Post not found")
+    update(id, {source: body.filename}, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      hexo.log.d(`renamed post to ${body.filename}`)
+      res.done(addIsDraft(post))
+    }, hexo)
+  }
+
   var use = function (path, fn) {
     app.use(hexo.config.root + 'admin/api/' + path, function (req, res) {
       var done = function (val) {
@@ -268,6 +280,9 @@ module.exports = function (app, hexo) {
     }
     if (last === 'remove') {
       return remove(parts[parts.length-2], req.body, res)
+    }
+    if (last === 'rename') {
+      return rename(parts[parts.length-2], req.body, res)
     }
 
     var id = last

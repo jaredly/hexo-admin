@@ -7,6 +7,7 @@ var CodeMirror = require('./code-mirror')
 var SinceWhen = require('./since-when')
 var Rendered = require('./rendered')
 var ConfigDropper = require('./config-dropper')
+var RenameFile = require('./rename-file')
 
 var Editor = React.createClass({
   propTypes: {
@@ -66,7 +67,8 @@ var Editor = React.createClass({
                 <SinceWhen className="editor_updated"
                 prefix="saved "
                 time={this.props.updated}/>}
-            Markdown
+            <span>Markdown&nbsp;&nbsp;
+            {!this.props.isPage && <RenameFile post={this.props.post} />}</span>
           </div>
           <CodeMirror
             onScroll={this.handleScroll}
