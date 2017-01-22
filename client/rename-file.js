@@ -57,6 +57,16 @@ var RenameFile = React.createClass({
     })
   },
 
+  handleKeyPress: function(e) {
+    if (e.key === 'Enter') {
+      return this.handleRenameFile()
+    }
+    // esccape key
+    if (e.keyCode === 27) {
+      return this.toggleEditing()
+    }
+  },
+
   render: function() {
     return (
       <div className='fileRename'>
@@ -69,6 +79,7 @@ var RenameFile = React.createClass({
         {this.state.editing && <span>
           <input type='text'
             onChange={this.handleEditChange}
+            onKeyDown={this.handleKeyPress}
             defaultValue={this.state.editingName} />
           <span className='fileRename_buttons'>
             <i title='Cancel'
