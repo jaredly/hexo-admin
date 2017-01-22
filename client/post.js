@@ -37,7 +37,6 @@ var Post = React.createClass({
   },
 
   handleChange: function (update) {
-    console.log('post.handleChange')
     var now = moment()
     api.post(this.props.params.postId, update).then((data) => {
       this.setState({
