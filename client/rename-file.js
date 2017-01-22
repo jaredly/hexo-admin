@@ -41,6 +41,11 @@ var RenameFile = React.createClass({
     var postId = this.props.post._id
     var editingName = this.state.editingName
     api.renamePost(postId, editingName).then(result => {
+      if (!result) {
+        console.log('error renaming file.')
+        this.toggleEditing()
+        return
+      }
       console.log(`successfully renamed file to ${editingName}`)
 
       var url = window.location.pathname.split('/')
