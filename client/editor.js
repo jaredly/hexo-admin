@@ -84,9 +84,8 @@ var Editor = React.createClass({
                 prefix="saved "
                 time={this.props.updated}/>}
             <span>Markdown&nbsp;&nbsp;
-            {!this.props.isPage &&
               <RenameFile post={this.props.post}
-                handlePreviewLink={this.handlePreviewLink} />}</span>
+                handlePreviewLink={this.handlePreviewLink} /></span>
           </div>
           <CodeMirror
             onScroll={this.handleScroll}
