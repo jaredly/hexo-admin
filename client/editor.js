@@ -111,6 +111,7 @@ var Editor = React.createClass({
             className="editor_rendered"
             text={this.props.rendered}/>}
           {this.state.checkingGrammar && <CheckGrammar
+            toggleGrammar={this.onCheckGrammar}
             raw={this.props.updatedRaw} />}
         </div>
       </div>

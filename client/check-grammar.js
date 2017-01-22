@@ -45,6 +45,7 @@ var suggestionContents = function (suggestions) {
 // takes the place of Rendered in the editor, showing grammar suggestions
 var CheckGrammar = React.createClass({
   propTypes: {
+    toggleGrammar: PT.func,
     raw: PT.string
   },
 
@@ -74,6 +75,10 @@ var CheckGrammar = React.createClass({
       <h2>Writing Suggestions</h2>
       <p style={creditStyle}>Brought to you by <a href='https://github.com/btford/write-good' target='_blank'>write-good</a>.</p>
       {this.state.suggestions}
+      <button onClick={this.props.toggleGrammar}
+              className='pb-button grammar_backToPreview'>
+      Back to Preview
+      </button>
     </div>)
   }
 })
