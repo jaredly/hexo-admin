@@ -1,4 +1,5 @@
 
+var path = require('path')
 var React = require('react/addons')
 var cx = React.addons.classSet
 var Promise = require('es6-promise').Promise
@@ -21,6 +22,21 @@ var Editor = React.createClass({
     onUnpublish: PT.func.isRequired,
     tagsAndCategories: PT.object,
     adminSettings: PT.object
+  },
+
+  getInitialState: function() {
+    var url = window.location.pathname.split('/')
+    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
+    return {
+      previewLink: path.join(rootPath, this.props.post.path)
+    }
+  },
+
+  handlePreviewLink: function(previewLink) {
+    console.log('updating preview link')
+    this.setState({
+      previewLink: path.join(previewLink)
+    })
   },
 
   handleChangeTitle: function (e) {
@@ -68,7 +84,9 @@ var Editor = React.createClass({
                 prefix="saved "
                 time={this.props.updated}/>}
             <span>Markdown&nbsp;&nbsp;
-            {!this.props.isPage && <RenameFile post={this.props.post} />}</span>
+            {!this.props.isPage &&
+              <RenameFile post={this.props.post}
+                handlePreviewLink={this.handlePreviewLink} />}</span>
           </div>
           <CodeMirror
             onScroll={this.handleScroll}
@@ -82,8 +100,8 @@ var Editor = React.createClass({
               {this.props.wordCount} words
             </span>
             Preview
-            {' '}<a className="editor_perma-link" href={this.props.previewLink} target="_blank">
-              <i className="fa fa-link"/> {this.props.previewLink}
+            {' '}<a className="editor_perma-link" href={this.state.previewLink} target="_blank">
+              <i className="fa fa-link"/> {this.state.previewLink}
             </a>
           </div>
           <Rendered

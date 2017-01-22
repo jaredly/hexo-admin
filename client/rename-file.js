@@ -1,11 +1,13 @@
 
+var path = require('path')
 var React = require('react/addons')
 var PT = React.PropTypes
 var api = require('./api')
 
 var RenameFile = React.createClass({
   propTypes: {
-    post: PT.object
+    post: PT.object,
+    handlePreviewLink: PT.func
   },
 
   getInitialState: function() {
@@ -40,7 +42,13 @@ var RenameFile = React.createClass({
     var editingName = this.state.editingName
     api.renamePost(postId, editingName).then(result => {
       console.log(`successfully renamed file to ${editingName}`)
-      this.setState({filename: editingName, editing: false})
+
+      var url = window.location.pathname.split('/')
+      var rootPath = url.slice(0, url.indexOf('admin')).join('/')
+      var previewLink = path.join(rootPath, result.path)
+
+      this.setState({filename: editingName, editing: false},
+                    this.props.handlePreviewLink(previewLink))
     })
   },
 

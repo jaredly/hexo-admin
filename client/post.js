@@ -1,5 +1,4 @@
 
-var path = require('path')
 var DataFetcher = require('./data-fetcher');
 var api = require('./api');
 var React = require('react/addons')
@@ -38,6 +37,7 @@ var Post = React.createClass({
   },
 
   handleChange: function (update) {
+    console.log('post.handleChange')
     var now = moment()
     api.post(this.props.params.postId, update).then((data) => {
       this.setState({
@@ -108,9 +108,6 @@ var Post = React.createClass({
     if (!post || !this.state.tagsAndCategories || !settings) {
       return <span>Loading...</span>
     }
-    var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
-    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
-    var permaLink = path.join(rootPath, '/', post.path)
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
@@ -119,7 +116,6 @@ var Post = React.createClass({
       updated: this.state.updated,
       title: this.state.title,
       rendered: this.state.rendered,
-      previewLink: permaLink,
       onChange: this.handleChange,
       onChangeContent: this.handleChangeContent,
       onChangeTitle: this.handleChangeTitle,
