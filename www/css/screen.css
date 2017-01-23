@@ -655,6 +655,10 @@ figure.highlight pre {
     margin: 0;
 }
 
+pre .line {
+  height: 20px
+}
+
 /* Theme: Solarized - Github
  * More theme here: http://softwaremaniacs.org/media/soft/highlight/test.html
  */
