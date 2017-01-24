@@ -11,8 +11,9 @@ module.exports = function (hexo) {
 
     function validate_credentials( executionScope, request, response, callback ) {
         var config = hexo.config.admin
+        var passwordHash = bcrypt.hashSync(config.secret)
         if (request.body.username == config.username &&
-            bcrypt.compareSync(request.body.password, config.password_hash)) {
+            bcrypt.compareSync(request.body.password, passwordHash)) {
             executionScope.success({name:request.body.user}, callback)
         }
         else {
