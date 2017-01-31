@@ -97,9 +97,6 @@ var Page = React.createClass({
     if (!page || !settings) {
       return <span>Loading...</span>
     }
-    var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
-    var rootPath = url.slice(0, url.indexOf('admin')).join('/')
-    var permaLink = rootPath + '/' + page.path
     return Editor({
       isPage: true,
       post: this.state.page,
@@ -109,7 +106,6 @@ var Page = React.createClass({
       updated: this.state.updated,
       title: this.state.title,
       rendered: this.state.rendered,
-      previewLink: permaLink,
       onChange: this.handleChange,
       onChangeContent: this.handleChangeContent,
       onChangeTitle: this.handleChangeTitle,

@@ -69,6 +69,7 @@ module.exports = function (config) {
       ids[id].isDraft = true
       return Promise.resolve(ids[id])
     },
+    renamePost: (id, filename) => Promise.resolve({path: filename}),
     tagsAndCategories: () => Promise.resolve(config.tagsAndCategories),
     settings: () => Promise.resolve(config.settings),
     setSetting: (name, value, addedOptions) => {
