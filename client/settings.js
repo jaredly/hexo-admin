@@ -1,5 +1,6 @@
 
 var React = require('react/addons')
+var Link = require('react-router').Link
 var SettingsCheckbox = require('./settings-checkbox')
 var SettingsTextbox = require('./settings-textbox')
 
@@ -56,6 +57,10 @@ var Settings = React.createClass({
         <h1>Settings</h1>
         <p>
           Set various settings for your admin panel and editor.
+        </p>
+        <p>
+          Hexo admin can be secured with a password.
+          {' '}<Link to='auth-setup'>Setup authentification here.</Link>
         </p>
         <hr />
 
