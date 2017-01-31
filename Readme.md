@@ -47,9 +47,16 @@ admin:
   secret: a secret something
 ```
 
+The `password_hash` is the bcrypt hash of your password. The `secret` is used
+to make the cookies secure, so it's a good idea to have it be long and
+complicated.
+
 A utility in Hexo admin's Settings can hash your password and generate the `admin`
-section for you. Start Hexo and go to Settings&nbsp;>&nbsp;Setup&nbsp;authentification
+section for you. Start Hexo and go to `Settings > Setup authentification`
 and fill out your information. Copy the generated YAML into your `_config.yml`.
+
+Once that's in place, start up your hexo server and going to `/admin/` will
+require you to enter your password.
 
 ### 5. Contribute!
 - let me know how it can be improved in the [github
