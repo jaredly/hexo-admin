@@ -53,7 +53,7 @@ module.exports = function (baseUrl) {
     renamePost: (id, filename) => post('/posts/' + id + '/rename', {
       filename: filename
     }),
-    tagsAndCategories: () => get('/tags-and-categories'),
+    tagsCategoriesAndMetadata: () => get('/tags-categories-and-metadata'),
     settings: () => get('/settings/list'),
     setSetting: (name, value, addedOptions) => post('/settings/set', {
       name: name,

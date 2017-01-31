@@ -11,29 +11,47 @@ function toText(lst, map) {
   return lst.map((name) => map[name] || name)
 }
 
+function addMetadata(state, metadata, post){
+  for(var i=0; i<metadata.length; i++){
+    state[metadata[i]] = post[metadata[i]]
+  }
+}
+
+function isMetadataEqual(state, metadata, post){
+  var isEqual = true;
+  for(var i=0; i<metadata.length && isEqual; i++){
+    isEqual = isEqual && state[metadata[i]] === post[metadata[i]]
+  }
+  return isEqual
+}
+
 var ConfigDropper = React.createClass({
   getInitialState: function () {
-    var tac = this.props.tagsAndCategories
-    return {
+    var tagCatMeta = this.props.tagsCategoriesAndMetadata
+    var state = {
       open: false,
       date: moment(this.props.post.date).format(dateFormat),
-      tags: toText(this.props.post.tags, tac.tags),
-      categories: toText(this.props.post.categories, tac.categories),
+      tags: toText(this.props.post.tags, tagCatMeta.tags),
+      categories: toText(this.props.post.categories, tagCatMeta.categories),
       author: this.props.post.author,
     }
+    addMetadata(state, tagCatMeta.metadata, this.props.post);
+    return state
   },
 
   componentWillReceiveProps: function (nextProps) {
     if (nextProps.post === this.props.post) {
       return
     }
-    var tac = nextProps.tagsAndCategories
-    this.setState({
+    var tagCatMeta = nextProps.tagsCategoriesAndMetadata
+    var state = {
       date: moment(nextProps.post.date).format(dateFormat),
-      tags: toText(nextProps.post.tags, tac.tags),
-      categories: toText(nextProps.post.categories, tac.categories),
+      tags: toText(nextProps.post.tags, tagCatMeta.tags),
+      categories: toText(nextProps.post.categories, tagCatMeta.categories),
       author: nextProps.post.author,
-    })
+    }
+    addMetadata(state, tagCatMeta.metadata, nextProps.post);
+    this.setState(state)
   },
 
   componentDidUpdate: function (prevProps, prevState) {
@@ -83,6 +101,12 @@ var ConfigDropper = React.createClass({
     })
   },
 
+  _onChangeMetadata: function (e) {
+    var state = {}
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  },
+
   _onChange: function (attr, value) {
     var update = {}
     update[attr] = value
@@ -94,22 +118,26 @@ var ConfigDropper = React.createClass({
     if (!date.isValid()) {
       date = moment(this.props.post.date)
     }
-    var tac = this.props.tagsAndCategories
-    var tags = toText(this.props.post.tags, tac.tags)
-    var categories = toText(this.props.post.categories, tac.categories)
+    var tagCatMeta = this.props.tagsCategoriesAndMetadata
+    var tags = toText(this.props.post.tags, tagCatMeta.tags)
+    var categories = toText(this.props.post.categories, tagCatMeta.categories)
     var author = this.props.post.author
     var textDate = date.toISOString()
+    var isSameMetadata = isMetadataEqual(this.state, tagCatMeta.metadata, this.props.post)
     if (textDate === this.props.post.date &&
         _.isEqual(this.state.categories, categories) &&
-        _.isEqual(this.state.tags, tags) && author === this.state.author) {
+        _.isEqual(this.state.tags, tags) && author === this.state.author &&
+        isSameMetadata) {
       return
     }
-    this.props.onChange({
+    var state = {
       date: date.toISOString(),
       categories: this.state.categories,
       tags: this.state.tags,
       author: this.state.author,
-    })
+    }
+    addMetadata(state, tagCatMeta.metadata, this.state)
+    this.props.onChange(state)
   },
 
   config: function () {
@@ -131,18 +159,36 @@ var ConfigDropper = React.createClass({
       <div className="config_section">
         <div className="config_section-title">Tags</div>
         <AutoList
-          options={this.props.tagsAndCategories.tags}
+          options={this.props.tagsCategoriesAndMetadata.tags}
           values={this.state.tags}
           onChange={this._onChange.bind(null, 'tags')}/>
       </div>
       <div className="config_section">
         <div className="config_section-title">Categories</div>
         <AutoList
-          options={this.props.tagsAndCategories.categories}
+          options={this.props.tagsCategoriesAndMetadata.categories}
           values={this.state.categories}
           onChange={this._onChange.bind(null, 'categories')}/>
       </div>
+      {this.configMetadata()}
     </div>
+  },
+
+  configMetadata: function() {
+    var metadata = this.props.tagsCategoriesAndMetadata.metadata;
+    var self = this;
+    return metadata.map(function(name, index){
+      return (
+        <div key={index} className="config_section">
+          <div className="config_section-title">{name}</div>
+          <input
+            className="config_metadata"
+            value={self.state[name]}
+            name={name}
+            onChange={self._onChangeMetadata}/>
+        </div>
+      )
+    })
   },
 
   render: function () {

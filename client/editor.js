@@ -22,7 +22,7 @@ var Editor = React.createClass({
     isDraft: PT.bool,
     onPublish: PT.func.isRequired,
     onUnpublish: PT.func.isRequired,
-    tagsAndCategories: PT.object,
+    tagsCategoriesAndMetadata: PT.object,
     adminSettings: PT.object
   },
 
@@ -72,7 +72,7 @@ var Editor = React.createClass({
           onChange={this.handleChangeTitle}/>
         {!this.props.isPage && <ConfigDropper
           post={this.props.post}
-          tagsAndCategories={this.props.tagsAndCategories}
+          tagsCategoriesAndMetadata={this.props.tagsCategoriesAndMetadata}
           onChange={this.props.onChange}/>}
         {!this.props.isPage && (this.props.isDraft ?
           <button className="editor_publish" onClick={this.props.onPublish}>

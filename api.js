@@ -2,6 +2,7 @@ var path = require('path')
 var fs = require('hexo-fs')
 var yml = require('js-yaml')
 var deepAssign = require('deep-assign')
+var extend = require('extend')
 var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
@@ -15,7 +16,7 @@ module.exports = function (app, hexo) {
     return post
   }
 
-  function tagsAndCategories() {
+  function tagsCategoriesAndMetadata() {
     var cats = {}
       , tags = {}
     hexo.model('Category').forEach(function (cat) {
@@ -26,7 +27,8 @@ module.exports = function (app, hexo) {
     })
     return {
       categories: cats,
-      tags: tags
+      tags: tags,
+      metadata: Object.keys(hexo.config.metadata || {})
     }
   }
 
@@ -140,8 +142,8 @@ module.exports = function (app, hexo) {
     })
   }
 
-  use('tags-and-categories', function (req, res) {
-    res.done(tagsAndCategories())
+  use('tags-categories-and-metadata', function (req, res) {
+    res.done(tagsCategoriesAndMetadata())
   });
 
   use('settings/list', function (req, res) {
@@ -253,7 +255,7 @@ module.exports = function (app, hexo) {
       }
       res.done({
         page: addIsDraft(page),
-        tagsAndCategories: tagsAndCategories()
+        tagsCategoriesAndMetadata: tagsCategoriesAndMetadata()
       })
     }, hexo);
   });
@@ -272,7 +274,9 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    hexo.post.create({title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author})
+    var postParameters = {title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author};
+    extend(postParameters, hexo.config.metadata || {});
+    hexo.post.create(postParameters)
     .error(function(err) {
       console.error(err, err.stack)
       return res.send(500, 'Failed to create post')
@@ -324,7 +328,7 @@ module.exports = function (app, hexo) {
       }
       res.done({
         post: addIsDraft(post),
-        tagsAndCategories: tagsAndCategories()
+        tagsCategoriesAndMetadata: tagsCategoriesAndMetadata()
       })
     }, hexo);
   });

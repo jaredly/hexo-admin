@@ -14,7 +14,7 @@ var Post = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
       post: api.post(params.postId),
-      tagsAndCategories: api.tagsAndCategories(),
+      tagsCategoriesAndMetadata: api.tagsCategoriesAndMetadata(),
       settings: api.settings()
     }
   })],
@@ -39,12 +39,17 @@ var Post = React.createClass({
   handleChange: function (update) {
     var now = moment()
     api.post(this.props.params.postId, update).then((data) => {
-      this.setState({
-        tagsAndCategories: data.tagsAndCategories,
+      var state = {
+        tagsCategoriesAndMetadata: data.tagsCategoriesAndMetadata,
         post: data.post,
         updated: now,
         author: data.post.author,
-      })
+      }
+      for(var i=0; i<data.tagsCategoriesAndMetadata.metadata.length; i++){
+        var name = data.tagsCategoriesAndMetadata.metadata[i]
+        state[name] = data.post[name]
+      }
+      this.setState(state)
     })
   },
 
@@ -104,7 +109,7 @@ var Post = React.createClass({
   render: function () {
     var post = this.state.post
     var settings = this.state.settings
-    if (!post || !this.state.tagsAndCategories || !settings) {
+    if (!post || !this.state.tagsCategoriesAndMetadata || !settings) {
       return <span>Loading...</span>
     }
     return Editor({
@@ -122,7 +127,7 @@ var Post = React.createClass({
       onPublish: this.handlePublish,
       onUnpublish: this.handleUnpublish,
       onRemove: this.handleRemove,
-      tagsAndCategories: this.state.tagsAndCategories,
+      tagsCategoriesAndMetadata: this.state.tagsCategoriesAndMetadata,
       adminSettings: settings
     })
   }

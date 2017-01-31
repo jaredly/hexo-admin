@@ -34,6 +34,9 @@ module.exports = function (model, id, update, callback, hexo) {
     compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
 
   var preservedKeys = ['title', 'date', 'tags', 'categories', '_content', 'author'];
+  Object.keys(hexo.config.metadata || {}).forEach(function (key) {
+    preservedKeys.push(key);
+  });
   var prev_full = post.full_source,
     full_source = prev_full;
   if (update.source && update.source !== post.source) {
