@@ -36,7 +36,8 @@
     "hexo-util": "^0.1.6",
     "less": "^2.5.1",
     "moment": "^2.7.0",
-    "serve-static": "^1.4.0"
+    "serve-static": "^1.4.0",
+    "write-good": "^0.10.0"
   },
   "devDependencies": {
     "browserify": "^11.2.0",

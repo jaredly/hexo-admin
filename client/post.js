@@ -110,6 +110,7 @@ var Post = React.createClass({
     return Editor({
       post: this.state.post,
       raw: this.state.initialRaw,
+      updatedRaw: this.state.raw,
       wordCount: this.state.raw ? this.state.raw.split(' ').length : 0,
       isDraft: post.isDraft,
       updated: this.state.updated,

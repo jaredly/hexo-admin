@@ -7,6 +7,7 @@ var PT = React.PropTypes
 var CodeMirror = require('./code-mirror')
 var SinceWhen = require('./since-when')
 var Rendered = require('./rendered')
+var CheckGrammar = require('./check-grammar')
 var ConfigDropper = require('./config-dropper')
 var RenameFile = require('./rename-file')
 
@@ -14,6 +15,7 @@ var Editor = React.createClass({
   propTypes: {
     post: PT.object,
     raw: PT.string,
+    updatedRaw: PT.string,
     onChangeTitle: PT.func,
     title: PT.string,
     updated: PT.object,
@@ -28,7 +30,8 @@ var Editor = React.createClass({
     var url = window.location.pathname.split('/')
     var rootPath = url.slice(0, url.indexOf('admin')).join('/')
     return {
-      previewLink: path.join(rootPath, this.props.post.path)
+      previewLink: path.join(rootPath, this.props.post.path),
+      checkingGrammar: false,
     }
   },
 
@@ -44,9 +47,17 @@ var Editor = React.createClass({
   },
 
   handleScroll: function (percent) {
-    var node = this.refs.rendered.getDOMNode()
-    var height = node.getBoundingClientRect().height
-    node.scrollTop = (node.scrollHeight - height) * percent
+    if (!this.state.checkingGrammar) {
+      var node = this.refs.rendered.getDOMNode()
+      var height = node.getBoundingClientRect().height
+      node.scrollTop = (node.scrollHeight - height) * percent
+    }
+  },
+
+  onCheckGrammar: function () {
+    this.setState({
+      checkingGrammar: !this.state.checkingGrammar
+    })
   },
 
   render: function () {
@@ -75,6 +86,11 @@ var Editor = React.createClass({
                   onClick={this.props.onRemove}>
             <i className="fa fa-times"/>
           </button>}
+          {!this.props.isPage &&
+          <button className="editor_checkGrammar" title="Check for Writing Improvements"
+                  onClick={this.onCheckGrammar}>
+            <i className="fa fa-check-circle-o"/>
+          </button>}
       </div>
       <div className="editor_main">
         <div className="editor_edit">
@@ -91,6 +107,7 @@ var Editor = React.createClass({
             onScroll={this.handleScroll}
             initialValue={this.props.raw}
             onChange={this.props.onChangeContent}
+            forceLineNumbers={this.state.checkingGrammar}
             adminSettings={this.props.adminSettings} />
         </div>
         <div className="editor_display">
@@ -103,10 +120,13 @@ var Editor = React.createClass({
               <i className="fa fa-link"/> {this.state.previewLink}
             </a>
           </div>
-          <Rendered
+          {!this.state.checkingGrammar && <Rendered
             ref="rendered"
             className="editor_rendered"
-            text={this.props.rendered}/>
+            text={this.props.rendered}/>}
+          {this.state.checkingGrammar && <CheckGrammar
+            toggleGrammar={this.onCheckGrammar}
+            raw={this.props.updatedRaw} />}
         </div>
       </div>
     </div>;
