@@ -50,6 +50,9 @@ module.exports = function (baseUrl) {
     remove: (id) => post('/posts/' + id + '/remove'),
     publish: (id) => post('/posts/' + id + '/publish'),
     unpublish: (id) => post('/posts/' + id + '/unpublish'),
+    renamePost: (id, filename) => post('/posts/' + id + '/rename', {
+      filename: filename
+    }),
     tagsAndCategories: () => get('/tags-and-categories'),
     settings: () => get('/settings/list'),
     setSetting: (name, value, addedOptions) => post('/settings/set', {

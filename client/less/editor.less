@@ -3,6 +3,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  max-width: 100%
 }
 
 .editor_top {
@@ -250,4 +251,23 @@
   display: block;
   color: @primaryLightText;
   background-color: @accent2light
+}
+
+.fileRename {
+  display: inline-block;
+  color: #888;
+
+  .fileRename_display:hover{
+    cursor: pointer
+  }
+
+  .fileRename_buttons {
+    i {
+      padding-left: 5px;
+
+      &:hover {
+        cursor: pointer
+      }
+    }
+  }
 }

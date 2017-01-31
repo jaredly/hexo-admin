@@ -82,6 +82,36 @@ module.exports = function (app, hexo) {
     }, hexo)
   }
 
+  function rename(id, body, res) {
+    var model = 'Post'
+    var post = hexo.model('Post').get(id)
+    if (!post) {
+      model = 'Page'
+      post = hexo.model('Page').get(id)
+      if (!post) return res.send(404, "Post not found")
+    }
+    // remember old path w/o index.md
+    var oldPath = post.full_source
+    oldPath = oldPath.slice(0, oldPath.indexOf('index.md'))
+
+    updateAny(model, id, {source: body.filename}, function (err, post) {
+      if (err) {
+        return res.send(400, err);
+      }
+      hexo.log.d(`renamed ${model.toLowerCase()} to ${body.filename}`)
+
+      // remove old folder if empty
+      if (model === 'Page' && fs.existsSync(oldPath)) {
+        if (fs.readdirSync(oldPath).length === 0) {
+          fs.rmdirSync(oldPath)
+          hexo.log.d('removed old page\'s empty directory')
+        }
+      }
+
+      res.done(addIsDraft(post))
+    }, hexo)
+  }
+
   var use = function (path, fn) {
     app.use(hexo.config.root + 'admin/api/' + path, function (req, res) {
       var done = function (val) {
@@ -201,6 +231,9 @@ module.exports = function (app, hexo) {
     if (last === 'remove') {
       return remove(parts[parts.length-2], req.body, res)
     }
+    if (last === 'rename') {
+      return remove(parts[parts.length-2], req.body, res)
+    }
 
     var id = last
     if (id === 'pages' || !id) return next()
@@ -268,6 +301,9 @@ module.exports = function (app, hexo) {
     }
     if (last === 'remove') {
       return remove(parts[parts.length-2], req.body, res)
+    }
+    if (last === 'rename') {
+      return rename(parts[parts.length-2], req.body, res)
     }
 
     var id = last
