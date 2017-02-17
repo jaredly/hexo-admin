@@ -1,9 +1,11 @@
 {
   "name": "hexo-admin-yf",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
+    "prepublish": "gulp build",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "hexo-util": "^0.1.6",
     "less": "^2.5.1",
     "moment": "^2.7.0",
+    "qiniu": "^6.1.13",
     "serve-static": "^1.4.0",
     "write-good": "^0.10.0"
   },

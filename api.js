@@ -7,8 +7,13 @@ var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
   , deploy = require('./deploy')
-
+var upload = require('./upload');
 module.exports = function (app, hexo) {
+
+  var qiniu ;
+  if(hexo.config.qiniu){
+    qiniu = upload(hexo.config.qiniu)
+  }
 
   function addIsDraft(post) {
     post.isDraft = post.source.indexOf('_draft') === 0
@@ -355,13 +360,10 @@ module.exports = function (app, hexo) {
       imagePath = settings.options.imagePath ? settings.options.imagePath : imagePath
       imagePrefix = settings.options.imagePrefix ? settings.options.imagePrefix : imagePrefix
     }
-
     var msg = 'upload successful'
-    var i = 0
-    while (fs.existsSync(path.join(hexo.source_dir, imagePath, imagePrefix + i +'.png'))) {
-      i +=1
-    }
+    var i = new Date().getTime()
     var filename = path.join(imagePrefix + i +'.png')
+    var originFileName = filename;
     if (req.body.filename) {
       var givenFilename = req.body.filename
       // check for png ending, add it if not there
@@ -394,12 +396,25 @@ module.exports = function (app, hexo) {
       if (err) {
         console.log(err)
       }
-      hexo.source.process().then(function () {
-        res.done({
-          src: path.join(hexo.config.root + filename),
-          msg: msg
+      if(hexo.config.qiniu){
+        qiniu.upload(originFileName, outpath, function(err, data){
+          if(data){
+            res.done(data.url)
+          }else{
+            hexo.source.process([ filename]).then(function () {
+              res.done(hexo.config.root  + filename)
+            });
+          }
         })
-      });
+      }else{
+        hexo.source.process().then(function () {
+          res.done({
+            src: path.join(hexo.config.root + filename),
+            msg: msg
+          })
+        });
+      }
+
     })
   });
 
