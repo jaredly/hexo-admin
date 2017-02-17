@@ -1,14 +1,13 @@
 {
-  "name": "hexo-admin",
-  "version": "2.1.0",
+  "name": "hexo-admin-yf",
+  "version": "0.0.1",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
-    "prepublish": "gulp build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaredly/hexo-admin.git"
+    "url": "https://github.com/yfsoftcom/hexo-admin.git"
   },
   "keywords": [
     "hexo",
@@ -16,12 +15,12 @@
     "dashboard",
     "plugin"
   ],
-  "author": "Jared Forsyth <jared@jaredforsyth.com>",
+  "author": "wangfan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jaredly/hexo-admin/issues"
+    "url": "https://github.com/yfsoftcom/hexo-admin/issues"
   },
-  "homepage": "http://jaredly.github.io/hexo-admin/",
+  "homepage": "https://github.com/yfsoftcom/hexo-admin",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.5.0",

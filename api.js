@@ -274,7 +274,7 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    var postParameters = {title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author};
+    var postParameters = {title: req.body.title, layout: 'draft', id: new Date().getTime(), date: new Date(), author: hexo.config.author};
     extend(postParameters, hexo.config.metadata || {});
     hexo.post.create(postParameters)
     .error(function(err) {
