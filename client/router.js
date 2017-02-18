@@ -5,6 +5,7 @@ var Posts = require('./posts')
 var Page = require('./page')
 var Pages = require('./pages')
 var About = require('./about')
+var Logout = require('./logout')
 var Deploy = require('./deploy')
 var Settings = require('./settings')
 var AuthSetup = require('./auth-setup')
@@ -20,5 +21,6 @@ module.exports = () => {
     <Route name="deploy" handler={Deploy}/>
     <Route name="settings" handler={Settings}/>
     <Route name="auth-setup" handler={AuthSetup}/>
+    <Route name="logout" handler={Logout}/>
   </Route>
 }
