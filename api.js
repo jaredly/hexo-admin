@@ -391,30 +391,30 @@ module.exports = function (app, hexo) {
     hexo.log.d(`saving image to ${outpath}`)
 
     filename = path.join(imagePath, filename)
-    if(hexo.config.qiniu){
-      qiniu.upload(originFileName, buf, function(err, data){
-        if(data){
-          res.done(data.url)
-        }else{
-          hexo.source.process([ filename]).then(function () {
-            res.done(hexo.config.root  + filename)
-          });
-        }
-      })
-    }else{
-      var outpath = path.join(hexo.source_dir, filename)
-      fs.writeFile(outpath, buf, function (err) {
-        if (err) {
-          console.log(err)
-        }
-        hexo.source.process().then(function () {
-          res.done({
-            src: path.join(hexo.config.root + filename),
-            msg: msg
-          })
-        });
-      })
-    }
+    var outpath = path.join(hexo.source_dir, filename)
+
+    fs.writeFile(outpath, buf, function (err) {
+      if (err) {
+        console.log(err)
+      }
+      if(hexo.config.qiniu){
+        qiniu.upload(originFileName, outpath, function(err, data){
+          if(data){
+            res.done({
+              src: data.url,
+              msg: msg
+            })
+          }else{
+            hexo.source.process().then(function () {
+              res.done({
+                src: path.join(hexo.config.root + filename),
+                msg: msg
+              })
+            });
+          }
+        })
+      }
+    });
 
   });
 

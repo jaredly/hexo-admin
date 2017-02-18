@@ -13,12 +13,20 @@ module.exports = function(options){
   }
 
   //构造上传函数
-  function uploadFile(uptoken, body, done) {
+  function uploadFile(uptoken, key,  body, done) {
     var extra = new qiniu.io.PutExtra();
-    qiniu.io.putWithoutKey(uptoken, body, extra, function(err, ret) {
+    // extra.mimeType = 'image/png';
+    qiniu.io.putFile(uptoken,key, body, extra, function(err, ret) {
       if(ret){
+        if(ret.code){
+          done(ret);
+          return;
+        }
         ret.url = 'http://' + C.qiniu.domain + '/'+ ret.key;
       }
+      if(err)
+        console.log(err)
+      console.log(ret)
       done(err, ret)
     });
   }
@@ -27,12 +35,12 @@ module.exports = function(options){
     //生成上传 Token
     var token = uptoken(filename);
     //调用uploadFile上传
-    uploadFile(token, data, done);
+    uploadFile(token, filename, data, done);
   }
 
   return {
-    upload: function(filename, filepath, done ) {
-      syncQiniu(filename, filepath, done)
+    upload: function(filename, data, done ) {
+      syncQiniu(filename, data, done)
     }
   };
 }

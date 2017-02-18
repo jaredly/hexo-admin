@@ -15,9 +15,9 @@ support Hexo v3.x.
 
 # Screenshots
 
-![login page](http://yfdocument.qiniudn.com/pasted-1487399214990.png)
+![login](http://olk3bzfd5.bkt.clouddn.com/pasted-1487403495592.png)
 
-![edit page](http://yfdocument.qiniudn.com/pasted-1487399246340.png)
+![edit](http://olk3bzfd5.bkt.clouddn.com/pasted-1487403530943.png)
 
 # Quickstart
 ### 1. Setup hexo & create a blog
@@ -76,11 +76,19 @@ of a new post.
 
 # Qiniu Support!
 
+Get Your Qiniu Keys:
+
+![upload successful](http://olk3bzfd5.bkt.clouddn.com/pasted-1487403384624.png)
+
+Get Your Qiniu Test Domain And Bucket:
+
+![upload successful](http://olk3bzfd5.bkt.clouddn.com/pasted-1487403438509.png)
 To Support Qiniu, add the qiniu variable to your hexo
 `_config.yml`:
 ```
 qiniu:
   bucket: [your qiniu bucket key here]
+  domain: [your qiniu outlink domain here]
   ACCESS_KEY: [your qiniu access key here]
   SECRET_KEY: [your qiniu secret key here]
 ```

@@ -13,6 +13,7 @@ var App = React.createClass({
           <li><Link to="pages">Pages</Link></li>
           <li><Link to="deploy">Deploy</Link></li>
           <li><Link to="settings">Settings</Link></li>
+          <li><Link to="/admin/login">Logout</Link></li>
         </ul>
       </div>
       <div className="app_main">
