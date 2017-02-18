@@ -13,21 +13,21 @@ module.exports = function(options){
   }
 
   //构造上传函数
-  function uploadFile(uptoken, key, localFile, done) {
+  function uploadFile(uptoken, body, done) {
     var extra = new qiniu.io.PutExtra();
-    qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+    qiniu.io.putWithoutKey(uptoken, body, extra, function(err, ret) {
       if(ret){
-        ret.url = 'http://' + C.qiniu.bucket + '.qiniudn.com/'+ ret.key;
+        ret.url = 'http://' + C.qiniu.domain + '/'+ ret.key;
       }
       done(err, ret)
     });
   }
 
-  function syncQiniu(filename,filepath, done){
+  function syncQiniu(filename, data, done){
     //生成上传 Token
     var token = uptoken(filename);
     //调用uploadFile上传
-    uploadFile(token, filename, filepath, done);
+    uploadFile(token, data, done);
   }
 
   return {

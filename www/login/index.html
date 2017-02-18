@@ -1,40 +1,118 @@
 <html>
 <head>
+  <title>Hexo Admin By WangFan</title>
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.2/css/materialize.css"  media="screen,projection"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <style>
+    #header-logo{
+      height: 200px; background: #6EAEFF; color: #fff
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    footer.page-footer {
+      background: #999999;
+      flex: 1 0 auto;
+    }
+    /* label color */
+    .input-field label {
+    color: #333;
+    }
+    /* label focus color */
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=password]:focus + label {
+    color: #6EAEFF;
+    }
+    /* label underline focus color */
+    .input-field input[type=text]:focus,
+    .input-field input[type=password]:focus {
+    border-bottom: 1px solid #6EAEFF;
+    box-shadow: 0 1px 0 0 #6EAEFF;
+    }
+    /* valid color */
+    .input-field input[type=text].valid,
+    .input-field input[type=password].valid {
+    border-bottom: 1px solid #6EAEFF;
+    box-shadow: 0 1px 0 0 #6EAEFF;
+    }
+    /* invalid color */
+    .input-field input[type=text].invalid,
+    .input-field input[type=password].invalid {
+    border-bottom: 1px solid #6EAEFF;
+    box-shadow: 0 1px 0 0 #6EAEFF;
+    }
+    /* icon prefix focus color */
+    .input-field .prefix.active {
+    color: #000;
+    }
+
+
+    </style>
 </head>
 
 <body>
+  <div >
+    <div class="valign-wrapper" id="header-logo">
+      <h5 class="valign">Happy To Use Hexo Admin By WangFan</h5>
+    </div>
+    <div class="row" style="margin-top: 50px">
+      <form class="col s12" method="post">
+          <div class="row">
+              <div class="input-field col s6" style="float: none; margin:auto">
+                  <input id="username" name="username" type="text" class="validate" autofocus>
+                  <label for="username">Username</label>
+              </div>
+          </div>
+          <div class="row">
+              <div class="input-field col s6" style="float: none; margin:auto">
+                  <input id="password" name="password" type="password" class="validate">
+                  <label for="password">Password</label>
+              </div>
+          </div>
+          <div class="row">
+              <div class="input-field col s6" style="float: none; margin:auto">
+                  <button class="btn waves-effect waves-light green" type="submit">Submit
+                      <i class="mdi-content-send right"></i>
+                  </button>
+              </div>
+          </div>
+        </form>
+      </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Contact Us</h5>
+          <p class="grey-text text-lighten-4">yfsoftcom@126.com</p>
+          <p class="grey-text text-lighten-4">13770683580</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="http://blog.yunplus.io">Blog</a></li>
+            <li><a class="grey-text text-lighten-3" href="https://github.com/team4yf/yf-fpm-server-logos/tree/master/images">Logos</a></li>
+            <li><a class="grey-text text-lighten-3" href="https://github.com/team4yf/yf-fpm-server">FPM</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2017 Copyright YunPlus.IO
+      </div>
+    </div>
+  </footer>
+
+</body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.2/js/materialize.min.js"></script>
-<div class="row" style="margin-top: 200px">
 
-    <form class="col s12" method="post">
-        <div class="row">
-            <div class="input-field col s6" style="float: none; margin:auto">
-                <input id="username" name="username" type="text" class="validate" autofocus>
-                <label for="username">Username</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6" style="float: none; margin:auto">
-                <input id="password" name="password" type="password" class="validate">
-                <label for="password">Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6" style="float: none; margin:auto">
-                <button class="btn waves-effect waves-light" type="submit">Submit
-                    <i class="mdi-content-send right"></i>
-                </button>
-            </div>
-        </div>
-
-
-        </form>
-    </div>
-</body>
 <script>
-
 </script>
 </html>

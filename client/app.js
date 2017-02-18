@@ -7,7 +7,7 @@ var App = React.createClass({
     return <div className="app">
       <div className="app_header">
         <img src="logo.png" className="app_logo"/>
-        <span className="app_title">Hexo Admin YF</span>
+        <span className="app_title">Hexo WF Admin</span>
         <ul className="app_nav">
           <li><Link to="posts">Posts</Link></li>
           <li><Link to="pages">Pages</Link></li>

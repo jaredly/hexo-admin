@@ -386,36 +386,36 @@ module.exports = function (app, hexo) {
       }
     }
 
-    filename = path.join(imagePath, filename)
-    var outpath = path.join(hexo.source_dir, filename)
-
     var dataURI = req.body.data.slice('data:image/png;base64,'.length)
     var buf = new Buffer(dataURI, 'base64')
     hexo.log.d(`saving image to ${outpath}`)
-    fs.writeFile(outpath, buf, function (err) {
-      if (err) {
-        console.log(err)
-      }
-      if(hexo.config.qiniu){
-        qiniu.upload(originFileName, outpath, function(err, data){
-          if(data){
-            res.done(data.url)
-          }else{
-            hexo.source.process([ filename]).then(function () {
-              res.done(hexo.config.root  + filename)
-            });
-          }
-        })
-      }else{
+
+    filename = path.join(imagePath, filename)
+    if(hexo.config.qiniu){
+      qiniu.upload(originFileName, buf, function(err, data){
+        if(data){
+          res.done(data.url)
+        }else{
+          hexo.source.process([ filename]).then(function () {
+            res.done(hexo.config.root  + filename)
+          });
+        }
+      })
+    }else{
+      var outpath = path.join(hexo.source_dir, filename)
+      fs.writeFile(outpath, buf, function (err) {
+        if (err) {
+          console.log(err)
+        }
         hexo.source.process().then(function () {
           res.done({
             src: path.join(hexo.config.root + filename),
             msg: msg
           })
         });
-      }
+      })
+    }
 
-    })
   });
 
   use('deploy', function(req, res, next) {
