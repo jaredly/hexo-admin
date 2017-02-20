@@ -10,13 +10,14 @@ var NewPage = React.createClass({
 
   getInitialState: function () {
     return {
-      showing: true,
+      showing: false,
       loading: true,
       text: 'Untitled'
     }
   },
 
   componentDidUpdate: function (prevProps, prevState) {
+
     if (this.state.showing && !prevState.showing) {
       var node = this.refs.input.getDOMNode()
       node.focus()
@@ -27,7 +28,7 @@ var NewPage = React.createClass({
 
   _onKeydown: function (e) {
     if (e.key === 'Enter') {
-      this._onSubmit()
+      this._onSubmit(e)
     }
   },
 
@@ -41,7 +42,8 @@ var NewPage = React.createClass({
     }
   },
 
-  _onSubmit: function () {
+  _onSubmit: function (e) {
+    e.preventDefault();
     this.setState({loading: true, showing: false})
     api.newPage(this.state.text).then((page) => {
       this.setState({showing: false, text: 'Untitled'})
@@ -80,9 +82,9 @@ var NewPage = React.createClass({
         onChange={this._onChange}
         />
       <i className="fa fa-check-circle new-post_ok"
-        onClick={this._onSubmit} ></i>
+        onMouseDown={this._onSubmit} ></i>
       <i className="fa fa-times-circle new-post_cancel"
-        onClick={this._onCancel} ></i>
+        onMouseDown={this._onCancel} ></i>
     </div>
   }
 })

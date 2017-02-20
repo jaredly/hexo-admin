@@ -7,8 +7,13 @@ var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
   , deploy = require('./deploy')
-
+var upload = require('./upload');
 module.exports = function (app, hexo) {
+
+  var qiniu ;
+  if(hexo.config.qiniu){
+    qiniu = upload(hexo.config.qiniu)
+  }
 
   function addIsDraft(post) {
     post.isDraft = post.source.indexOf('_draft') === 0
@@ -211,8 +216,9 @@ module.exports = function (app, hexo) {
       console.error(err, err.stack)
       return res.send(500, 'Failed to create page')
     })
-    .then(function (err, file) {
+    .then(function (file) {
       var source = file.path.slice(hexo.source_dir.length)
+
       hexo.source.process([source]).then(function () {
         var page = hexo.model('Page').findOne({source: source})
         res.done(addIsDraft(page));
@@ -274,7 +280,7 @@ module.exports = function (app, hexo) {
       return res.send(400, 'No title given');
     }
 
-    var postParameters = {title: req.body.title, layout: 'draft', date: new Date(), author: hexo.config.author};
+    var postParameters = {title: req.body.title, layout: 'draft', id: new Date().getTime(), date: new Date(), author: hexo.config.author};
     extend(postParameters, hexo.config.metadata || {});
     hexo.post.create(postParameters)
     .error(function(err) {
@@ -355,13 +361,10 @@ module.exports = function (app, hexo) {
       imagePath = settings.options.imagePath ? settings.options.imagePath : imagePath
       imagePrefix = settings.options.imagePrefix ? settings.options.imagePrefix : imagePrefix
     }
-
     var msg = 'upload successful'
-    var i = 0
-    while (fs.existsSync(path.join(hexo.source_dir, imagePath, imagePrefix + i +'.png'))) {
-      i +=1
-    }
+    var i = new Date().getTime()
     var filename = path.join(imagePrefix + i +'.png')
+    var originFileName = filename;
     if (req.body.filename) {
       var givenFilename = req.body.filename
       // check for png ending, add it if not there
@@ -384,23 +387,36 @@ module.exports = function (app, hexo) {
       }
     }
 
-    filename = path.join(imagePath, filename)
-    var outpath = path.join(hexo.source_dir, filename)
-
     var dataURI = req.body.data.slice('data:image/png;base64,'.length)
     var buf = new Buffer(dataURI, 'base64')
     hexo.log.d(`saving image to ${outpath}`)
+
+    filename = path.join(imagePath, filename)
+    var outpath = path.join(hexo.source_dir, filename)
+
     fs.writeFile(outpath, buf, function (err) {
       if (err) {
         console.log(err)
       }
-      hexo.source.process().then(function () {
-        res.done({
-          src: path.join(hexo.config.root + filename),
-          msg: msg
+      if(hexo.config.qiniu){
+        qiniu.upload(originFileName, outpath, function(err, data){
+          if(data){
+            res.done({
+              src: data.url,
+              msg: msg
+            })
+          }else{
+            hexo.source.process().then(function () {
+              res.done({
+                src: path.join(hexo.config.root + filename),
+                msg: msg
+              })
+            });
+          }
         })
-      });
-    })
+      }
+    });
+
   });
 
   use('deploy', function(req, res, next) {

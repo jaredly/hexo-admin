@@ -1,5 +1,13 @@
-
-var spawn = require('child_process').spawn
+var Process = require('child_process')
+var options = {
+    encoding: 'utf8',
+    timeout: 0,
+    maxBuffer: 200 * 1024,
+    killSignal: 'SIGTERM',
+    setsid: false,
+    cwd: null,
+    env: null
+};
 
 function once(fn) {
   var called = false
@@ -11,16 +19,6 @@ function once(fn) {
 
 module.exports = function (command, message, done) {
   done = once(done);
-  var proc = spawn(command, [message], {detached: true});
-  var stdout = '';
-  var stderr = '';
-  proc.stdout.on('data', function(data){stdout += data.toString()})
-  proc.stderr.on('data', function(data){stderr += data.toString()})
-  proc.on('error', function(err) {
-    done(err, {stdout: stdout, stderr: stderr});
-  });
-  proc.on('close', function () {
-    done(null, {stdout: stdout, stderr: stderr});
-  });
+  console.log('run :' + command)
+  Process.exec(command + ' ' + message, options, done)
 }
-
