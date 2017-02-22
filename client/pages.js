@@ -15,7 +15,7 @@ var api = require('./api');
 var Pages = React.createClass({
   mixins: [DataFetcher((params) => {
     return {
-      pages: api.pages().then((pages) => 
+      pages: api.pages().then((pages) =>
         _.sortBy(pages, ['isDraft', 'date']).reverse()
       )
     }
@@ -50,9 +50,9 @@ var Pages = React.createClass({
     var rootPath = url.slice(0, url.indexOf('admin')).join('/')
     return <div className="posts">
       <ul className='posts_list'>
-        {/** not working atm <Newpage onNew={this._onNew}/> **/}
+        <Newpage onNew={this._onNew}/>
         {
-          this.state.pages.map((page, i) => 
+          this.state.pages.map((page, i) =>
             <li key={page._id} className={cx({
                 "posts_post": true,
                 "posts_post--draft": page.isDraft,
