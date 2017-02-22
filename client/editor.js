@@ -84,7 +84,7 @@ var Editor = React.createClass({
           {!this.props.isPage &&
           <button className="editor_remove" title="Remove"
                   onClick={this.props.onRemove}>
-            <i className="fa fa-times"/>
+            <i className="fa fa-trash-o" aria-hidden="true"/>
           </button>}
           {!this.props.isPage &&
           <button className="editor_checkGrammar" title="Check for Writing Improvements"
