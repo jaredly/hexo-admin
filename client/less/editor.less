@@ -1,9 +1,9 @@
 
 .editor {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  max-width: 100%
+  min-height: 0;
+  width: 100%
 }
 
 .editor_top {
@@ -81,9 +81,6 @@
 }
 
 .editor_updated {
-  //position: absolute;
-  //right: 25px;
-  //top: 15px;
   float: right;
   font-size: 14px;
   font-family: Inconsolata;
@@ -113,8 +110,10 @@
 @edit-back: @accent2light; //rgb(219, 213, 197);
 
 .editor_main {
-  flex: 1;
   display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: row;
   padding: 5px 0 0;
   background-color: @edit-back;
 
@@ -148,25 +147,15 @@
 }
 
 .editor_edit {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   font-family: Inconsolata;
-  padding: 40px 20px 0;
   font-size: 18px;
-  position: relative;
-  min-width: 0;
-
-  > div {
-    flex: 1
-  }
+  width: 50vw;
 }
 
 .h-head {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   background-color: @accent2transparent;
   z-index: 10;
   padding: 0 25px;
@@ -182,18 +171,22 @@
   .h-head;
 }
 
-.editor_display {
-  flex: 1;
+.editor_md-header + div {
+  height: 100%;
   display: flex;
+}
+
+.editor_display {
+  display: flex;
+  flex-direction: column;
   border-left: 5px solid @edit-back;
   font-size: 18px;
-  position: relative;
-  min-width: 0;
+  width: 50vw;
 }
 
 .editor_rendered {
-  flex: 1;
-  overflow: auto;
+  // flex: 1;
+  overflow-y: auto;
   padding: 40px 20px 20px;
 
   > :first-child {
@@ -207,8 +200,15 @@
 
 
 .CodeMirror, .CodeMirror pre {
-  // font-family: Inconsolata!important;
   line-height: 1.3em;
+  display: flex;
+  flex: 1 1 auto;
+  padding-left: 20px;
+}
+
+.CodeMirror-scroll {
+  width: 100%;
+  padding-top: 30px;
 }
 
 .cm-header-1 {
