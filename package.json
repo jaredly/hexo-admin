@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "browserify": "^11.2.0",
-    "codemirror": "^5.20.2",
+    "codemirror": "^5.24.2",
     "es6-promise": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-less": "^3.0.5",
