@@ -116,6 +116,7 @@
   flex-direction: row;
   padding: 5px 0 0;
   background-color: @edit-back;
+  position: relative;
 
   > div {
     background-color: white;
@@ -152,6 +153,8 @@
   flex-direction: column;
   font-family: Inconsolata;
   font-size: 18px;
+  // height: 100%;
+  min-height: 0;
   width: 50vw;
 }
 
@@ -161,6 +164,7 @@
   padding: 0 25px;
   font-size: 14px;
   font-family: Inconsolata, monospace;
+  height: 32px;
 }
 
 .editor_md-header {
@@ -172,8 +176,13 @@
 }
 
 .editor_md-header + div {
-  height: 100%;
-  display: flex;
+  min-height: 0px;
+  // width: 50vw;
+  // display: flex;
+  // flex: 1 1 auto;
+  // min-width: 50%;
+  // position: absolute;
+  // margin-left: -12px;
 }
 
 .editor_display {
@@ -201,14 +210,16 @@
 
 .CodeMirror, .CodeMirror pre {
   line-height: 1.3em;
-  display: flex;
-  flex: 1 1 auto;
-  padding-left: 20px;
+  // display: flex;
+  // flex: 1 1 auto;
+  // padding-left: 20px;
+  // margin-top: 32px;
 }
 
 .CodeMirror-scroll {
   width: 100%;
   padding-top: 30px;
+  padding-left: 20px;
 }
 
 .cm-header-1 {

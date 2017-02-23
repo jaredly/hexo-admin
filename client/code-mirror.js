@@ -45,8 +45,8 @@ var CodeMirror = React.createClass({
       var max = node.scrollHeight - node.getBoundingClientRect().height
       this.props.onScroll(node.scrollTop / max)
     })
-    var box = this.getDOMNode().getBoundingClientRect()
-    this.cm.setSize(box.width, box.height)
+    var box = this.getDOMNode().parentNode.getBoundingClientRect()
+    this.cm.setSize(box.width, box.height - 32)
 
     window.addEventListener('resize', this._onResize)
 
@@ -54,8 +54,9 @@ var CodeMirror = React.createClass({
   },
 
   _onResize: function () {
-    var box = this.getDOMNode().getBoundingClientRect()
-    this.cm.setSize(box.width, box.height)
+    var box = this.getDOMNode().parentNode.getBoundingClientRect()
+    // need to subtract header to get proper height without flexbox (see #124)
+    this.cm.setSize(box.width, box.height - 32)
   },
 
   componentWillUnmount: function () {
