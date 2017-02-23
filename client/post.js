@@ -111,8 +111,8 @@ var Post = React.createClass({
 
   handleRemove: function () {
     var self = this;
-    return confirm('Remove this post?', {
-      description: 'This operation cannot be undone!',
+    return confirm('Delete this post?', {
+      description: 'This operation will move current draft into source/_discarded folder.',
       confirmLabel: 'Yes',
       abortLabel: 'No'
     }).then((function(_this) {

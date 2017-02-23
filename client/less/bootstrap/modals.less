@@ -7,19 +7,29 @@
 // .modal-dialog    - positioning shell for the actual modal
 // .modal-content   - actual modal w/ bg and corners and shit
 
-//Standaone config
-@zindex-modal: 10;
-@modal-content-bg: #fff;
-@modal-content-fallback-border-color: #999;
-@border-radius-large: 10px;
+//Backdrop
 @modal-backdrop-bg: #000;
 @modal-backdrop-opacity: .8;
-@modal-title-padding: 10px;
-@modal-content-border-color: #999;
-@modal-header-border-color: @modal-content-bg;
-@modal-footer-border-color: @modal-content-bg;
-@modal-title-line-height: 2em;
+
+//Modal
+@zindex-modal: 10;
 @modal-inner-padding: 10px;
+@border-radius-large: 10px;
+
+//Modal Body
+@modal-content-border-color: #999;
+@modal-content-fallback-border-color: #999;
+@modal-content-bg: #fff;
+
+//Modal Header
+@modal-header-border-color: @modal-content-bg;
+@modal-title-line-height: 2em;
+@modal-title-padding: 10px;
+
+//Modal Footer
+@modal-footer-border-color: @modal-content-bg;
+
+
 
 // Kill the scroll on the body
 .modal-open {
@@ -32,9 +42,7 @@
   overflow: hidden;
   position: fixed;
   top: 120px;
-  right: 90px;
-  // bottom: 0;
-  // left: 0;
+  right: 110px;
   width: 400px;
   z-index: @zindex-modal;
   -webkit-overflow-scrolling: touch;
@@ -71,6 +79,7 @@
   border-radius: @border-radius-large;
   .box-shadow(0 3px 9px rgba(0,0,0,.5));
   background-clip: padding-box;
+  font-size: .8em;
   // Remove focus outline from opened modal
   outline: 0;
 }
@@ -101,6 +110,7 @@
   padding: @modal-title-padding;
   border-bottom: 1px solid @modal-header-border-color;
   min-height: (@modal-title-padding + @modal-title-line-height);
+  text-align: center;
 }
 // Close icon
 .modal-header .close {
@@ -118,14 +128,34 @@
 .modal-body {
   position: relative;
   padding: @modal-inner-padding;
+  text-align: center;
 }
 
 // Footer (for actions)
 .modal-footer {
   padding: @modal-inner-padding;
+  padding-bottom: @modal-inner-padding + @modal-title-padding;
   text-align: right; // right align buttons
   border-top: 1px solid @modal-footer-border-color;
+  text-align: center;
   &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
+
+  .btn {
+    .pb-button;
+    margin: 0 5px;
+    position: relative;
+    right: 0;
+    top:0;
+  }
+  .btn[role="confirm"] {
+    background-color: #B0FFD0;
+    // text-shadow: 1px 1px #B0FFD0;
+  }
+  .btn[role="abort"] {
+    color: rgb(255, 213, 213);
+    background-color: rgb(218, 18, 18);
+    text-shadow: 1px 1px rgb(124, 49, 49);
+  }
 
   // Properly space out buttons
   .btn + .btn {
