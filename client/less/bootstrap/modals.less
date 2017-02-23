@@ -1,0 +1,182 @@
+//The file is a modified modal.less taken from Bootstrap (http://getbootstrap.com/)
+// Modals
+// --------------------------------------------------
+
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and shit
+
+//Backdrop
+@modal-backdrop-bg: #000;
+@modal-backdrop-opacity: .8;
+
+//Modal
+@zindex-modal: 10;
+@modal-inner-padding: 10px;
+@border-radius-large: 10px;
+
+//Modal Body
+@modal-content-border-color: #999;
+@modal-content-fallback-border-color: #999;
+@modal-content-bg: #fff;
+
+//Modal Header
+@modal-header-border-color: @modal-content-bg;
+@modal-title-line-height: 2em;
+@modal-title-padding: 10px;
+
+//Modal Footer
+@modal-footer-border-color: @modal-content-bg;
+
+
+
+// Kill the scroll on the body
+.modal-open {
+  overflow: hidden;
+}
+
+// Container that the modal scrolls within
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 120px;
+  right: 110px;
+  width: 400px;
+  z-index: @zindex-modal;
+  -webkit-overflow-scrolling: touch;
+
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+
+  // When fading in the modal, animate it to slide down
+  &.fade .modal-dialog {
+    .translate(0, -25%);
+    .transition-transform(~"0.3s ease-out");
+  }
+  &.in .modal-dialog { .translate(0, 0) }
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+
+// Actual modal
+.modal-content {
+  position: relative;
+  background-color: @modal-content-bg;
+  border: 1px solid @modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
+  border: 1px solid @modal-content-border-color;
+  border-radius: @border-radius-large;
+  .box-shadow(0 3px 9px rgba(0,0,0,.5));
+  background-clip: padding-box;
+  font-size: .8em;
+  // Remove focus outline from opened modal
+  outline: 0;
+}
+
+// Modal background
+.modal-backdrop {
+  background-color: @modal-backdrop-bg;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: @zindex-modal;
+  // Fade for backdrop
+  &.fade {
+    opacity: 0;
+    .transition(opacity .15s linear);
+  }
+  &.in {
+    opacity: @modal-backdrop-opacity;
+  }
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.modal-header {
+  padding: @modal-title-padding;
+  border-bottom: 1px solid @modal-header-border-color;
+  min-height: (@modal-title-padding + @modal-title-line-height);
+  text-align: center;
+}
+// Close icon
+.modal-header .close {
+  margin-top: -2px;
+}
+
+// Title text within header
+.modal-title {
+  margin: 0;
+  line-height: @modal-title-line-height;
+}
+
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+  position: relative;
+  padding: @modal-inner-padding;
+  text-align: center;
+}
+
+// Footer (for actions)
+.modal-footer {
+  padding: @modal-inner-padding;
+  padding-bottom: @modal-inner-padding + @modal-title-padding;
+  text-align: right; // right align buttons
+  border-top: 1px solid @modal-footer-border-color;
+  text-align: center;
+  &:extend(.clearfix all); // clear it in case folks use .pull-* classes on buttons
+
+  .btn {
+    .pb-button;
+    margin: 0 5px;
+    position: relative;
+    right: 0;
+    top:0;
+  }
+  .btn[role="abort"] {
+    background-color: #B0FFD0;
+    // text-shadow: 1px 1px #B0FFD0;
+  }
+  .btn[role="confirm"] {
+    color: rgb(255, 213, 213);
+    background-color: rgb(218, 18, 18);
+    text-shadow: 1px 1px rgb(124, 49, 49);
+  }
+
+  // Properly space out buttons
+  .btn + .btn {
+    margin-left: 5px;
+    margin-bottom: 0; // account for input[type="submit"] which gets the bottom margin like all other inputs
+  }
+  // but override that for button groups
+  .btn-group .btn + .btn {
+    margin-left: -1px;
+  }
+  // and override it for block buttons as well
+  .btn-block + .btn-block {
+    margin-left: 0;
+  }
+}
+
+// Measure scrollbar width for padding body during modal show/hide
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}

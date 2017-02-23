@@ -9,6 +9,28 @@ var Editor = require('./editor')
 var _ = require('lodash')
 var moment = require('moment')
 var Router = require('react-router');
+var Confirm = require('./confirm');
+
+var confirm = function (message, options) {
+  var cleanup, component, props, wrapper;
+  if (options == null) {
+    options = {};
+  }
+
+  props = $.extend({
+    message: message
+  }, options);
+  wrapper = document.body.appendChild(document.createElement('div'));
+  component = React.renderComponent(<Confirm {...props}/>, wrapper);
+  cleanup = function () {
+    React.unmountComponentAtNode(wrapper);
+    return setTimeout(function () {
+      return wrapper.remove();
+    });
+  };
+
+  return component.promise.always(cleanup).promise();
+};
 
 var Post = React.createClass({
   mixins: [DataFetcher((params) => {
@@ -88,9 +110,17 @@ var Post = React.createClass({
   },
 
   handleRemove: function () {
-    api.remove(this.state.post._id).then(
-        Router.transitionTo('posts')
-    );
+    var self = this;
+    return confirm('Delete this post?', {
+      description: 'This operation will move current draft into source/_discarded folder.',
+      confirmLabel: 'Yes',
+      abortLabel: 'No'
+    }).then(function() {
+        api.remove(self.state.post._id).then(
+          Router.transitionTo('posts')
+        );
+      };
+    });
   },
 
   dataDidLoad: function (name, data) {
