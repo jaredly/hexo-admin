@@ -51,7 +51,7 @@ module.exports = function (app, hexo) {
   function remove(id, body, res) {
     var post = hexo.model('Post').get(id)
     if (!post) return res.send(404, "Post not found")
-    var newSource = '_discarded/' + post.source.slice('_drafts/'.length)
+    var newSource = '_discarded/' + post.source.slice('_drafts'.length)
     update(id, {source: newSource}, function (err, post) {
       if (err) {
         return res.send(400, err);
@@ -211,8 +211,9 @@ module.exports = function (app, hexo) {
       console.error(err, err.stack)
       return res.send(500, 'Failed to create page')
     })
-    .then(function (err, file) {
+    .then(function (file) {
       var source = file.path.slice(hexo.source_dir.length)
+
       hexo.source.process([source]).then(function () {
         var page = hexo.model('Page').findOne({source: source})
         res.done(addIsDraft(page));

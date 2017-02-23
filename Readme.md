@@ -12,6 +12,12 @@ support Hexo v3.x.
 - [**Quickstart**](#quickstart)
 - [**Credits**](#credits)
 
+# Local use vs deployment
+This plugin was originally designed as a local editor -- you run hexo locally, use `hexo-admin` to author posts, and then use `hexo generate` or `hexo deploy` to send the generated static HTML files up to github pages or some other static server.
+
+However, `hexo-admin` can be run on your live blog, as long as you're using a non-static hosting service such as Heroku, DigitalOcean, etc. Static hosting services such as Github pages and Surge.sh does not support running hexo-admin from your live site.
+If you're using Hexo admin from your live blog, you should definitely set up a password (see below) -- otherwise anyone will be able to edit your content.
+
 # Screenshots
 ![posts view](docs/pasted-0.png?raw=true)
 

@@ -1,22 +1,26 @@
 
+html,
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
+}
+
+/* entire app is wrapped in a div that must have height for flexbox to work */
+body > div:first-of-type {
+  height: 100%;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   font-family: "Open Sans";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  height: 100%;
 }
 
 .app_header {
   background-color: @primaryVeryDark;
+  height: 52px;
 
   &, a {
     color: @primaryDarkText;
@@ -59,7 +63,7 @@ body {
 }
 
 .app_main {
-  flex: 1;
   display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
 }
-

@@ -1,11 +1,8 @@
 
 .posts {
   display: flex;
-  flex: 1;
-}
-
-.posts_display {
-  flex: 1;
+  flex-direction: row;
+  width: 100%;
 }
 
 .posts_list {
@@ -14,7 +11,7 @@
   padding: 0;
   margin: 0;
   width: 400px;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .posts_post {
@@ -52,8 +49,8 @@
 }
 
 .posts_display {
-  display: flex;
-  position: relative;
+  overflow-y: auto;
+  flex: 1 1 auto;
 }
 
 .posts_content {
@@ -63,10 +60,6 @@
 
 .posts_draft-message {
   background-color: @primaryRatherLight;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   padding: 5px;
   text-align: center;
   color: white;
@@ -105,4 +98,3 @@
   right: 30px;
   .icon-link;
 }
-
