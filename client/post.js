@@ -115,11 +115,10 @@ var Post = React.createClass({
       description: 'This operation will move current draft into source/_discarded folder.',
       confirmLabel: 'Yes',
       abortLabel: 'No'
-    }).then(function() {
-        api.remove(self.state.post._id).then(
-          Router.transitionTo('posts')
-        );
-      };
+    }).then(function () {
+      api.remove(self.state.post._id).then(
+        Router.transitionTo('posts')
+      );
     });
   },
 
