@@ -81,11 +81,15 @@ var Editor = React.createClass({
           <button className="editor_unpublish" onClick={this.props.onUnpublish}>
             Unpublish
           </button>)}
-          {!this.props.isPage &&
+          {!this.props.isPage && (this.props.isDraft ?
           <button className="editor_remove" title="Remove"
                   onClick={this.props.onRemove}>
             <i className="fa fa-trash-o" aria-hidden="true"/>
-          </button>}
+          </button> :
+          <button className="editor_remove" title="Can't Remove Published Post"
+                  onClick={this.props.onRemove} disabled>
+            <i className="fa fa-trash-o" aria-hidden="true"/>
+          </button>)}
           {!this.props.isPage &&
           <button className="editor_checkGrammar" title="Check for Writing Improvements"
                   onClick={this.onCheckGrammar}>
