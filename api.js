@@ -7,6 +7,9 @@ var updateAny = require('./update')
   , updatePage = updateAny.bind(null, 'Page')
   , update = updateAny.bind(null, 'Post')
   , deploy = require('./deploy')
+  , moment = require('moment')
+  , debug = require('debug')('api')
+
 
 module.exports = function (app, hexo) {
 
@@ -28,7 +31,8 @@ module.exports = function (app, hexo) {
     return {
       categories: cats,
       tags: tags,
-      metadata: Object.keys(hexo.config.metadata || {})
+      metadata: Object.keys(hexo.config.metadata || {}),
+      new_post_name: (hexo.config.new_post_name || "title.md")
     }
   }
 
@@ -63,7 +67,11 @@ module.exports = function (app, hexo) {
   function publish(id, body, res) {
     var post = hexo.model('Post').get(id)
     if (!post) return res.send(404, "Post not found")
-    var newSource = '_posts/' + post.source.slice('_drafts/'.length)
+    var new_post_name = tagsCategoriesAndMetadata().new_post_name
+    var filename = parseFileName(post.date,post.title,new_post_name)
+    debug('new_post_name %O', new_post_name)
+    debug('filename %O', filename)
+    var newSource = '_posts/' + filename
     update(id, {source: newSource}, function (err, post) {
       if (err) {
         return res.send(400, err);
@@ -72,6 +80,20 @@ module.exports = function (app, hexo) {
     }, hexo)
   }
 
+  function parseFileName(date,title,rule){
+    var filenameData = {
+      year: date.format('YYYY'),
+      month: date.format('MM'),
+      i_month: date.format('M'),
+      day: date.format('DD'),
+      i_day: date.format('D'),
+      title: title
+    };
+    for (var key in filenameData){
+      rule = rule.replace(new RegExp(":"+key),filenameData[key])
+    }
+    return rule;
+  }
   function unpublish(id, body, res) {
     var post = hexo.model('Post').get(id)
     if (!post) return res.send(404, "Post not found")
