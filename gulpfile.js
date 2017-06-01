@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
-// var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var reactify = require('reactify');
 var rename = require('gulp-rename');
@@ -35,9 +35,9 @@ gulp.task('javascript', function () {
     .pipe(buffer())
     // .pipe(sourcemaps.init({loadMaps: true}))
     // Add transformation tasks to the pipeline here.
-    // .pipe(uglify())
-    // .on('error', gutil.log)
-    // .pipe(sourcemaps.write('./'))
+    .pipe(uglify())
+    .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))
     .pipe(rename('bundle.js'))
     .pipe(gulp.dest('./www/'));
 });

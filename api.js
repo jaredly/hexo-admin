@@ -263,7 +263,13 @@ module.exports = function (app, hexo) {
 
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
-   res.done(post.toArray().map(addIsDraft));
+   res.done(post.toArray().map(addIsDraft).map(function(item) { 
+      delete item.content;
+      delete item.excerpt;
+      delete item.more;
+      delete item.raw;
+      return item;
+   }));
   });
 
   use('posts/new', function (req, res, next) {
