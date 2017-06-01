@@ -1,5 +1,5 @@
 
-var spawn = require('child_process').spawn
+var exec = require('child_process').exec
 
 function once(fn) {
   var called = false
@@ -11,7 +11,7 @@ function once(fn) {
 
 module.exports = function (command, message, done) {
   done = once(done);
-  var proc = spawn(command, [message], {detached: true});
+  var proc = exec(command); //, [message], {detached: true});
   var stdout = '';
   var stderr = '';
   proc.stdout.on('data', function(data){stdout += data.toString()})

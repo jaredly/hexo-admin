@@ -87,9 +87,12 @@ var CodeMirror = React.createClass({
         }
       }
       console.log(filename)
-      api.uploadImage(event.target.result, filename).then((res) =>
-        this.cm.replaceSelection(`\n![${res.msg}](${res.src})`)
-      );
+      api.uploadImage(event.target.result, filename).then((res) => {
+        setTimeout(() => {
+          // waiting for write to disk.
+          this.cm.replaceSelection(`\n![${res.msg}](${res.src})`)
+        }, 1000);
+      });
     };
     reader.readAsDataURL(blob);
   },
