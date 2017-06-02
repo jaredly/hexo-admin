@@ -2,6 +2,7 @@
 var React = require('react')
 var PT = React.PropTypes
 var api = require('./api')
+var Router = require('react-router');
 
 var NewPost = React.createClass({
   propTypes: {
@@ -46,7 +47,11 @@ var NewPost = React.createClass({
     this.setState({loading: true, showing: false})
     api.newPost(this.state.text).then((post) => {
       this.setState({showing: false, text: 'Untitled'})
-      this.props.onNew(post)
+      if (this.props.onNew) {
+        this.props.onNew(post)
+      } else {
+        Router.transitionTo('post', {postId: post._id})
+      }
     }, (err) => {
       console.error('Failed! to make post', err)
     })

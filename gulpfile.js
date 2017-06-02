@@ -37,7 +37,7 @@ gulp.task('javascript', function () {
     // Add transformation tasks to the pipeline here.
     .pipe(uglify())
     .on('error', gutil.log)
-    .pipe(sourcemaps.write('./'))
+    // .pipe(sourcemaps.write('./'))
     .pipe(rename('bundle.js'))
     .pipe(gulp.dest('./www/'));
 });

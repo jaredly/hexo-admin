@@ -31,10 +31,15 @@ var CodeMirror = React.createClass({
       theme: 'default',
       mode: 'markdown',
       lineWrapping: true,
+      dragDrop: true,
+      autofocus: true,
+      inputStyle: 'textarea',
+      rtlMoveVisually: true
     }
     for (var key in this.props.adminSettings.editor) {
       editorSettings[key] = this.props.adminSettings.editor[key]
     }
+    editorSettings.inputStyle = 'textarea';
 
     this.cm = CM(this.getDOMNode(), editorSettings);
     this.cm.on('change', (cm) => {
@@ -49,7 +54,6 @@ var CodeMirror = React.createClass({
     this.cm.setSize(box.width, box.height - 32)
 
     window.addEventListener('resize', this._onResize)
-
     document.addEventListener('paste', this._onPaste)
   },
 

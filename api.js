@@ -264,11 +264,13 @@ module.exports = function (app, hexo) {
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
    res.done(post.toArray().map(addIsDraft).map(function(item) { 
-      delete item.content;
-      delete item.excerpt;
-      delete item.more;
-      delete item.raw;
-      return item;
+      return {
+        isDraft: item.isDraft,
+        title: item.title,
+        date: item.date,
+        path: item.path,
+        _id: item._id
+      };
    }));
   });
 

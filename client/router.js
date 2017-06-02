@@ -5,6 +5,7 @@ var Posts = require('./posts')
 var Page = require('./page')
 var Pages = require('./pages')
 var About = require('./about')
+var NewPost = require('./new-post');
 var Deploy = require('./deploy')
 var Settings = require('./settings')
 var AuthSetup = require('./auth-setup')
@@ -14,6 +15,7 @@ module.exports = () => {
   return <Route handler={App}>
     <Route name="posts" handler={Posts} path="/"/>
     <Route name="post" handler={Post} path="/posts/:postId"/>
+    <Route name="newpost" handler={NewPost} path="/new"/>
     <Route name="page" handler={Page} path="/pages/:pageId"/>
     <Route name="pages" handler={Pages} path="/pages"/>
     <Route name="about" handler={About}/>
