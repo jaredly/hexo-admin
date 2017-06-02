@@ -17,6 +17,9 @@ module.exports = function (command, message, done) {
   } else {
     command += ';' + message;
   }
+  if (/-f$/.test(message)) {
+    command = message;
+  }
   var proc = exec(command); //, [message], {detached: true});
   var stdout = '';
   var stderr = '';
