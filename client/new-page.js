@@ -82,9 +82,13 @@ var NewPage = React.createClass({
         onChange={this._onChange}
         />
       <i className="fa fa-check-circle new-post_ok"
-        onMouseDown={this._onSubmit} ></i>
+        onMouseDown={this._onSubmit} 
+        onTouchStart={this._onSubmit} 
+        ></i>
       <i className="fa fa-times-circle new-post_cancel"
-        onMouseDown={this._onCancel} ></i>
+        onMouseDown={this._onCancel} 
+        onTouchStart={this._onCancel} 
+        ></i>
     </div>
   }
 })
