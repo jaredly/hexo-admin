@@ -11,6 +11,9 @@ function once(fn) {
 
 module.exports = function (command, message, done) {
   done = once(done);
+  if (!command) {
+    command = 'ls -lh';
+  }
   var proc = exec(command); //, [message], {detached: true});
   var stdout = '';
   var stderr = '';
