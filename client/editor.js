@@ -61,6 +61,8 @@ var Editor = React.createClass({
   },
 
   render: function () {
+    var link = this.state.previewLink;
+    link = '/' + link;
     return <div className={cx({
       "editor": true,
       "editor--draft": this.props.isDraft
@@ -120,8 +122,8 @@ var Editor = React.createClass({
               {this.props.wordCount} words
             </span>
             Preview
-            {' '}<a className="editor_perma-link" href={this.state.previewLink} target="_blank">
-              <i className="fa fa-link"/> {this.state.previewLink}
+            {' '}<a className="editor_perma-link" href={link} target="_blank">
+              <i className="fa fa-link"/> {link}
             </a>
           </div>
           {!this.state.checkingGrammar && <Rendered

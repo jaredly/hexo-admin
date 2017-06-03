@@ -41,11 +41,19 @@ var Pages = React.createClass({
     Router.transitionTo('page', {pageId: id})
   },
 
+  fetchSinglePostData: function(id) {
+    api.page(id).then((data) => {
+      this.setState({
+        current: data
+      });
+    });
+  },
+
   render: function () {
     if (!this.state.pages) {
       return <div className='pages'>Loading...</div>
     }
-    var current = this.state.pages[this.state.selected] || {}
+    var current = this.state.current || {}
     var url = window.location.href.replace(/^.*\/\/[^\/]+/, '').split('/')
     var rootPath = url.slice(0, url.indexOf('admin')).join('/')
     return <div className="posts">
@@ -59,7 +67,7 @@ var Pages = React.createClass({
                 "posts_post--selected": i === this.state.selected
               })}
               onDoubleClick={this.goTo.bind(null, page._id)}
-              onClick={this.setState.bind(this, {selected: i}, null)}
+              onClick={this.fetchSinglePostData.bind(this, page._id)}
             >
               <span className="posts_post-title">
                 {page.title}

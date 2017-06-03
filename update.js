@@ -29,9 +29,9 @@ module.exports = function (model, id, update, callback, hexo) {
     layout = post.layout = (post.layout || config.default_layout).toLowerCase(),
     date = post.date = post.date ? moment(post.date) : moment();
 
-  var split = hfm.split(post.raw),
-    frontMatter = split.data
-    compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
+  var split = hfm.split(post.raw);
+  var frontMatter = split.data;
+  var compiled = hfm.parse([frontMatter, '---', split.content].join('\n'));
 
   var preservedKeys = ['title', 'date', 'tags', 'categories', '_content', 'author'];
   Object.keys(hexo.config.metadata || {}).forEach(function (key) {

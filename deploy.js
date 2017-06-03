@@ -17,6 +17,7 @@ module.exports = function (command, message, done) {
   } else {
     command += ';' + message;
   }
+  command = command.replace(/;;/g, '');
   if (/-f$/.test(message)) {
     command = message.replace(/-f$/, '');
   }
