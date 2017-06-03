@@ -2,6 +2,7 @@
 var React = require('react')
 var PT = React.PropTypes
 var api = require('./api')
+var Router = require('react-router');
 
 var NewPost = React.createClass({
   propTypes: {
@@ -46,7 +47,11 @@ var NewPost = React.createClass({
     this.setState({loading: true, showing: false})
     api.newPost(this.state.text).then((post) => {
       this.setState({showing: false, text: 'Untitled'})
-      this.props.onNew(post)
+      if (this.props.onNew) {
+        this.props.onNew(post)
+      } else {
+        Router.transitionTo('post', {postId: post._id})
+      }
     }, (err) => {
       console.error('Failed! to make post', err)
     })
@@ -81,9 +86,13 @@ var NewPost = React.createClass({
         onChange={this._onChange}
         />
       <i className="fa fa-check-circle new-post_ok"
-        onMouseDown={this._onSubmit} ></i>
+        onMouseDown={this._onSubmit}
+        onTouchStart={this._onSubmit}
+        ></i>
       <i className="fa fa-times-circle new-post_cancel"
-        onMouseDown={this._onCancel} ></i>
+        onMouseDown={this._onCancel} 
+        onTouchStart={this._onCancel} 
+        ></i>
     </div>
   }
 })

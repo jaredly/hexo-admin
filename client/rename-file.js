@@ -73,7 +73,8 @@ var RenameFile = React.createClass({
         {!this.state.editing &&
           <div className='fileRename_display'
             title='Click to rename'
-            onClick={this.toggleEditing}>
+            onClick={this.toggleEditing}
+            onTouchStart={this.toggleEditing}>
             {this.state.filename}
           </div>}
         {this.state.editing && <span>

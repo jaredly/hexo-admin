@@ -193,8 +193,18 @@ module.exports = function (app, hexo) {
   });
 
   use('pages/list', function (req, res) {
-   var page = hexo.model('Page')
-   res.done(page.toArray().map(addIsDraft));
+   var page = hexo.model('Page').filter(function(item) {
+    return item.path && /^pages\//.test(item.path)
+   })
+   res.done(page.toArray().map(addIsDraft).map(function(item) { 
+      return {
+        isDraft: item.isDraft,
+        title: item.title,
+        date: item.date,
+        path: item.path,
+        _id: item._id
+      };
+   }));
   });
 
   use('pages/new', function (req, res, next) {
@@ -263,7 +273,15 @@ module.exports = function (app, hexo) {
 
   use('posts/list', function (req, res) {
    var post = hexo.model('Post')
-   res.done(post.toArray().map(addIsDraft));
+   res.done(post.toArray().map(addIsDraft).map(function(item) { 
+      return {
+        isDraft: item.isDraft,
+        title: item.title,
+        date: item.date,
+        path: item.path,
+        _id: item._id
+      };
+   }));
   });
 
   use('posts/new', function (req, res, next) {
