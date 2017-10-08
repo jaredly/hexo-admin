@@ -178,14 +178,21 @@ var ConfigDropper = React.createClass({
     var metadata = this.props.tagsCategoriesAndMetadata.metadata;
     var self = this;
     return metadata.map(function(name, index){
+      var component = (_.isArray(self.state[name]))
+      ? <AutoList
+          options={[]}
+          values={self.state[name]}
+          onChange={self._onChange.bind(null, name)} />
+      : <input
+          className="config_metadata"
+          value={self.state[name]}
+          name={name}
+          onChange={self._onChangeMetadata}/>
+
       return (
         <div key={index} className="config_section">
           <div className="config_section-title">{name}</div>
-          <input
-            className="config_metadata"
-            value={self.state[name]}
-            name={name}
-            onChange={self._onChangeMetadata}/>
+          {component}
         </div>
       )
     })
