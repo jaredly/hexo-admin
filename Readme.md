@@ -73,7 +73,7 @@ metadata:
   language:
 ```
 You can provide default values that will be used to initialize the metadata
-of a new post.
+of a new post. These can be either primitives or arrays.
 
 ### 6. Contribute!
 - let me know how it can be improved in the [github
