@@ -395,7 +395,7 @@ module.exports = function (app, hexo) {
       if (err) {
         console.log(err)
       }
-      hexo.source.process().then(function () {
+      hexo.load().then(function () {
         res.done({
           src: path.join(hexo.config.root + filename),
           msg: msg
