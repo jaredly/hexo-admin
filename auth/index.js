@@ -3,6 +3,8 @@
  * All paths starting with /admin/ are protected by cookie-based login, where
  * username must match `admin.username` and the password's bcrypt hash must match
  * `admin.password_hash`.
+ * If the admin.protect_all config setting is present, the entire hexo site will
+ * be protected.
  */
 
 var cookieParser = require('cookie-parser')
@@ -21,7 +23,12 @@ module.exports = function (app, hexo) {
       saveUninitialized: false,
       secret: hexo.config.admin.secret
   }));
-  app.use(hexo.config.root + 'admin', auth(new authStrategy(hexo)));
+
+  var protectPattern = hexo.config.root + 'admin';
+  if(hexo.config.admin.protect_all)
+    protectPattern = hexo.config.root;
+  app.use(protectPattern, auth(new authStrategy(hexo)));
+
   app.use(hexo.config.root + 'admin/login', function (req, res) {
       if (req.method === 'POST') {
           req.authenticate(['adminAuth'], function(error, done) {
@@ -34,7 +41,8 @@ module.exports = function (app, hexo) {
           serveStatic(path.join(__dirname, '../www', 'login'))(req, res);
       }
   });
-  app.use(hexo.config.root + 'admin/', function (req, res, next) {
+
+  app.use(protectPattern, function (req, res, next) {
       req.authenticate(['adminAuth'], next)
   });
 }
