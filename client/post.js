@@ -11,6 +11,12 @@ var moment = require('moment')
 var Router = require('react-router');
 var Confirm = require('./confirm');
 
+// DOMPurify & jsdom to mitigate the XSS vulnerability
+const createDOMPurify = require('dompurify')
+const { JSDOM } = require('jsdom')
+const window = new JSDOM('').window
+const DOMPurify = createDOMPurify(window)
+
 var confirm = function (message, options) {
   var cleanup, component, props, wrapper;
   if (options == null) {
@@ -98,14 +104,14 @@ var Post = React.createClass({
   handlePublish: function () {
     if (!this.state.post.isDraft) return
     api.publish(this.state.post._id).then((post) => {
-      this.setState({post: post})
+      this.setState({post: DOMPurify.sanitize(post)})
     });
   },
 
   handleUnpublish: function () {
     if (this.state.post.isDraft) return
     api.unpublish(this.state.post._id).then((post) => {
-      this.setState({post: post})
+      this.setState({post: DOMPurify.sanitize(post)})
     });
   },
 
