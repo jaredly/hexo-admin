@@ -8,6 +8,12 @@ var _ = require('lodash')
 var moment = require('moment')
 var SinceWhen = require('./since-when')
 
+// DOMPurify & jsdom to mitigate the XSS vulnerability
+const createDOMPurify = require('dompurify')
+const { JSDOM } = require('jsdom')
+const window = new JSDOM('').window
+const DOMPurify = createDOMPurify(window)
+
 var Rendered = require('./rendered')
 var DataFetcher = require('./data-fetcher');
 var NewPost = require('./new-post')
@@ -86,7 +92,7 @@ var Posts = React.createClass({
         <Rendered
           ref="rendered"
           className="posts_content"
-          text={current.content}/>
+          text={DOMPurify.sanitize(current.content)}/>
       </div>
     </div>
   }
