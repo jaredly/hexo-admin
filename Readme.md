@@ -1,3 +1,7 @@
+# Maintainer wanted!
+This project has a ton of people using it, but I (@jaredly) haven't used Hexo in several years. If you use this plugin, and are interested in helping maintain it, I'd love your help! To volunteer, start making pull requests fixing bugs & making things better :) if I'm not responsive, feel free to bug me on twitter (@jaredforsyth).
+
+
 ![logo](docs/logo.png?raw=true)
 
 An admin UI for the [Hexo blog engine](http://hexo.io). Based off of the [Ghost](http://ghost.org) interface, with inspiration from [svbtle](http://svbtle.com) and [prose.io](http://prose.io).
