@@ -410,8 +410,14 @@ module.exports = function (app, hexo) {
     if (!hexo.config.admin || !hexo.config.admin.deployCommand) {
       return res.done({error: 'Config value "admin.deployCommand" not found'});
     }
+
+    var deployCommand = hexo.config.admin.deployCommand;
+    if(process.platform === "win32"){
+      deployCommand =  hexo.config.admin.win32DeployCommand;
+    }
+
     try {
-      deploy(hexo.config.admin.deployCommand, req.body.message, function(err, result) {
+      deploy(deployCommand, req.body.message, function(err, result) {
         console.log('res', err, result);
         if (err) {
           return res.done({error: err.message || err})
