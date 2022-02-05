@@ -41,8 +41,12 @@ module.exports = function (app, hexo) {
       fs.writeFile(hexo.base_dir+'_admin-config.yml', '')
       return {}
     } else {
-      var settings = yml.safeLoad(fs.readFileSync(path))
-
+          // Update hexo 5.x after, it used yml.js 4.x .After yml.js 4.x "load" method replace "safeLoad" method.
+      if (hexo.version[0] < '5') {
+        var settings = yml.safeLoad(fs.readFileSync(path))
+      } else {
+        var settings = yml.load(fs.readFileSync(path))
+      } 
       if (!settings) return {}
       return settings
     }
@@ -184,8 +188,12 @@ module.exports = function (app, hexo) {
       settings = deepAssign(settings, addedOptions)
     }
     hexo.log.d('set', name, '=', value, 'with', JSON.stringify(addedOptions))
-
-    fs.writeFileSync(hexo.base_dir + '_admin-config.yml', yml.safeDump(settings))
+    // Update hexo 5.x after, it used yml.js 4.x .After yml.js 4.x "dump" method replace "safeDump" method.
+    if (hexo.version[0] < '5') {
+      fs.writeFileSync(hexo.base_dir + '_admin-config.yml', yml.safeDump(settings))
+    } else {
+      fs.writeFileSync(hexo.base_dir + '_admin-config.yml', yml.dump(settings))
+    }
     res.done({
       updated: 'Successfully updated ' + name + ' = ' + value,
       settings: settings
