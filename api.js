@@ -41,7 +41,7 @@ module.exports = function (app, hexo) {
       fs.writeFile(hexo.base_dir+'_admin-config.yml', '')
       return {}
     } else {
-          // Update hexo 5.x after, it used yml.js 4.x .After yml.js 4.x "load" method replace "safeLoad" method.
+      // Update hexo 5.x after, it used yml.js 4.x .After yml.js 4.x "load" method replace "safeLoad" method.
       if (hexo.version[0] < '5') {
         var settings = yml.safeLoad(fs.readFileSync(path))
       } else {
