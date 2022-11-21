@@ -70,6 +70,7 @@ module.exports = function (model, id, update, callback, hexo) {
 
   post.save(function () {
   //  console.log(post.full_source, post.source)
+    raw = '---\n' + raw;
     fs.writeFile(full_source, raw, function(err){
       if (err) return callback(err);
 
