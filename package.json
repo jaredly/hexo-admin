@@ -1,10 +1,11 @@
 {
   "name": "hexo-admin",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Adds an admin section to the hexo server",
   "main": "index.js",
   "scripts": {
-    "prepublish": "gulp build"
+    "prepublish": "gulp build",
+    "release": "bumpp --commit --push --all --tag"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "write-good": "^0.10.0"
   },
   "devDependencies": {
+    "bumpp": "^8.2.1",
     "browserify": "^11.2.0",
     "codemirror": "^5.24.2",
     "es6-promise": "^1.0.0",
