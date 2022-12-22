@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   noti_url: https://api-lmapp.lingman.tech/api/Public/publish
