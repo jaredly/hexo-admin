@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   # packages =======================================================================================================================
-  lingman-cli:
+  lingman-hexo-admin:
     if: contains(github.event.head_commit.message, 'release')
     runs-on: ubuntu-latest
     strategy:
