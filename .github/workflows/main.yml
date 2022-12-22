@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16.x]
+        node: [18.x]
         name: [lingman-hexo-admin]
         title: [lingman-hexo-admin]
       fail-fast: false
