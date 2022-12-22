@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  noti_url: https://api-lmapp.lingman.tech/api/Public/publish
+
+permissions:
+  contents: read
+
+jobs:
+  # packages =======================================================================================================================
+  lingman-cli:
+    if: contains(github.event.head_commit.message, 'release')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16.x]
+        name: [lingman-hexo-admin]
+        title: [lingman-hexo-admin]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node version to ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install
+        run: pnpm i
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish
+        run: npm publish --registry https://registry.npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_OPTIONS: --max-old-space-size=6144
+
+      - name: The job has success
+        if: success()
+        run: curl -G --data-urlencode "sound= ${{ matrix.name }}发布成功" --data-urlencode "title=${{ matrix.title }}" --data-urlencode "status=success" ${{ env.noti_url }}
+
+      - name: The job has failed
+        if: failure()
+        run: curl -G --data-urlencode "sound= ${{ matrix.name }}发布失败" --data-urlencode "title=${{ matrix.title }}" --data-urlencode "status=fail" ${{ env.noti_url }}
