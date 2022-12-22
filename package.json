@@ -1,8 +1,8 @@
 {
   "name": "hexo-admin",
-  "version": "2.3.13",
+  "version": "2.3.14",
   "description": "Adds an admin section to the hexo server",
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "npm@8.7.0",
   "main": "index.js",
   "scripts": {
     "prepublish": "gulp build",
